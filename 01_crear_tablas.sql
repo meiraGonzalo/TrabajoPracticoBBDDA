@@ -505,7 +505,7 @@ GO
 
 /* ===================== CHECK CONSTRAINTS ===================== */
 /* (dominios + arcos exclusivos sacados del DER) */
-/* ---------- Catalogos / Competicion ---------- */
+/* ---------- Catalogos / Competicion ---------- */ 
 
 ALTER TABLE cat.Pais WITH CHECK ADD CONSTRAINT CK_Pais_Confederacion
   CHECK (confederacion IN ('CONMEBOL','UEFA','CAF','AFC','CONCACAF','OFC'));
