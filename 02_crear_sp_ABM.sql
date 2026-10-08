@@ -158,7 +158,7 @@ BEGIN
 
     -- Coherencia entre minimo y maximo de convocados
     IF @clave = 'MIN_CONVOCADOS'
-       AND EXISTS(SELECT COUNT(*) FROM comp.ParametroReglamento
+       AND EXISTS(SELECT 1 FROM comp.ParametroReglamento
             WHERE id_torneo = @id_torneo AND clave = 'MAX_CONVOCADOS' AND valor < @valor)
         SET @err = @err + ' - El minimo de convocados no puede superar al maximo.';
 
