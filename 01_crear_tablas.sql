@@ -2,12 +2,13 @@
 =====================================================================
  UNLaM - 3641 Bases de Datos Aplicada
  TP: Sistema de Registro y Gestion del Mundial de Futbol
- Entrega 5 - Script 01: Creacion de tablas, indices, FK y CHECK
+ Entrega 5 - Script 01: Creacion de tablas, indices, FK y CHECK (con schemas)
  Grupo 02 - Comision 02-5600
- Integrantes: [completar]
+ Integrantes: Miro, Saba.
  Fecha: 2026-10-08
  Objetivo: crear todas las tablas del modelo con sus restricciones.
-           Requiere ejecutar antes el script 00 (crea MundialDB).
+           Requiere ejecutar antes el script 00 (crea MundialDB y los schemas
+           cat / comp / disc / pub / imp). Cada tabla va en su schema de dominio.
  Convertido desde el export de dbdiagram (estaba en dialecto MySQL).
 =====================================================================
 */
@@ -218,7 +219,7 @@ CREATE TABLE comp.Alineacion (
 );
 GO
 
-CREATE TABLE disc.Periodo (
+CREATE TABLE comp.Periodo (
   id_periodo int IDENTITY(1,1) PRIMARY KEY,
   nombre varchar(30) UNIQUE NOT NULL,  -- Primer tiempo, Segundo tiempo, Alargue 1, Alargue 2, Definicion por penales
   orden tinyint NOT NULL  -- el orden es imprescindible para ordenar goles/tarjetas/cambios cronologicamente y reconstruir el equipo en cualquier minuto
@@ -464,15 +465,15 @@ ALTER TABLE comp.Alineacion ADD CONSTRAINT FK_Alineacion_id_convocado FOREIGN KE
 ALTER TABLE comp.Alineacion ADD CONSTRAINT FK_Alineacion_id_posicion_cancha FOREIGN KEY (id_posicion_cancha) REFERENCES comp.Posicion (id_posicion);
 ALTER TABLE comp.Sustitucion ADD CONSTRAINT FK_Sustitucion_id_alineacion_sale FOREIGN KEY (id_alineacion_sale) REFERENCES comp.Alineacion (id_alineacion);
 ALTER TABLE comp.Sustitucion ADD CONSTRAINT FK_Sustitucion_id_alineacion_entra FOREIGN KEY (id_alineacion_entra) REFERENCES comp.Alineacion (id_alineacion);
-ALTER TABLE comp.Sustitucion ADD CONSTRAINT FK_Sustitucion_id_periodo FOREIGN KEY (id_periodo) REFERENCES disc.Periodo (id_periodo);
+ALTER TABLE comp.Sustitucion ADD CONSTRAINT FK_Sustitucion_id_periodo FOREIGN KEY (id_periodo) REFERENCES comp.Periodo (id_periodo);
 ALTER TABLE disc.Gol ADD CONSTRAINT FK_Gol_id_alineacion_autor FOREIGN KEY (id_alineacion_autor) REFERENCES comp.Alineacion (id_alineacion);
 ALTER TABLE disc.Gol ADD CONSTRAINT FK_Gol_id_alineacion_asistencia FOREIGN KEY (id_alineacion_asistencia) REFERENCES comp.Alineacion (id_alineacion);
 ALTER TABLE disc.Gol ADD CONSTRAINT FK_Gol_id_tipo_gol FOREIGN KEY (id_tipo_gol) REFERENCES disc.TipoGol (id_tipo_gol);
-ALTER TABLE disc.Gol ADD CONSTRAINT FK_Gol_id_periodo FOREIGN KEY (id_periodo) REFERENCES disc.Periodo (id_periodo);
+ALTER TABLE disc.Gol ADD CONSTRAINT FK_Gol_id_periodo FOREIGN KEY (id_periodo) REFERENCES comp.Periodo (id_periodo);
 ALTER TABLE disc.Tarjeta ADD CONSTRAINT FK_Tarjeta_id_alineacion FOREIGN KEY (id_alineacion) REFERENCES comp.Alineacion (id_alineacion);
 ALTER TABLE disc.Tarjeta ADD CONSTRAINT FK_Tarjeta_id_cuerpo_tecnico FOREIGN KEY (id_cuerpo_tecnico) REFERENCES comp.CuerpoTecnico (id_cuerpo_tecnico);
 ALTER TABLE disc.Tarjeta ADD CONSTRAINT FK_Tarjeta_id_partido_seleccion FOREIGN KEY (id_partido_seleccion) REFERENCES comp.PartidoSeleccion (id_partido_seleccion);
-ALTER TABLE disc.Tarjeta ADD CONSTRAINT FK_Tarjeta_id_periodo FOREIGN KEY (id_periodo) REFERENCES disc.Periodo (id_periodo);
+ALTER TABLE disc.Tarjeta ADD CONSTRAINT FK_Tarjeta_id_periodo FOREIGN KEY (id_periodo) REFERENCES comp.Periodo (id_periodo);
 ALTER TABLE disc.Suspension ADD CONSTRAINT FK_Suspension_id_convocado FOREIGN KEY (id_convocado) REFERENCES comp.Convocado (id_convocado);
 ALTER TABLE disc.Suspension ADD CONSTRAINT FK_Suspension_id_cuerpo_tecnico FOREIGN KEY (id_cuerpo_tecnico) REFERENCES comp.CuerpoTecnico (id_cuerpo_tecnico);
 ALTER TABLE disc.Suspension ADD CONSTRAINT FK_Suspension_id_tarjeta_origen FOREIGN KEY (id_tarjeta_origen) REFERENCES disc.Tarjeta (id_tarjeta);
@@ -505,7 +506,7 @@ GO
 
 /* ===================== CHECK CONSTRAINTS ===================== */
 /* (dominios + arcos exclusivos sacados del DER) */
-/* ---------- Catalogos / Competicion ---------- */ 
+/* ---------- Catalogos / Competicion ---------- */
 
 ALTER TABLE cat.Pais WITH CHECK ADD CONSTRAINT CK_Pais_Confederacion
   CHECK (confederacion IN ('CONMEBOL','UEFA','CAF','AFC','CONCACAF','OFC'));
@@ -539,7 +540,7 @@ ALTER TABLE comp.Sustitucion WITH CHECK ADD CONSTRAINT CK_Sustitucion_Motivo
   CHECK (motivo IN ('Tactico','Lesion','Precaucion'));
 
 /* ---------- Disciplina (goles, tarjetas, suspensiones) ---------- */
--- OJO: disc.TipoGol NO lleva CHECK a proposito (dominio abierto, se importa).
+-- OJO: TipoGol NO lleva CHECK a proposito (dominio abierto, se importa).
 
 ALTER TABLE disc.Tarjeta WITH CHECK ADD CONSTRAINT CK_Tarjeta_Tipo
   CHECK (tipo_tarjeta IN ('Amarilla','Roja directa','Roja por doble amarilla'));
@@ -576,6 +577,10 @@ ALTER TABLE pub.ExhibicionPublicitaria WITH CHECK ADD CONSTRAINT CK_Exhibicion_N
 ALTER TABLE pub.ExhibicionPublicitaria WITH CHECK ADD CONSTRAINT CK_Exhibicion_Estado
   CHECK (estado IN ('PROPUESTA','EXHIBIDA','CANCELADA'));
 
+/* =====================================================================
+   OPCIONALES recomendados (sanidad numerica, no estaban en el DER pero
+   suman y son faciles de defender). Borralos si no los quieren.
+   ===================================================================== */
 
 ALTER TABLE comp.Sede WITH CHECK ADD CONSTRAINT CK_Sede_Capacidad
   CHECK (capacidad > 0);
