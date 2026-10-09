@@ -5,6 +5,9 @@
  Entrega 5 - Script 01: Creacion de tablas, indices, FK y CHECK (con schemas)
  Grupo 02 - Comision 02-5600
  Integrantes: Miro, Saba.
+              Mendez Camacho, Tatiana Antonella
+              Rocha Escalera, Sheila
+              Meira Da Cruz Saleiro, Gonzalo
  Fecha: 2026-10-08
  Objetivo: crear todas las tablas del modelo con sus restricciones.
            Requiere ejecutar antes el script 00 (crea MundialDB y los schemas
@@ -240,7 +243,7 @@ GO
 
 CREATE TABLE disc.TipoGol (
   id_tipo_gol int IDENTITY(1,1) PRIMARY KEY,
-  nombre varchar(30) UNIQUE NOT NULL  -- Jugada, Penal, Tiro libre, En contra, Cabezazo... El enunciado deja el dominio abierto ("etc.") y los datasets importados traen valores propios: con CHECK cada valor nuevo exigiria ALTER TABLE
+  nombre varchar(30) UNIQUE NOT NULL  -- Jugada, Penal, Tiro libre, En contra, Cabezazo
 );
 GO
 
@@ -313,7 +316,7 @@ GO
 
 CREATE TABLE pub.Anunciante (
   id_anunciante int IDENTITY(1,1) PRIMARY KEY,
-  nombre varchar(100) UNIQUE NOT NULL,  -- varchar a proposito: marcas globales en alfabeto latino. Pasar a nvarchar solo si se cargan anunciantes con caracteres no latinos
+  nombre varchar(100) UNIQUE NOT NULL,  -- varchar a proposito: marcas globales en alfabeto latino.
   id_pais int NOT NULL
 );
 GO
@@ -321,7 +324,7 @@ GO
 CREATE TABLE pub.Marca (
   id_marca int IDENTITY(1,1) PRIMARY KEY,
   id_anunciante int NOT NULL,
-  nombre varchar(100) NOT NULL  -- varchar a proposito: marcas globales en alfabeto latino. Pasar a nvarchar solo si se cargan anunciantes con caracteres no latinos
+  nombre varchar(100) NOT NULL  -- varchar a proposito: marcas globales en alfabeto latino. 
 );
 GO
 
@@ -505,7 +508,7 @@ ALTER TABLE imp.ErrorImportacion ADD CONSTRAINT FK_ErrorImportacion_id_log_impor
 GO
 
 /* ===================== CHECK CONSTRAINTS ===================== */
-/* (dominios + arcos exclusivos sacados del DER) */
+
 /* ---------- Catalogos / Competicion ---------- */
 
 ALTER TABLE cat.Pais WITH CHECK ADD CONSTRAINT CK_Pais_Confederacion
@@ -540,7 +543,6 @@ ALTER TABLE comp.Sustitucion WITH CHECK ADD CONSTRAINT CK_Sustitucion_Motivo
   CHECK (motivo IN ('Tactico','Lesion','Precaucion'));
 
 /* ---------- Disciplina (goles, tarjetas, suspensiones) ---------- */
--- OJO: TipoGol NO lleva CHECK a proposito (dominio abierto, se importa).
 
 ALTER TABLE disc.Tarjeta WITH CHECK ADD CONSTRAINT CK_Tarjeta_Tipo
   CHECK (tipo_tarjeta IN ('Amarilla','Roja directa','Roja por doble amarilla'));
@@ -576,11 +578,6 @@ ALTER TABLE pub.ExhibicionPublicitaria WITH CHECK ADD CONSTRAINT CK_Exhibicion_N
 
 ALTER TABLE pub.ExhibicionPublicitaria WITH CHECK ADD CONSTRAINT CK_Exhibicion_Estado
   CHECK (estado IN ('PROPUESTA','EXHIBIDA','CANCELADA'));
-
-/* =====================================================================
-   OPCIONALES recomendados (sanidad numerica, no estaban en el DER pero
-   suman y son faciles de defender). Borralos si no los quieren.
-   ===================================================================== */
 
 ALTER TABLE comp.Sede WITH CHECK ADD CONSTRAINT CK_Sede_Capacidad
   CHECK (capacidad > 0);
