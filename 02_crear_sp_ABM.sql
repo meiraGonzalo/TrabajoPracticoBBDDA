@@ -6,6 +6,7 @@
  Grupo 02 - Comision 02-5600
  Integrantes: Mendez Camacho, Tatiana Antonella nickGithub: tatimendez
               Rocha Escalera, Sheila Belisa  nickGithub: sheilarocha02
+              Meira da Cruz Saleiro, Gonzalo nickGithub: meiraGonzalo
  Objetivo: crear stored procedures de ABM
 =====================================================================
 
@@ -2151,5 +2152,1380 @@ BEGIN
     END
 
     DELETE FROM comp.Sustitucion WHERE id_sustitucion = @id_sustitucion;
+END
+GO
+
+
+/* =====================================================================
+   MONEDA
+   ===================================================================== */
+
+CREATE OR ALTER PROCEDURE cat.usp_Moneda_Alta
+    @codigo_iso char(3), @nombre varchar(50)
+AS BEGIN
+    DECLARE @err nvarchar(2000) = '';
+
+    IF @codigo_iso IS NULL OR LEN(@codigo_iso) <> 3 
+        SET @err += ' - El codigo ISO debe tener 3 caracteres.';
+
+    IF @nombre IS NULL OR @nombre = '' 
+        SET @err += ' - El nombre es obligatorio.';
+
+    IF EXISTS(SELECT 1 FROM cat.Moneda WHERE codigo_iso = @codigo_iso) 
+        SET @err += ' - Ya existe una moneda con ese codigo ISO.';
+
+    IF @err <> '' 
+    BEGIN 
+        SET @err = 'usp_Moneda_Alta:' + @err; 
+        THROW 50271, @err, 1; 
+    END
+
+    INSERT INTO cat.Moneda (codigo_iso, nombre) VALUES (@codigo_iso, @nombre);
+END
+GO
+
+CREATE OR ALTER PROCEDURE cat.usp_Moneda_Modificacion
+    @id_moneda int, @codigo_iso char(3), @nombre varchar(50)
+AS BEGIN
+    DECLARE @err nvarchar(2000) = '';
+
+    IF NOT EXISTS(SELECT 1 FROM cat.Moneda WHERE id_moneda = @id_moneda) 
+        SET @err += ' - Moneda inexistente.';
+
+    IF @codigo_iso IS NULL OR LEN(@codigo_iso) <> 3 
+        SET @err += ' - El codigo ISO debe tener 3 caracteres.';
+
+    IF @nombre IS NULL OR @nombre = '' 
+        SET @err += ' - El nombre es obligatorio.';
+
+    IF EXISTS(SELECT 1 FROM cat.Moneda WHERE codigo_iso = @codigo_iso AND id_moneda <> @id_moneda) 
+        SET @err += ' - Ya existe otra moneda con ese codigo ISO.';
+
+    IF @err <> '' 
+    BEGIN 
+        SET @err = 'usp_Moneda_Modificacion:' + @err; 
+        THROW 50272, @err, 1; 
+    END
+
+    UPDATE cat.Moneda SET codigo_iso = @codigo_iso, nombre = @nombre WHERE id_moneda = @id_moneda;
+END
+GO
+
+CREATE OR ALTER PROCEDURE cat.usp_Moneda_Baja
+    @id_moneda int
+AS BEGIN
+    DECLARE @err nvarchar(2000) = '';
+
+    IF NOT EXISTS(SELECT 1 FROM cat.Moneda WHERE id_moneda = @id_moneda) 
+        SET @err += ' - Moneda inexistente.';
+
+    IF EXISTS(SELECT 1 FROM cat.Pais WHERE id_moneda = @id_moneda) 
+        SET @err += ' - Existen paises asociados a esta moneda.';
+
+    IF EXISTS(SELECT 1 FROM pub.Tarifa WHERE id_moneda = @id_moneda) 
+        SET @err += ' - Existen tarifas asociadas a esta moneda.';
+
+    IF @err <> '' 
+    BEGIN 
+        SET @err = 'usp_Moneda_Baja:' + @err; 
+        THROW 50273, @err, 1; 
+    END
+
+    DELETE FROM cat.Moneda WHERE id_moneda = @id_moneda;
+END
+GO
+
+
+/* =====================================================================
+   IDIOMA
+   ===================================================================== */
+
+CREATE OR ALTER PROCEDURE cat.usp_Idioma_Alta
+    @codigo_iso char(2), @nombre varchar(50)
+AS BEGIN
+    DECLARE @err nvarchar(2000) = '';
+
+    IF @codigo_iso IS NULL OR LEN(@codigo_iso) <> 2 
+        SET @err += ' - El codigo ISO debe tener 2 caracteres.';
+
+    IF @nombre IS NULL OR @nombre = '' 
+        SET @err += ' - El nombre es obligatorio.';
+
+    IF EXISTS(SELECT 1 FROM cat.Idioma WHERE codigo_iso = @codigo_iso) 
+        SET @err += ' - Ya existe un idioma con ese codigo ISO.';
+
+    IF @err <> '' 
+    BEGIN 
+        SET @err = 'usp_Idioma_Alta:' + @err; 
+        THROW 50281, @err, 1; 
+    END
+
+    INSERT INTO cat.Idioma (codigo_iso, nombre) VALUES (@codigo_iso, @nombre);
+END
+GO
+
+CREATE OR ALTER PROCEDURE cat.usp_Idioma_Modificacion
+    @id_idioma int, @codigo_iso char(2), @nombre varchar(50)
+AS BEGIN
+    DECLARE @err nvarchar(2000) = '';
+
+    IF NOT EXISTS(SELECT 1 FROM cat.Idioma WHERE id_idioma = @id_idioma) 
+        SET @err += ' - Idioma inexistente.';
+
+    IF @codigo_iso IS NULL OR LEN(@codigo_iso) <> 2 
+        SET @err += ' - El codigo ISO debe tener 2 caracteres.';
+
+    IF @nombre IS NULL OR @nombre = '' 
+        SET @err += ' - El nombre es obligatorio.';
+
+    IF EXISTS(SELECT 1 FROM cat.Idioma WHERE codigo_iso = @codigo_iso AND id_idioma <> @id_idioma) 
+        SET @err += ' - Ya existe otro idioma con ese codigo ISO.';
+
+    IF @err <> '' 
+    BEGIN 
+        SET @err = 'usp_Idioma_Modificacion:' + @err; 
+        THROW 50282, @err, 1; 
+    END
+
+    UPDATE cat.Idioma SET codigo_iso = @codigo_iso, nombre = @nombre WHERE id_idioma = @id_idioma;
+END
+GO
+
+CREATE OR ALTER PROCEDURE cat.usp_Idioma_Baja
+    @id_idioma int
+AS BEGIN
+    DECLARE @err nvarchar(2000) = '';
+
+    IF NOT EXISTS(SELECT 1 FROM cat.Idioma WHERE id_idioma = @id_idioma) 
+        SET @err += ' - Idioma inexistente.';
+
+    IF EXISTS(SELECT 1 FROM disc.ArbitroIdioma WHERE id_idioma = @id_idioma) 
+        SET @err += ' - El idioma está asignado a árbitros.';
+
+    IF EXISTS(SELECT 1 FROM pub.PiezaPublicitaria WHERE id_idioma = @id_idioma) 
+        SET @err += ' - Existen piezas publicitarias en este idioma.';
+
+    IF @err <> '' 
+    BEGIN 
+        SET @err = 'usp_Idioma_Baja:' + @err; 
+        THROW 50283, @err, 1; 
+    END
+
+    DELETE FROM cat.Idioma WHERE id_idioma = @id_idioma;
+END
+GO
+
+
+/* =====================================================================
+   PAIS
+   ===================================================================== */
+
+CREATE OR ALTER PROCEDURE cat.usp_Pais_Alta
+    @nombre varchar(100), @confederacion varchar(20), @id_moneda int, @huso_horario varchar(50)
+AS BEGIN
+    DECLARE @err nvarchar(2000) = '';
+
+    IF @nombre IS NULL OR @nombre = '' 
+        SET @err += ' - El nombre es obligatorio.';
+
+    IF @confederacion IS NOT NULL AND @confederacion NOT IN ('CONMEBOL','UEFA','CAF','AFC','CONCACAF','OFC') 
+        SET @err += ' - Confederacion invalida.';
+
+    IF @id_moneda IS NOT NULL AND NOT EXISTS(SELECT 1 FROM cat.Moneda WHERE id_moneda = @id_moneda) 
+        SET @err += ' - Moneda inexistente.';
+
+    IF NOT EXISTS(SELECT 1 FROM sys.time_zone_info WHERE name = @huso_horario) 
+        SET @err += ' - Huso horario invalido.';
+
+    IF @err <> '' 
+    BEGIN 
+        SET @err = 'usp_Pais_Alta:' + @err; 
+        THROW 50291, @err, 1; 
+    END
+
+    INSERT INTO cat.Pais(nombre, confederacion, id_moneda, huso_horario) VALUES (@nombre, @confederacion, @id_moneda, @huso_horario);
+END
+GO
+
+CREATE OR ALTER PROCEDURE cat.usp_Pais_Modificacion
+    @id_pais int, @nombre varchar(100), @confederacion varchar(20), @id_moneda int, @huso_horario varchar(50)
+AS BEGIN
+    DECLARE @err nvarchar(2000) = '';
+
+    IF NOT EXISTS(SELECT 1 FROM cat.Pais WHERE id_pais = @id_pais) 
+        SET @err += ' - Pais inexistente.';
+
+    IF @nombre IS NULL OR @nombre = '' 
+        SET @err += ' - El nombre es obligatorio.';
+
+    IF @confederacion IS NOT NULL AND @confederacion NOT IN ('CONMEBOL','UEFA','CAF','AFC','CONCACAF','OFC') 
+        SET @err += ' - Confederacion invalida.';
+
+    IF @id_moneda IS NOT NULL AND NOT EXISTS(SELECT 1 FROM cat.Moneda WHERE id_moneda = @id_moneda) 
+        SET @err += ' - Moneda inexistente.';
+
+    IF NOT EXISTS(SELECT 1 FROM sys.time_zone_info WHERE name = @huso_horario) 
+        SET @err += ' - Huso horario invalido.';
+
+    IF @err <> '' 
+    BEGIN 
+        SET @err = 'usp_Pais_Modificacion:' + @err; 
+        THROW 50292, @err, 1; 
+    END
+
+    UPDATE cat.Pais SET nombre = @nombre, confederacion = @confederacion, id_moneda = @id_moneda, huso_horario = @huso_horario WHERE id_pais = @id_pais;
+END
+GO
+
+CREATE OR ALTER PROCEDURE cat.usp_Pais_Baja
+    @id_pais int
+AS BEGIN
+    DECLARE @err nvarchar(2000) = '';
+
+    IF NOT EXISTS(SELECT 1 FROM cat.Pais WHERE id_pais = @id_pais) 
+        SET @err += ' - Pais inexistente.';
+
+    IF EXISTS(SELECT 1 FROM cat.Ciudad WHERE id_pais = @id_pais) 
+        SET @err += ' - El pais tiene ciudades.';
+
+    IF EXISTS(SELECT 1 FROM comp.Seleccion WHERE id_pais = @id_pais) 
+        SET @err += ' - El pais tiene selecciones.';
+
+    IF EXISTS(SELECT 1 FROM comp.Persona WHERE id_pais_nacionalidad = @id_pais) 
+        SET @err += ' - El pais tiene personas registradas.';
+
+    IF EXISTS(SELECT 1 FROM pub.Anunciante WHERE id_pais = @id_pais) 
+        SET @err += ' - El pais tiene anunciantes.';
+
+    IF @err <> '' 
+    BEGIN 
+        SET @err = 'usp_Pais_Baja:' + @err; 
+        THROW 50293, @err, 1; 
+    END
+
+    DELETE FROM cat.Pais WHERE id_pais = @id_pais;
+END
+GO
+
+
+/* =====================================================================
+   CIUDAD
+   ===================================================================== */
+
+CREATE OR ALTER PROCEDURE cat.usp_Ciudad_Alta
+    @nombre nvarchar(100), @id_pais int, @huso_horario varchar(50)
+AS BEGIN
+    DECLARE @err nvarchar(2000) = '';
+
+    IF @nombre IS NULL OR @nombre = '' 
+        SET @err += ' - El nombre es obligatorio.';
+
+    IF NOT EXISTS(SELECT 1 FROM cat.Pais WHERE id_pais = @id_pais) 
+        SET @err += ' - Pais inexistente.';
+
+    IF NOT EXISTS(SELECT 1 FROM sys.time_zone_info WHERE name = @huso_horario) 
+        SET @err += ' - Huso horario invalido.';
+
+    IF EXISTS(SELECT 1 FROM cat.Ciudad WHERE nombre = @nombre AND id_pais = @id_pais) 
+        SET @err += ' - La ciudad ya existe en este pais.';
+
+    IF @err <> '' 
+    BEGIN 
+        SET @err = 'usp_Ciudad_Alta:' + @err; 
+        THROW 50301, @err, 1; 
+    END
+
+    INSERT INTO cat.Ciudad(nombre, id_pais, huso_horario) VALUES (@nombre, @id_pais, @huso_horario);
+END
+GO
+
+CREATE OR ALTER PROCEDURE cat.usp_Ciudad_Modificacion
+    @id_ciudad int, @nombre nvarchar(100), @id_pais int, @huso_horario varchar(50)
+AS BEGIN
+    DECLARE @err nvarchar(2000) = '';
+
+    IF NOT EXISTS(SELECT 1 FROM cat.Ciudad WHERE id_ciudad = @id_ciudad) 
+        SET @err += ' - Ciudad inexistente.';
+
+    IF @nombre IS NULL OR @nombre = '' 
+        SET @err += ' - El nombre es obligatorio.';
+
+    IF NOT EXISTS(SELECT 1 FROM cat.Pais WHERE id_pais = @id_pais) 
+        SET @err += ' - Pais inexistente.';
+
+    IF NOT EXISTS(SELECT 1 FROM sys.time_zone_info WHERE name = @huso_horario) 
+        SET @err += ' - Huso horario invalido.';
+
+    IF EXISTS(SELECT 1 FROM cat.Ciudad WHERE nombre = @nombre AND id_pais = @id_pais AND id_ciudad <> @id_ciudad) 
+        SET @err += ' - La ciudad ya existe en este pais.';
+
+    IF @err <> '' 
+    BEGIN 
+        SET @err = 'usp_Ciudad_Modificacion:' + @err; 
+        THROW 50302, @err, 1; 
+    END
+
+    UPDATE cat.Ciudad SET nombre = @nombre, id_pais = @id_pais, huso_horario = @huso_horario WHERE id_ciudad = @id_ciudad;
+END
+GO
+
+CREATE OR ALTER PROCEDURE cat.usp_Ciudad_Baja
+    @id_ciudad int
+AS BEGIN
+    DECLARE @err nvarchar(2000) = '';
+
+    IF NOT EXISTS(SELECT 1 FROM cat.Ciudad WHERE id_ciudad = @id_ciudad) 
+        SET @err += ' - Ciudad inexistente.';
+
+    IF EXISTS(SELECT 1 FROM comp.Sede WHERE id_ciudad = @id_ciudad) 
+        SET @err += ' - Existen sedes registradas en la ciudad.';
+
+    IF @err <> '' 
+    BEGIN 
+        SET @err = 'usp_Ciudad_Baja:' + @err; 
+        THROW 50303, @err, 1; 
+    END
+
+    DELETE FROM cat.Ciudad WHERE id_ciudad = @id_ciudad;
+END
+GO
+
+
+/* =====================================================================
+   INDICADOR ECONOMICO
+   ===================================================================== */
+
+CREATE OR ALTER PROCEDURE cat.usp_IndicadorEconomico_Alta
+    @id_pais int, @anio smallint, @codigo_indicador varchar(30), @valor decimal(18,2)
+AS BEGIN
+    DECLARE @err nvarchar(2000) = '';
+
+    IF NOT EXISTS(SELECT 1 FROM cat.Pais WHERE id_pais = @id_pais) 
+        SET @err += ' - Pais inexistente.';
+
+    IF @codigo_indicador IS NULL OR @codigo_indicador = '' 
+        SET @err += ' - El codigo es obligatorio.';
+
+    IF @valor < 0 
+        SET @err += ' - El valor no puede ser negativo.';
+
+    IF EXISTS(SELECT 1 FROM cat.IndicadorEconomico WHERE id_pais = @id_pais AND anio = @anio AND codigo_indicador = @codigo_indicador) 
+        SET @err += ' - Indicador ya existente.';
+
+    IF @err <> '' 
+    BEGIN 
+        SET @err = 'usp_IndicadorEconomico_Alta:' + @err; 
+        THROW 50311, @err, 1; 
+    END
+
+    INSERT INTO cat.IndicadorEconomico(id_pais, anio, codigo_indicador, valor) VALUES (@id_pais, @anio, @codigo_indicador, @valor);
+END
+GO
+
+CREATE OR ALTER PROCEDURE cat.usp_IndicadorEconomico_Modificacion
+    @id_pais int, @anio smallint, @codigo_indicador varchar(30), @valor decimal(18,2)
+AS BEGIN
+    DECLARE @err nvarchar(2000) = '';
+
+    IF NOT EXISTS(SELECT 1 FROM cat.IndicadorEconomico WHERE id_pais = @id_pais AND anio = @anio AND codigo_indicador = @codigo_indicador) 
+        SET @err += ' - Indicador inexistente.';
+
+    IF @valor < 0 
+        SET @err += ' - El valor no puede ser negativo.';
+
+    IF @err <> '' 
+    BEGIN 
+        SET @err = 'usp_IndicadorEconomico_Modificacion:' + @err; 
+        THROW 50312, @err, 1; 
+    END
+
+    UPDATE cat.IndicadorEconomico SET valor = @valor WHERE id_pais = @id_pais AND anio = @anio AND codigo_indicador = @codigo_indicador;
+END
+GO
+
+CREATE OR ALTER PROCEDURE cat.usp_IndicadorEconomico_Baja
+    @id_pais int, @anio smallint, @codigo_indicador varchar(30)
+AS BEGIN
+    DECLARE @err nvarchar(2000) = '';
+
+    IF NOT EXISTS(SELECT 1 FROM cat.IndicadorEconomico WHERE id_pais = @id_pais AND anio = @anio AND codigo_indicador = @codigo_indicador) 
+        SET @err += ' - Indicador inexistente.';
+
+    IF @err <> '' 
+    BEGIN 
+        SET @err = 'usp_IndicadorEconomico_Baja:' + @err; 
+        THROW 50313, @err, 1; 
+    END
+
+    DELETE FROM cat.IndicadorEconomico WHERE id_pais = @id_pais AND anio = @anio AND codigo_indicador = @codigo_indicador;
+END
+GO
+
+
+/* =====================================================================
+   TIPO CAMBIO
+   ===================================================================== */
+
+CREATE OR ALTER PROCEDURE cat.usp_TipoCambio_Alta
+    @id_moneda int, @fecha date, @tasa_usd decimal(18,6)
+AS BEGIN
+    DECLARE @err nvarchar(2000) = '';
+
+    IF NOT EXISTS(SELECT 1 FROM cat.Moneda WHERE id_moneda = @id_moneda) 
+        SET @err += ' - Moneda inexistente.';
+
+    IF @tasa_usd IS NULL OR @tasa_usd <= 0 
+        SET @err += ' - La tasa de cambio debe ser mayor a cero.';
+
+    IF EXISTS(SELECT 1 FROM cat.TipoCambio WHERE id_moneda = @id_moneda AND fecha = @fecha) 
+        SET @err += ' - Ya existe un tipo de cambio para esta moneda en esta fecha.';
+
+    IF @err <> '' 
+    BEGIN 
+        SET @err = 'usp_TipoCambio_Alta:' + @err; 
+        THROW 50321, @err, 1; 
+    END
+
+    INSERT INTO cat.TipoCambio (id_moneda, fecha, tasa_usd) VALUES (@id_moneda, @fecha, @tasa_usd);
+END
+GO
+
+CREATE OR ALTER PROCEDURE cat.usp_TipoCambio_Modificacion
+    @id_moneda int, @fecha date, @tasa_usd decimal(18,6)
+AS BEGIN
+    DECLARE @err nvarchar(2000) = '';
+
+    IF NOT EXISTS(SELECT 1 FROM cat.TipoCambio WHERE id_moneda = @id_moneda AND fecha = @fecha) 
+        SET @err += ' - Tipo de cambio inexistente.';
+
+    IF @tasa_usd IS NULL OR @tasa_usd <= 0 
+        SET @err += ' - La tasa de cambio debe ser mayor a cero.';
+
+    IF @err <> '' 
+    BEGIN 
+        SET @err = 'usp_TipoCambio_Modificacion:' + @err; 
+        THROW 50322, @err, 1; 
+    END
+
+    UPDATE cat.TipoCambio SET tasa_usd = @tasa_usd WHERE id_moneda = @id_moneda AND fecha = @fecha;
+END
+GO
+
+CREATE OR ALTER PROCEDURE cat.usp_TipoCambio_Baja
+    @id_moneda int, @fecha date
+AS BEGIN
+    DECLARE @err nvarchar(2000) = '';
+
+    IF NOT EXISTS(SELECT 1 FROM cat.TipoCambio WHERE id_moneda = @id_moneda AND fecha = @fecha) 
+        SET @err += ' - Tipo de cambio inexistente.';
+
+    IF @err <> '' 
+    BEGIN 
+        SET @err = 'usp_TipoCambio_Baja:' + @err; 
+        THROW 50323, @err, 1; 
+    END
+
+    DELETE FROM cat.TipoCambio WHERE id_moneda = @id_moneda AND fecha = @fecha;
+END
+GO
+
+
+/* =====================================================================
+   FERIADO
+   ===================================================================== */
+
+CREATE OR ALTER PROCEDURE cat.usp_Feriado_Alta
+    @id_pais int, @fecha date, @nombre varchar(150)
+AS BEGIN
+    DECLARE @err nvarchar(2000) = '';
+
+    IF NOT EXISTS(SELECT 1 FROM cat.Pais WHERE id_pais = @id_pais) 
+        SET @err += ' - Pais inexistente.';
+
+    IF @nombre IS NULL OR @nombre = '' 
+        SET @err += ' - El nombre del feriado es obligatorio.';
+
+    IF EXISTS(SELECT 1 FROM cat.Feriado WHERE id_pais = @id_pais AND fecha = @fecha) 
+        SET @err += ' - Ya existe un feriado en esa fecha para este pais.';
+
+    IF @err <> '' 
+    BEGIN 
+        SET @err = 'usp_Feriado_Alta:' + @err; 
+        THROW 50331, @err, 1; 
+    END
+
+    INSERT INTO cat.Feriado (id_pais, fecha, nombre) VALUES (@id_pais, @fecha, @nombre);
+END
+GO
+
+CREATE OR ALTER PROCEDURE cat.usp_Feriado_Modificacion
+    @id_pais int, @fecha date, @nombre varchar(150)
+AS BEGIN
+    DECLARE @err nvarchar(2000) = '';
+
+    IF NOT EXISTS(SELECT 1 FROM cat.Feriado WHERE id_pais = @id_pais AND fecha = @fecha) 
+        SET @err += ' - Feriado inexistente.';
+
+    IF @nombre IS NULL OR @nombre = '' 
+        SET @err += ' - El nombre del feriado es obligatorio.';
+
+    IF @err <> '' 
+    BEGIN 
+        SET @err = 'usp_Feriado_Modificacion:' + @err; 
+        THROW 50332, @err, 1; 
+    END
+
+    UPDATE cat.Feriado SET nombre = @nombre WHERE id_pais = @id_pais AND fecha = @fecha;
+END
+GO
+
+CREATE OR ALTER PROCEDURE cat.usp_Feriado_Baja
+    @id_pais int, @fecha date
+AS BEGIN
+    DECLARE @err nvarchar(2000) = '';
+
+    IF NOT EXISTS(SELECT 1 FROM cat.Feriado WHERE id_pais = @id_pais AND fecha = @fecha) 
+        SET @err += ' - Feriado inexistente.';
+
+    IF @err <> '' 
+    BEGIN 
+        SET @err = 'usp_Feriado_Baja:' + @err; 
+        THROW 50333, @err, 1; 
+    END
+
+    DELETE FROM cat.Feriado WHERE id_pais = @id_pais AND fecha = @fecha;
+END
+GO
+
+
+/* =====================================================================
+   ANUNCIANTE
+   ===================================================================== */
+
+CREATE OR ALTER PROCEDURE pub.usp_Anunciante_Alta
+    @nombre varchar(100), @id_pais int
+AS BEGIN
+    DECLARE @err nvarchar(2000) = '';
+
+    IF @nombre IS NULL OR @nombre = '' 
+        SET @err += ' - El nombre es obligatorio.';
+
+    IF NOT EXISTS(SELECT 1 FROM cat.Pais WHERE id_pais = @id_pais) 
+        SET @err += ' - Pais inexistente.';
+
+    IF EXISTS(SELECT 1 FROM pub.Anunciante WHERE nombre = @nombre) 
+        SET @err += ' - Ya existe un anunciante con ese nombre.';
+
+    IF @err <> '' 
+    BEGIN 
+        SET @err = 'usp_Anunciante_Alta:' + @err; 
+        THROW 50341, @err, 1; 
+    END
+
+    INSERT INTO pub.Anunciante (nombre, id_pais) VALUES (@nombre, @id_pais);
+END
+GO
+
+CREATE OR ALTER PROCEDURE pub.usp_Anunciante_Modificacion
+    @id_anunciante int, @nombre varchar(100), @id_pais int
+AS BEGIN
+    DECLARE @err nvarchar(2000) = '';
+
+    IF NOT EXISTS(SELECT 1 FROM pub.Anunciante WHERE id_anunciante = @id_anunciante) 
+        SET @err += ' - Anunciante inexistente.';
+
+    IF @nombre IS NULL OR @nombre = '' 
+        SET @err += ' - El nombre es obligatorio.';
+
+    IF NOT EXISTS(SELECT 1 FROM cat.Pais WHERE id_pais = @id_pais) 
+        SET @err += ' - Pais inexistente.';
+
+    IF EXISTS(SELECT 1 FROM pub.Anunciante WHERE nombre = @nombre AND id_anunciante <> @id_anunciante) 
+        SET @err += ' - Ya existe otro anunciante con ese nombre.';
+
+    IF @err <> '' 
+    BEGIN 
+        SET @err = 'usp_Anunciante_Modificacion:' + @err; 
+        THROW 50342, @err, 1; 
+    END
+
+    UPDATE pub.Anunciante SET nombre = @nombre, id_pais = @id_pais WHERE id_anunciante = @id_anunciante;
+END
+GO
+
+CREATE OR ALTER PROCEDURE pub.usp_Anunciante_Baja
+    @id_anunciante int
+AS BEGIN
+    DECLARE @err nvarchar(2000) = '';
+
+    IF NOT EXISTS(SELECT 1 FROM pub.Anunciante WHERE id_anunciante = @id_anunciante) 
+        SET @err += ' - Anunciante inexistente.';
+
+    IF EXISTS(SELECT 1 FROM pub.Marca WHERE id_anunciante = @id_anunciante) 
+        SET @err += ' - Existen marcas asociadas a este anunciante.';
+
+    IF @err <> '' 
+    BEGIN 
+        SET @err = 'usp_Anunciante_Baja:' + @err; 
+        THROW 50343, @err, 1; 
+    END
+
+    DELETE FROM pub.Anunciante WHERE id_anunciante = @id_anunciante;
+END
+GO
+
+
+/* =====================================================================
+   MARCA
+   ===================================================================== */
+
+CREATE OR ALTER PROCEDURE pub.usp_Marca_Alta
+    @id_anunciante int, @nombre varchar(100)
+AS BEGIN
+    DECLARE @err nvarchar(2000) = '';
+
+    IF NOT EXISTS(SELECT 1 FROM pub.Anunciante WHERE id_anunciante = @id_anunciante) 
+        SET @err += ' - Anunciante inexistente.';
+
+    IF @nombre IS NULL OR @nombre = '' 
+        SET @err += ' - El nombre de la marca es obligatorio.';
+
+    IF EXISTS(SELECT 1 FROM pub.Marca WHERE id_anunciante = @id_anunciante AND nombre = @nombre) 
+        SET @err += ' - Esta marca ya existe para este anunciante.';
+
+    IF @err <> '' 
+    BEGIN 
+        SET @err = 'usp_Marca_Alta:' + @err; 
+        THROW 50351, @err, 1; 
+    END
+
+    INSERT INTO pub.Marca (id_anunciante, nombre) VALUES (@id_anunciante, @nombre);
+END
+GO
+
+CREATE OR ALTER PROCEDURE pub.usp_Marca_Modificacion
+    @id_marca int, @id_anunciante int, @nombre varchar(100)
+AS BEGIN
+    DECLARE @err nvarchar(2000) = '';
+
+    IF NOT EXISTS(SELECT 1 FROM pub.Marca WHERE id_marca = @id_marca) 
+        SET @err += ' - Marca inexistente.';
+
+    IF NOT EXISTS(SELECT 1 FROM pub.Anunciante WHERE id_anunciante = @id_anunciante) 
+        SET @err += ' - Anunciante inexistente.';
+
+    IF @nombre IS NULL OR @nombre = '' 
+        SET @err += ' - El nombre de la marca es obligatorio.';
+
+    IF EXISTS(SELECT 1 FROM pub.Marca WHERE id_anunciante = @id_anunciante AND nombre = @nombre AND id_marca <> @id_marca) 
+        SET @err += ' - Ya existe otra marca con este nombre para este anunciante.';
+
+    IF @err <> '' 
+    BEGIN 
+        SET @err = 'usp_Marca_Modificacion:' + @err; 
+        THROW 50352, @err, 1; 
+    END
+
+    UPDATE pub.Marca SET id_anunciante = @id_anunciante, nombre = @nombre WHERE id_marca = @id_marca;
+END
+GO
+
+CREATE OR ALTER PROCEDURE pub.usp_Marca_Baja
+    @id_marca int
+AS BEGIN
+    DECLARE @err nvarchar(2000) = '';
+
+    IF NOT EXISTS(SELECT 1 FROM pub.Marca WHERE id_marca = @id_marca) 
+        SET @err += ' - Marca inexistente.';
+
+    IF EXISTS(SELECT 1 FROM pub.Campania WHERE id_marca = @id_marca) 
+        SET @err += ' - Existen campanias asociadas a esta marca.';
+
+    IF @err <> '' 
+    BEGIN 
+        SET @err = 'usp_Marca_Baja:' + @err; 
+        THROW 50353, @err, 1; 
+    END
+
+    DELETE FROM pub.Marca WHERE id_marca = @id_marca;
+END
+GO
+
+
+/* =====================================================================
+   AGENCIA
+   ===================================================================== */
+
+CREATE OR ALTER PROCEDURE pub.usp_Agencia_Alta
+    @nombre varchar(100)
+AS BEGIN
+    DECLARE @err nvarchar(2000) = '';
+
+    IF @nombre IS NULL OR @nombre = '' 
+        SET @err += ' - El nombre de la agencia es obligatorio.';
+
+    IF EXISTS(SELECT 1 FROM pub.Agencia WHERE nombre = @nombre) 
+        SET @err += ' - Ya existe una agencia con ese nombre.';
+
+    IF @err <> '' 
+    BEGIN 
+        SET @err = 'usp_Agencia_Alta:' + @err; 
+        THROW 50361, @err, 1; 
+    END
+
+    INSERT INTO pub.Agencia (nombre) VALUES (@nombre);
+END
+GO
+
+CREATE OR ALTER PROCEDURE pub.usp_Agencia_Modificacion
+    @id_agencia int, @nombre varchar(100)
+AS BEGIN
+    DECLARE @err nvarchar(2000) = '';
+
+    IF NOT EXISTS(SELECT 1 FROM pub.Agencia WHERE id_agencia = @id_agencia) 
+        SET @err += ' - Agencia inexistente.';
+
+    IF @nombre IS NULL OR @nombre = '' 
+        SET @err += ' - El nombre de la agencia es obligatorio.';
+
+    IF EXISTS(SELECT 1 FROM pub.Agencia WHERE nombre = @nombre AND id_agencia <> @id_agencia) 
+        SET @err += ' - Ya existe otra agencia con ese nombre.';
+
+    IF @err <> '' 
+    BEGIN 
+        SET @err = 'usp_Agencia_Modificacion:' + @err; 
+        THROW 50362, @err, 1; 
+    END
+
+    UPDATE pub.Agencia SET nombre = @nombre WHERE id_agencia = @id_agencia;
+END
+GO
+
+CREATE OR ALTER PROCEDURE pub.usp_Agencia_Baja
+    @id_agencia int
+AS BEGIN
+    DECLARE @err nvarchar(2000) = '';
+
+    IF NOT EXISTS(SELECT 1 FROM pub.Agencia WHERE id_agencia = @id_agencia) 
+        SET @err += ' - Agencia inexistente.';
+
+    IF EXISTS(SELECT 1 FROM pub.Campania WHERE id_agencia = @id_agencia) 
+        SET @err += ' - Existen campanias gestionadas por esta agencia.';
+
+    IF @err <> '' 
+    BEGIN 
+        SET @err = 'usp_Agencia_Baja:' + @err; 
+        THROW 50363, @err, 1; 
+    END
+
+    DELETE FROM pub.Agencia WHERE id_agencia = @id_agencia;
+END
+GO
+
+
+/* =====================================================================
+   CAMPANIA
+   ===================================================================== */
+
+CREATE OR ALTER PROCEDURE pub.usp_Campania_Alta
+    @id_marca int, @id_agencia int, @titulo varchar(150), @fecha_desde date, @fecha_hasta date, @descripcion varchar(500)
+AS BEGIN
+    DECLARE @err nvarchar(2000) = '';
+
+    IF NOT EXISTS(SELECT 1 FROM pub.Marca WHERE id_marca = @id_marca) 
+        SET @err += ' - Marca inexistente.';
+
+    IF @id_agencia IS NOT NULL AND NOT EXISTS(SELECT 1 FROM pub.Agencia WHERE id_agencia = @id_agencia) 
+        SET @err += ' - Agencia inexistente.';
+
+    IF @titulo IS NULL OR @titulo = '' 
+        SET @err += ' - El titulo de la campania es obligatorio.';
+
+    IF @fecha_desde IS NOT NULL AND @fecha_hasta IS NOT NULL AND @fecha_hasta < @fecha_desde 
+        SET @err += ' - La fecha de fin no puede ser anterior a la de inicio.';
+
+    IF @err <> '' 
+    BEGIN 
+        SET @err = 'usp_Campania_Alta:' + @err; 
+        THROW 50371, @err, 1; 
+    END
+
+    INSERT INTO pub.Campania (id_marca, id_agencia, titulo, fecha_desde, fecha_hasta, descripcion) 
+    VALUES (@id_marca, @id_agencia, @titulo, @fecha_desde, @fecha_hasta, @descripcion);
+END
+GO
+
+CREATE OR ALTER PROCEDURE pub.usp_Campania_Modificacion
+    @id_campania int, @id_marca int, @id_agencia int, @titulo varchar(150), @fecha_desde date, @fecha_hasta date, @descripcion varchar(500)
+AS BEGIN
+    DECLARE @err nvarchar(2000) = '';
+
+    IF NOT EXISTS(SELECT 1 FROM pub.Campania WHERE id_campania = @id_campania) 
+        SET @err += ' - Campania inexistente.';
+
+    IF NOT EXISTS(SELECT 1 FROM pub.Marca WHERE id_marca = @id_marca) 
+        SET @err += ' - Marca inexistente.';
+
+    IF @id_agencia IS NOT NULL AND NOT EXISTS(SELECT 1 FROM pub.Agencia WHERE id_agencia = @id_agencia) 
+        SET @err += ' - Agencia inexistente.';
+
+    IF @titulo IS NULL OR @titulo = '' 
+        SET @err += ' - El titulo de la campania es obligatorio.';
+
+    IF @fecha_desde IS NOT NULL AND @fecha_hasta IS NOT NULL AND @fecha_hasta < @fecha_desde 
+        SET @err += ' - La fecha de fin no puede ser anterior a la de inicio.';
+
+    IF @err <> '' 
+    BEGIN 
+        SET @err = 'usp_Campania_Modificacion:' + @err; 
+        THROW 50372, @err, 1; 
+    END
+
+    UPDATE pub.Campania 
+    SET id_marca = @id_marca, id_agencia = @id_agencia, titulo = @titulo, fecha_desde = @fecha_desde, fecha_hasta = @fecha_hasta, descripcion = @descripcion 
+    WHERE id_campania = @id_campania;
+END
+GO
+
+CREATE OR ALTER PROCEDURE pub.usp_Campania_Baja
+    @id_campania int
+AS BEGIN
+    DECLARE @err nvarchar(2000) = '';
+
+    IF NOT EXISTS(SELECT 1 FROM pub.Campania WHERE id_campania = @id_campania) 
+        SET @err += ' - Campania inexistente.';
+
+    IF EXISTS(SELECT 1 FROM pub.CampaniaPais WHERE id_campania = @id_campania) 
+        SET @err += ' - La campania tiene mercados objetivo asociados.';
+
+    IF EXISTS(SELECT 1 FROM pub.PiezaPublicitaria WHERE id_campania = @id_campania) 
+        SET @err += ' - Existen piezas publicitarias bajo esta campania.';
+
+    IF @err <> '' 
+    BEGIN 
+        SET @err = 'usp_Campania_Baja:' + @err; 
+        THROW 50373, @err, 1; 
+    END
+
+    DELETE FROM pub.Campania WHERE id_campania = @id_campania;
+END
+GO
+
+
+/* =====================================================================
+   CAMPANIA PAIS
+   ===================================================================== */
+
+CREATE OR ALTER PROCEDURE pub.usp_CampaniaPais_Alta
+    @id_campania int, @id_pais int
+AS BEGIN
+    DECLARE @err nvarchar(2000) = '';
+
+    IF NOT EXISTS(SELECT 1 FROM pub.Campania WHERE id_campania = @id_campania) 
+        SET @err += ' - Campania inexistente.';
+
+    IF NOT EXISTS(SELECT 1 FROM cat.Pais WHERE id_pais = @id_pais) 
+        SET @err += ' - Pais inexistente.';
+
+    IF EXISTS(SELECT 1 FROM pub.CampaniaPais WHERE id_campania = @id_campania AND id_pais = @id_pais) 
+        SET @err += ' - Esta campania ya esta dirigida a este pais.';
+
+    IF @err <> '' 
+    BEGIN 
+        SET @err = 'usp_CampaniaPais_Alta:' + @err; 
+        THROW 50381, @err, 1; 
+    END
+
+    INSERT INTO pub.CampaniaPais (id_campania, id_pais) VALUES (@id_campania, @id_pais);
+END
+GO
+
+CREATE OR ALTER PROCEDURE pub.usp_CampaniaPais_Baja
+    @id_campania int, @id_pais int
+AS BEGIN
+    DECLARE @err nvarchar(2000) = '';
+
+    IF NOT EXISTS(SELECT 1 FROM pub.CampaniaPais WHERE id_campania = @id_campania AND id_pais = @id_pais) 
+        SET @err += ' - Asignacion de campania a pais inexistente.';
+
+    IF @err <> '' 
+    BEGIN 
+        SET @err = 'usp_CampaniaPais_Baja:' + @err; 
+        THROW 50383, @err, 1; 
+    END
+
+    DELETE FROM pub.CampaniaPais WHERE id_campania = @id_campania AND id_pais = @id_pais;
+END
+GO
+
+
+/* =====================================================================
+   PIEZA PUBLICITARIA
+   ===================================================================== */
+
+CREATE OR ALTER PROCEDURE pub.usp_PiezaPublicitaria_Alta
+    @id_campania int, @id_idioma int, @id_pais_mercado int, @titulo varchar(150), @url_contenido varchar(300)
+AS BEGIN
+    DECLARE @err nvarchar(2000) = '';
+
+    IF NOT EXISTS(SELECT 1 FROM pub.Campania WHERE id_campania = @id_campania) 
+        SET @err += ' - Campania inexistente.';
+
+    IF NOT EXISTS(SELECT 1 FROM cat.Idioma WHERE id_idioma = @id_idioma) 
+        SET @err += ' - Idioma inexistente.';
+
+    IF NOT EXISTS(SELECT 1 FROM cat.Pais WHERE id_pais = @id_pais_mercado) 
+        SET @err += ' - Pais mercado inexistente.';
+
+    IF @titulo IS NULL OR @titulo = '' 
+        SET @err += ' - El titulo de la pieza es obligatorio.';
+
+    IF @err <> '' 
+    BEGIN 
+        SET @err = 'usp_PiezaPublicitaria_Alta:' + @err; 
+        THROW 50391, @err, 1; 
+    END
+
+    INSERT INTO pub.PiezaPublicitaria (id_campania, id_idioma, id_pais_mercado, titulo, url_contenido) 
+    VALUES (@id_campania, @id_idioma, @id_pais_mercado, @titulo, @url_contenido);
+END
+GO
+
+CREATE OR ALTER PROCEDURE pub.usp_PiezaPublicitaria_Modificacion
+    @id_pieza_publicitaria int, @id_campania int, @id_idioma int, @id_pais_mercado int, @titulo varchar(150), @url_contenido varchar(300)
+AS BEGIN
+    DECLARE @err nvarchar(2000) = '';
+
+    IF NOT EXISTS(SELECT 1 FROM pub.PiezaPublicitaria WHERE id_pieza_publicitaria = @id_pieza_publicitaria) 
+        SET @err += ' - Pieza publicitaria inexistente.';
+
+    IF NOT EXISTS(SELECT 1 FROM pub.Campania WHERE id_campania = @id_campania) 
+        SET @err += ' - Campania inexistente.';
+
+    IF NOT EXISTS(SELECT 1 FROM cat.Idioma WHERE id_idioma = @id_idioma) 
+        SET @err += ' - Idioma inexistente.';
+
+    IF NOT EXISTS(SELECT 1 FROM cat.Pais WHERE id_pais = @id_pais_mercado) 
+        SET @err += ' - Pais mercado inexistente.';
+
+    IF @titulo IS NULL OR @titulo = '' 
+        SET @err += ' - El titulo de la pieza es obligatorio.';
+
+    IF @err <> '' 
+    BEGIN 
+        SET @err = 'usp_PiezaPublicitaria_Modificacion:' + @err; 
+        THROW 50392, @err, 1; 
+    END
+
+    UPDATE pub.PiezaPublicitaria 
+    SET id_campania = @id_campania, id_idioma = @id_idioma, id_pais_mercado = @id_pais_mercado, titulo = @titulo, url_contenido = @url_contenido 
+    WHERE id_pieza_publicitaria = @id_pieza_publicitaria;
+END
+GO
+
+CREATE OR ALTER PROCEDURE pub.usp_PiezaPublicitaria_Baja
+    @id_pieza_publicitaria int
+AS BEGIN
+    DECLARE @err nvarchar(2000) = '';
+
+    IF NOT EXISTS(SELECT 1 FROM pub.PiezaPublicitaria WHERE id_pieza_publicitaria = @id_pieza_publicitaria) 
+        SET @err += ' - Pieza publicitaria inexistente.';
+
+    IF EXISTS(SELECT 1 FROM pub.ExhibicionPublicitaria WHERE id_pieza_publicitaria = @id_pieza_publicitaria) 
+        SET @err += ' - Existen exhibiciones historicas o propuestas con esta pieza.';
+
+    IF @err <> '' 
+    BEGIN 
+        SET @err = 'usp_PiezaPublicitaria_Baja:' + @err; 
+        THROW 50393, @err, 1; 
+    END
+
+    DELETE FROM pub.PiezaPublicitaria WHERE id_pieza_publicitaria = @id_pieza_publicitaria;
+END
+GO
+
+
+/* =====================================================================
+   FRANJA HORARIA
+   ===================================================================== */
+
+CREATE OR ALTER PROCEDURE pub.usp_FranjaHoraria_Alta
+    @nombre varchar(30), @hora_desde time(0), @hora_hasta time(0), @es_prime_time bit
+AS BEGIN
+    DECLARE @err nvarchar(2000) = '';
+
+    IF @nombre IS NULL OR @nombre = '' 
+        SET @err += ' - El nombre de la franja es obligatorio.';
+
+
+    IF EXISTS(SELECT 1 FROM pub.FranjaHoraria WHERE nombre = @nombre) 
+        SET @err += ' - Ya existe una franja con ese nombre.';
+
+    IF @err <> '' 
+    BEGIN 
+        SET @err = 'usp_FranjaHoraria_Alta:' + @err; 
+        THROW 50401, @err, 1; 
+    END
+
+    INSERT INTO pub.FranjaHoraria (nombre, hora_desde, hora_hasta, es_prime_time) 
+    VALUES (@nombre, @hora_desde, @hora_hasta, @es_prime_time);
+END
+GO
+
+CREATE OR ALTER PROCEDURE pub.usp_FranjaHoraria_Modificacion
+    @id_franja_horaria int, @nombre varchar(30), @hora_desde time(0), @hora_hasta time(0), @es_prime_time bit
+AS BEGIN
+    DECLARE @err nvarchar(2000) = '';
+
+    IF NOT EXISTS(SELECT 1 FROM pub.FranjaHoraria WHERE id_franja_horaria = @id_franja_horaria) 
+        SET @err += ' - Franja horaria inexistente.';
+
+    IF @nombre IS NULL OR @nombre = '' 
+        SET @err += ' - El nombre de la franja es obligatorio.';
+
+    IF EXISTS(SELECT 1 FROM pub.FranjaHoraria WHERE nombre = @nombre AND id_franja_horaria <> @id_franja_horaria) 
+        SET @err += ' - Ya existe otra franja con ese nombre.';
+
+    IF @err <> '' 
+    BEGIN 
+        SET @err = 'usp_FranjaHoraria_Modificacion:' + @err; 
+        THROW 50402, @err, 1; 
+    END
+
+    UPDATE pub.FranjaHoraria 
+    SET nombre = @nombre, hora_desde = @hora_desde, hora_hasta = @hora_hasta, es_prime_time = @es_prime_time 
+    WHERE id_franja_horaria = @id_franja_horaria;
+END
+GO
+
+CREATE OR ALTER PROCEDURE pub.usp_FranjaHoraria_Baja
+    @id_franja_horaria int
+AS BEGIN
+    DECLARE @err nvarchar(2000) = '';
+
+    IF NOT EXISTS(SELECT 1 FROM pub.FranjaHoraria WHERE id_franja_horaria = @id_franja_horaria) 
+        SET @err += ' - Franja horaria inexistente.';
+
+    IF EXISTS(SELECT 1 FROM pub.Tarifa WHERE id_franja_horaria = @id_franja_horaria) 
+        SET @err += ' - Existen tarifas asociadas a esta franja.';
+
+    IF @err <> '' 
+    BEGIN 
+        SET @err = 'usp_FranjaHoraria_Baja:' + @err; 
+        THROW 50403, @err, 1; 
+    END
+
+    DELETE FROM pub.FranjaHoraria WHERE id_franja_horaria = @id_franja_horaria;
+END
+GO
+
+
+/* =====================================================================
+   TARIFA
+   ===================================================================== */
+
+CREATE OR ALTER PROCEDURE pub.usp_Tarifa_Alta
+    @id_torneo int, @id_fase int, @id_franja_horaria int, @monto decimal(12,2), @id_moneda int
+AS BEGIN
+    DECLARE @err nvarchar(2000) = '';
+
+    IF NOT EXISTS(SELECT 1 FROM comp.Torneo WHERE id_torneo = @id_torneo) 
+        SET @err += ' - Torneo inexistente.';
+
+    IF NOT EXISTS(SELECT 1 FROM comp.Fase WHERE id_fase = @id_fase) 
+        SET @err += ' - Fase inexistente.';
+
+    IF NOT EXISTS(SELECT 1 FROM pub.FranjaHoraria WHERE id_franja_horaria = @id_franja_horaria) 
+        SET @err += ' - Franja horaria inexistente.';
+
+    IF NOT EXISTS(SELECT 1 FROM cat.Moneda WHERE id_moneda = @id_moneda) 
+        SET @err += ' - Moneda inexistente.';
+
+    IF @monto IS NULL OR @monto < 0 
+        SET @err += ' - El monto no puede ser negativo.';
+
+    IF EXISTS(SELECT 1 FROM pub.Tarifa WHERE id_torneo = @id_torneo AND id_fase = @id_fase AND id_franja_horaria = @id_franja_horaria) 
+        SET @err += ' - Ya existe una tarifa para esta combinacion estructural.';
+
+    IF @err <> '' 
+    BEGIN 
+        SET @err = 'usp_Tarifa_Alta:' + @err; 
+        THROW 50411, @err, 1; 
+    END
+
+    INSERT INTO pub.Tarifa (id_torneo, id_fase, id_franja_horaria, monto, id_moneda) 
+    VALUES (@id_torneo, @id_fase, @id_franja_horaria, @monto, @id_moneda);
+END
+GO
+
+CREATE OR ALTER PROCEDURE pub.usp_Tarifa_Modificacion
+    @id_tarifa int, @monto decimal(12,2), @id_moneda int
+AS BEGIN
+    DECLARE @err nvarchar(2000) = '';
+
+    IF NOT EXISTS(SELECT 1 FROM pub.Tarifa WHERE id_tarifa = @id_tarifa) 
+        SET @err += ' - Tarifa inexistente.';
+
+    IF NOT EXISTS(SELECT 1 FROM cat.Moneda WHERE id_moneda = @id_moneda) 
+        SET @err += ' - Moneda inexistente.';
+
+    IF @monto IS NULL OR @monto < 0 
+        SET @err += ' - El monto no puede ser negativo.';
+
+    IF @err <> '' 
+    BEGIN 
+        SET @err = 'usp_Tarifa_Modificacion:' + @err; 
+        THROW 50412, @err, 1; 
+    END
+
+    UPDATE pub.Tarifa SET monto = @monto, id_moneda = @id_moneda WHERE id_tarifa = @id_tarifa;
+END
+GO
+
+CREATE OR ALTER PROCEDURE pub.usp_Tarifa_Baja
+    @id_tarifa int
+AS BEGIN
+    DECLARE @err nvarchar(2000) = '';
+
+    IF NOT EXISTS(SELECT 1 FROM pub.Tarifa WHERE id_tarifa = @id_tarifa) 
+        SET @err += ' - Tarifa inexistente.';
+
+    IF EXISTS(SELECT 1 FROM pub.ExhibicionPublicitaria WHERE id_tarifa = @id_tarifa) 
+        SET @err += ' - La tarifa fue aplicada a exhibiciones historicas.';
+
+    IF @err <> '' 
+    BEGIN 
+        SET @err = 'usp_Tarifa_Baja:' + @err; 
+        THROW 50413, @err, 1; 
+    END
+
+    DELETE FROM pub.Tarifa WHERE id_tarifa = @id_tarifa;
+END
+GO
+
+
+/* =====================================================================
+   EXHIBICION PUBLICITARIA
+   ===================================================================== */
+
+CREATE OR ALTER PROCEDURE pub.usp_ExhibicionPublicitaria_Alta
+    @id_partido int, @nro_espacio tinyint, @id_pieza_publicitaria int, @id_tarifa int, 
+    @monto_aplicado decimal(12,2), @id_moneda int, @puntaje_prioridad decimal(8,2), @estado varchar(10)
+AS BEGIN
+    DECLARE @err nvarchar(2000) = '';
+
+    IF NOT EXISTS(SELECT 1 FROM comp.Partido WHERE id_partido = @id_partido) 
+        SET @err += ' - Partido inexistente.';
+
+    IF @nro_espacio IS NULL OR @nro_espacio < 1 OR @nro_espacio > 4 
+        SET @err += ' - El nro de espacio asignado debe estar entre 1 y 4.';
+
+    IF EXISTS(SELECT 1 FROM pub.ExhibicionPublicitaria WHERE id_partido = @id_partido AND nro_espacio = @nro_espacio) 
+        SET @err += ' - El espacio publicitario ya esta ocupado para este partido.';
+
+    IF NOT EXISTS(SELECT 1 FROM pub.PiezaPublicitaria WHERE id_pieza_publicitaria = @id_pieza_publicitaria) 
+        SET @err += ' - Pieza publicitaria inexistente.';
+
+    IF NOT EXISTS(SELECT 1 FROM pub.Tarifa WHERE id_tarifa = @id_tarifa) 
+        SET @err += ' - Tarifa referencial inexistente.';
+
+    IF NOT EXISTS(SELECT 1 FROM cat.Moneda WHERE id_moneda = @id_moneda) 
+        SET @err += ' - Moneda inexistente.';
+
+    IF @monto_aplicado IS NULL OR @monto_aplicado < 0 
+        SET @err += ' - El monto no puede ser negativo.';
+
+    IF @estado IS NULL OR @estado NOT IN ('PROPUESTA','EXHIBIDA','CANCELADA') 
+        SET @err += ' - Estado de exhibicion invalido.';
+
+    IF @err <> '' 
+    BEGIN 
+        SET @err = 'usp_ExhibicionPublicitaria_Alta:' + @err; 
+        THROW 50421, @err, 1; 
+    END
+
+    INSERT INTO pub.ExhibicionPublicitaria (id_partido, nro_espacio, id_pieza_publicitaria, id_tarifa, monto_aplicado, id_moneda, puntaje_prioridad, estado)
+    VALUES (@id_partido, @nro_espacio, @id_pieza_publicitaria, @id_tarifa, @monto_aplicado, @id_moneda, @puntaje_prioridad, @estado);
+END
+GO
+
+CREATE OR ALTER PROCEDURE pub.usp_ExhibicionPublicitaria_Modificacion
+    @id_exhibicion_publicitaria int, @estado varchar(10)
+AS BEGIN
+    DECLARE @err nvarchar(2000) = '';
+
+    IF NOT EXISTS(SELECT 1 FROM pub.ExhibicionPublicitaria WHERE id_exhibicion_publicitaria = @id_exhibicion_publicitaria) 
+        SET @err += ' - Exhibicion inexistente.';
+
+    IF @estado IS NULL OR @estado NOT IN ('PROPUESTA','EXHIBIDA','CANCELADA') 
+        SET @err += ' - Estado de exhibicion invalido.';
+
+    IF @err <> '' 
+    BEGIN 
+        SET @err = 'usp_ExhibicionPublicitaria_Modificacion:' + @err; 
+        THROW 50422, @err, 1; 
+    END
+
+    UPDATE pub.ExhibicionPublicitaria SET estado = @estado WHERE id_exhibicion_publicitaria = @id_exhibicion_publicitaria;
+END
+GO
+
+CREATE OR ALTER PROCEDURE pub.usp_ExhibicionPublicitaria_Baja
+    @id_exhibicion_publicitaria int
+AS BEGIN
+    DECLARE @err nvarchar(2000) = '';
+
+    IF NOT EXISTS(SELECT 1 FROM pub.ExhibicionPublicitaria WHERE id_exhibicion_publicitaria = @id_exhibicion_publicitaria) 
+        SET @err += ' - Exhibicion inexistente.';
+
+    IF @err <> '' 
+    BEGIN 
+        SET @err = 'usp_ExhibicionPublicitaria_Baja:' + @err; 
+        THROW 50423, @err, 1; 
+    END
+
+    DELETE FROM pub.ExhibicionPublicitaria WHERE id_exhibicion_publicitaria = @id_exhibicion_publicitaria;
+END
+GO
+
+
+/* =====================================================================
+   LOG IMPORTACION
+   ===================================================================== */
+
+CREATE OR ALTER PROCEDURE imp.usp_LogImportacion_Alta
+    @nombre_archivo varchar(260), @fuente varchar(100), @fecha_inicio datetime2(0), @fecha_fin datetime2(0), @filas_leidas int, @filas_ok int, @filas_error int
+AS BEGIN
+    DECLARE @err nvarchar(2000) = '';
+
+    IF @nombre_archivo IS NULL OR @nombre_archivo = '' 
+        SET @err += ' - El nombre de archivo es obligatorio.';
+
+    IF @fecha_fin IS NOT NULL AND @fecha_fin < @fecha_inicio 
+        SET @err += ' - La fecha de fin no puede ser anterior a la de inicio.';
+
+    IF @err <> '' 
+    BEGIN 
+        SET @err = 'usp_LogImportacion_Alta:' + @err; 
+        THROW 50431, @err, 1; 
+    END
+
+    INSERT INTO imp.LogImportacion (nombre_archivo, fuente, fecha_inicio, fecha_fin, filas_leidas, filas_ok, filas_error)
+    VALUES (@nombre_archivo, @fuente, @fecha_inicio, @fecha_fin, @filas_leidas, @filas_ok, @filas_error);
+END
+GO
+
+CREATE OR ALTER PROCEDURE imp.usp_LogImportacion_Modificacion
+    @id_log_importacion int, @fecha_fin datetime2(0), @filas_leidas int, @filas_ok int, @filas_error int
+AS BEGIN
+    DECLARE @err nvarchar(2000) = '';
+    DECLARE @fecha_inicio datetime2(0);
+
+    SELECT @fecha_inicio = fecha_inicio 
+    FROM imp.LogImportacion 
+    WHERE id_log_importacion = @id_log_importacion;
+
+    IF @fecha_inicio IS NULL 
+        SET @err += ' - Log de importacion inexistente.';
+
+    IF @fecha_fin IS NOT NULL AND @fecha_fin < @fecha_inicio 
+        SET @err += ' - La fecha de fin no puede ser anterior a la de inicio.';
+
+    IF @err <> '' 
+    BEGIN 
+        SET @err = 'usp_LogImportacion_Modificacion:' + @err; 
+        THROW 50432, @err, 1; 
+    END
+
+    UPDATE imp.LogImportacion 
+    SET fecha_fin = @fecha_fin, filas_leidas = @filas_leidas, filas_ok = @filas_ok, filas_error = @filas_error 
+    WHERE id_log_importacion = @id_log_importacion;
+END
+GO
+
+CREATE OR ALTER PROCEDURE imp.usp_LogImportacion_Baja
+    @id_log_importacion int
+AS BEGIN
+    DECLARE @err nvarchar(2000) = '';
+
+    IF NOT EXISTS(SELECT 1 FROM imp.LogImportacion WHERE id_log_importacion = @id_log_importacion) 
+        SET @err += ' - Log de importacion inexistente.';
+
+    IF EXISTS(SELECT 1 FROM imp.ErrorImportacion WHERE id_log_importacion = @id_log_importacion) 
+        SET @err += ' - Existen errores asociados. Borrelos previamente.';
+
+    IF @err <> '' 
+    BEGIN 
+        SET @err = 'usp_LogImportacion_Baja:' + @err; 
+        THROW 50433, @err, 1; 
+    END
+
+    DELETE FROM imp.LogImportacion WHERE id_log_importacion = @id_log_importacion;
+END
+GO
+
+
+/* =====================================================================
+   ERROR IMPORTACION
+   ===================================================================== */
+
+CREATE OR ALTER PROCEDURE imp.usp_ErrorImportacion_Alta
+    @id_log_importacion int, @nro_linea int, @dato_original nvarchar(1000), @mensaje varchar(500)
+AS BEGIN
+    DECLARE @err nvarchar(2000) = '';
+
+    IF NOT EXISTS(SELECT 1 FROM imp.LogImportacion WHERE id_log_importacion = @id_log_importacion) 
+        SET @err += ' - Log padre inexistente.';
+
+    IF @mensaje IS NULL OR @mensaje = '' 
+        SET @err += ' - El mensaje de error es obligatorio.';
+
+    IF @err <> '' 
+    BEGIN 
+        SET @err = 'usp_ErrorImportacion_Alta:' + @err; 
+        THROW 50441, @err, 1; 
+    END
+
+    INSERT INTO imp.ErrorImportacion (id_log_importacion, nro_linea, dato_original, mensaje) 
+    VALUES (@id_log_importacion, @nro_linea, @dato_original, @mensaje);
+END
+GO
+
+CREATE OR ALTER PROCEDURE imp.usp_ErrorImportacion_Modificacion
+    @id_error_importacion int, @mensaje varchar(500)
+AS BEGIN
+    DECLARE @err nvarchar(2000) = '';
+
+    IF NOT EXISTS(SELECT 1 FROM imp.ErrorImportacion WHERE id_error_importacion = @id_error_importacion) 
+        SET @err += ' - Registro de error inexistente.';
+
+    IF @mensaje IS NULL OR @mensaje = '' 
+        SET @err += ' - El mensaje de error es obligatorio.';
+
+    IF @err <> '' 
+    BEGIN 
+        SET @err = 'usp_ErrorImportacion_Modificacion:' + @err; 
+        THROW 50442, @err, 1; 
+    END
+
+    UPDATE imp.ErrorImportacion SET mensaje = @mensaje WHERE id_error_importacion = @id_error_importacion;
+END
+GO
+
+CREATE OR ALTER PROCEDURE imp.usp_ErrorImportacion_Baja
+    @id_error_importacion int
+AS BEGIN
+    DECLARE @err nvarchar(2000) = '';
+
+    IF NOT EXISTS(SELECT 1 FROM imp.ErrorImportacion WHERE id_error_importacion = @id_error_importacion) 
+        SET @err += ' - Registro de error inexistente.';
+
+    IF @err <> '' 
+    BEGIN 
+        SET @err = 'usp_ErrorImportacion_Baja:' + @err; 
+        THROW 50443, @err, 1; 
+    END
+
+    DELETE FROM imp.ErrorImportacion WHERE id_error_importacion = @id_error_importacion;
 END
 GO
