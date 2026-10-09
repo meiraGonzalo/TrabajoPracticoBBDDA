@@ -6,13 +6,12 @@
  Grupo 02 - Comision 02-5600
  Integrantes: Miro, Saba.
  Objetivo: crear stored procedures de ABM del modulo disciplina/arbitros
-           (schema disc). Mismo patron que el ABM de comp (Tati).
+           (schema disc).
 
  Formato de errores (THROW): 5 - TT - A
       5  = fijo (los errores propios empiezan en 50000)
       TT = tabla: 19 TipoGol, 20 Gol, 21 Tarjeta, 22 Suspension,
                   23 Arbitro, 24 ArbitroIdioma, 25 Designacion, 26 InformeArbitral
-                  (comp usa 01-12 (Tati); la parte 2 (Shei) usa 13-18)
       A  = accion (1 = Alta, 2 = Modificacion, 3 = Baja)
 =====================================================================
 */
