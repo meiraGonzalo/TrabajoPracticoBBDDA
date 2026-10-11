@@ -19,6 +19,8 @@ Formato de errores (Throw) : 5 - TT A
      A  = accion (1 = Alta, 2 = Modificacion, 3 = Baja)
 */
 
+USE MundialDB;
+GO
 
 
 /*------------------1. TORNEO ----------------*/ 
