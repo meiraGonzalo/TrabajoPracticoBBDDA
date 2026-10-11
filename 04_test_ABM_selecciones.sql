@@ -742,3 +742,290 @@ EXEC comp.usp_CambioConvocatoria_Modificacion 9999, 'Cansancio', NULL;
    usp_CambioConvocatoria_Modificacion: - El cambio de convocatoria no existe.
    - Motivo invalido (Lesion / Enfermedad / Decision tecnica / Sancion). */
 GO
+
+/* =================================================================
+   13. BAJAS
+   ================================================================= */
+
+-- POSICION BAJA ERROR: Arquero es la posicion de Jugador Uno
+DECLARE @id int;
+SELECT @id = id_posicion FROM comp.Posicion WHERE nombre = 'Arquero';
+EXEC comp.usp_Posicion_Baja @id;
+/* Esperado:
+   usp_Posicion_Baja: - Es la posicion habitual de algun jugador. */
+GO
+
+--POSICION BAJA OK: Volante no la usa nadie
+DECLARE @id int;
+SELECT @id = id_posicion FROM comp.Posicion WHERE nombre = 'Volante';
+EXEC comp.usp_Posicion_Baja @id;
+SELECT * FROM comp.Posicion WHERE nombre = 'Volante';
+-- Esperado: 0 filas
+GO
+
+-- FASE BAJA ERROR: fase inexistente
+EXEC comp.usp_Fase_Baja 9999;
+/* Esperado:
+   usp_Fase_Baja: - La fase no existe. */
+GO
+
+-- FASE BAJA OK: Tercer puesto no tiene partidos
+DECLARE @id int;
+SELECT @id = id_fase FROM comp.Fase WHERE nombre = 'Tercer puesto';
+EXEC comp.usp_Fase_Baja @id;
+SELECT * FROM comp.Fase WHERE nombre = 'Tercer puesto';
+-- Esperado: 0 filas
+GO
+
+-- PERSONA BAJA ERROR: Jugador Uno esta registrado como jugador
+DECLARE @p int;
+SELECT @p = id_persona FROM comp.Persona WHERE nro_documento = 'T-0001';
+EXEC comp.usp_Persona_Baja @p;
+/* Esperado:
+   usp_Persona_Baja: - Esta registrada como jugador. */
+GO
+
+--PERSONA BAJA OK: se crea una persona sin vinculos y se borra
+DECLARE @arg int, @p int;
+SELECT @arg = id_pais FROM cat.Pais WHERE nombre = 'Argentina';
+EXEC comp.usp_Persona_Alta 'Persona', 'Borrar', '1990-01-01', @arg, 'DNI', 'T-9999';
+SELECT @p = id_persona FROM comp.Persona WHERE nro_documento = 'T-9999';
+EXEC comp.usp_Persona_Baja @p;
+SELECT * FROM comp.Persona WHERE nro_documento = 'T-9999';
+-- Esperado: 0 filas
+GO
+
+-- JUGADOR BAJA ERROR: Jugador Uno fue convocado
+DECLARE @p int;
+SELECT @p = id_persona FROM comp.Persona WHERE nro_documento = 'T-0001';
+EXEC comp.usp_Jugador_Baja @p;
+/* Esperado:
+   usp_Jugador_Baja: - Fue convocado por alguna seleccion. */
+GO
+
+-- JUGADOR BAJA OK: Jugador Tres nunca fue convocado
+DECLARE @p int;
+SELECT @p = id_persona FROM comp.Persona WHERE nro_documento = 'T-0003';
+EXEC comp.usp_Jugador_Baja @p;
+SELECT * FROM comp.Jugador WHERE id_jugador = @p;
+SELECT * FROM comp.Persona WHERE id_persona = @p;
+-- Esperado: 0 filas en Jugador y 1 fila en Persona (la persona queda)
+GO
+
+-- CLUB BAJA ERROR: River es el club de Jugador Uno
+DECLARE @c int;
+SELECT @c = id_club FROM comp.Club WHERE nombre = 'River Plate';
+EXEC comp.usp_Club_Baja @c;
+/* Esperado:
+   usp_Club_Baja: - Es el club de origen de algun convocado. */
+GO
+
+-- CLUB BAJA OK: Boca Jrs no tiene convocados
+DECLARE @c int;
+SELECT @c = id_club FROM comp.Club WHERE nombre = 'Boca Jrs';
+EXEC comp.usp_Club_Baja @c;
+SELECT * FROM comp.Club WHERE nombre = 'Boca Jrs';
+-- Esperado: 0 filas
+GO
+
+-- CUERPO TECNICO BAJA OK: Tecnico Dos
+DECLARE @ct int;
+SELECT @ct = ct.id_cuerpo_tecnico FROM comp.CuerpoTecnico ct
+INNER JOIN comp.Persona p ON p.id_persona = ct.id_persona WHERE p.nro_documento = 'T-0102';
+EXEC comp.usp_CuerpoTecnico_Baja @ct;
+SELECT * FROM comp.CuerpoTecnico WHERE id_cuerpo_tecnico = @ct;
+-- Esperado: 0 filas
+GO
+
+-- CUERPO TECNICO BAJA ERROR: inexistente
+EXEC comp.usp_CuerpoTecnico_Baja 9999;
+/* Esperado:
+   usp_CuerpoTecnico_Baja: - El integrante del cuerpo tecnico no existe. */
+GO
+
+-- SELECCION BAJA ERROR: Argentina tiene convocados y cuerpo tecnico
+DECLARE @t int, @s int;
+SELECT @t = id_torneo FROM comp.Torneo WHERE anio = 2026;
+SELECT @s = s.id_seleccion FROM comp.Seleccion s INNER JOIN cat.Pais p ON p.id_pais = s.id_pais
+WHERE p.nombre = 'Argentina' AND s.id_torneo = @t;
+EXEC comp.usp_Seleccion_Baja @s;
+/* Esperado:
+   usp_Seleccion_Baja: - Tiene convocados. - Tiene cuerpo tecnico. */
+GO
+
+--SELECCION BAJA OK: Uruguay no tiene nada asociado
+DECLARE @t int, @s int;
+SELECT @t = id_torneo FROM comp.Torneo WHERE anio = 2026;
+SELECT @s = s.id_seleccion FROM comp.Seleccion s INNER JOIN cat.Pais p ON p.id_pais = s.id_pais
+WHERE p.nombre = 'Uruguay' AND s.id_torneo = @t;
+EXEC comp.usp_Seleccion_Baja @s;
+SELECT * FROM comp.Seleccion WHERE id_seleccion = @s;
+-- Esperado: 0 filas
+GO
+
+--GRUPO BAJA ERROR: el grupo A tiene selecciones
+DECLARE @t int, @g int;
+SELECT @t = id_torneo FROM comp.Torneo WHERE anio = 2026;
+SELECT @g = id_grupo FROM comp.Grupo WHERE id_torneo = @t AND letra = 'A';
+EXEC comp.usp_Grupo_Baja @g;
+/* Esperado:
+   usp_Grupo_Baja: - Tiene selecciones asignadas. */
+GO
+
+-- GRUPO BAJA OK: el grupo C quedo vacio (se borro Uruguay)
+DECLARE @t int, @g int;
+SELECT @t = id_torneo FROM comp.Torneo WHERE anio = 2026;
+SELECT @g = id_grupo FROM comp.Grupo WHERE id_torneo = @t AND letra = 'C';
+EXEC comp.usp_Grupo_Baja @g;
+SELECT * FROM comp.Grupo WHERE id_torneo = @t;
+-- Esperado: 1 fila (solo el grupo A)
+GO
+
+-- TORNEO BAJA ERROR: el torneo 2026 tiene selecciones, grupos y parametros
+DECLARE @t int;
+SELECT @t = id_torneo FROM comp.Torneo WHERE anio = 2026;
+EXEC comp.usp_Torneo_Baja @t;
+/* Esperado:
+   usp_Torneo_Baja: - Tiene selecciones. - Tiene grupos. - Tiene parametros de reglamento. */
+GO
+-- PREPARACION
+IF (SELECT COUNT(*) FROM cat.Pais WHERE nombre = 'Mexico') = 0
+BEGIN
+    IF OBJECT_ID('cat.usp_Pais_Alta') IS NOT NULL
+        EXEC cat.usp_Pais_Alta @nombre = 'Mexico', @confederacion = 'CONCACAF',
+                               @id_moneda = NULL, @huso_horario = 'Central Standard Time (Mexico)';
+    ELSE
+        INSERT INTO cat.Pais (nombre, confederacion, huso_horario) VALUES ('Mexico', 'CONCACAF', 'Central Standard Time (Mexico)');
+END
+GO
+
+IF (SELECT COUNT(*) FROM cat.Pais WHERE nombre = 'Canada') = 0
+BEGIN
+    IF OBJECT_ID('cat.usp_Pais_Alta') IS NOT NULL
+        EXEC cat.usp_Pais_Alta @nombre = 'Canada', @confederacion = 'CONCACAF',
+                               @id_moneda = NULL, @huso_horario = 'Eastern Standard Time';
+    ELSE
+        INSERT INTO cat.Pais (nombre, confederacion, huso_horario) VALUES ('Canada', 'CONCACAF', 'Eastern Standard Time');
+END
+GO
+
+IF (SELECT COUNT(*) FROM cat.Pais WHERE nombre = 'Chile') = 0
+BEGIN
+    IF OBJECT_ID('cat.usp_Pais_Alta') IS NOT NULL
+        EXEC cat.usp_Pais_Alta @nombre = 'Chile', @confederacion = 'CONMEBOL',
+                               @id_moneda = NULL, @huso_horario = 'Pacific SA Standard Time';
+    ELSE
+        INSERT INTO cat.Pais (nombre, confederacion, huso_horario) VALUES ('Chile', 'CONMEBOL', 'Pacific SA Standard Time');
+END
+GO
+
+DECLARE @id_pais int;
+SELECT @id_pais = id_pais FROM cat.Pais WHERE nombre = 'Mexico';
+IF (SELECT COUNT(*) FROM cat.Ciudad WHERE nombre = N'Ciudad de Mexico') = 0
+BEGIN
+    IF OBJECT_ID('cat.usp_Ciudad_Alta') IS NOT NULL
+        EXEC cat.usp_Ciudad_Alta @nombre = N'Ciudad de Mexico', @id_pais = @id_pais,
+                                 @huso_horario = 'Central Standard Time (Mexico)';
+    ELSE
+        INSERT INTO cat.Ciudad (nombre, id_pais, huso_horario) VALUES (N'Ciudad de Mexico', @id_pais, 'Central Standard Time (Mexico)');
+END
+GO
+
+DECLARE @id_pais int;
+SELECT @id_pais = id_pais FROM cat.Pais WHERE nombre = 'Canada';
+IF (SELECT COUNT(*) FROM cat.Ciudad WHERE nombre = N'Toronto') = 0
+BEGIN
+    IF OBJECT_ID('cat.usp_Ciudad_Alta') IS NOT NULL
+        EXEC cat.usp_Ciudad_Alta @nombre = N'Toronto', @id_pais = @id_pais,
+                                 @huso_horario = 'Eastern Standard Time';
+    ELSE
+        INSERT INTO cat.Ciudad (nombre, id_pais, huso_horario) VALUES (N'Toronto', @id_pais, 'Eastern Standard Time');
+END
+GO
+
+--paises y ciudades cargados
+SELECT c.id_ciudad, c.nombre AS ciudad, p.nombre AS pais, c.huso_horario
+FROM cat.Ciudad c
+INNER JOIN cat.Pais p ON p.id_pais = c.id_pais
+WHERE c.nombre IN (N'Ciudad de Mexico', N'Toronto');
+-- Esperado: 2 filas
+GO
+
+-- Datos de la Parte 1, cargados con sus SP (solo si no existen)
+IF (SELECT COUNT(*) FROM comp.Posicion WHERE nombre = 'Arquero') = 0  EXEC comp.usp_Posicion_Alta 'Arquero';
+IF (SELECT COUNT(*) FROM comp.Posicion WHERE nombre = 'Defensor') = 0 EXEC comp.usp_Posicion_Alta 'Defensor';
+IF (SELECT COUNT(*) FROM comp.Fase WHERE nombre = 'Grupos') = 0       EXEC comp.usp_Fase_Alta 'Grupos', 1, 0;
+IF (SELECT COUNT(*) FROM comp.Fase WHERE nombre = 'Octavos') = 0      EXEC comp.usp_Fase_Alta 'Octavos', 3, 1;
+IF (SELECT COUNT(*) FROM comp.Torneo WHERE anio = 2034) = 0
+    EXEC comp.usp_Torneo_Alta 'Mundial de prueba 2034', 2034, '2034-06-01', '2034-07-31';
+GO
+
+-- Parametros: MAX_CAMBIOS = 1 y MAX_VENTANAS = 1 a proposito, para probar los maximos rapido
+DECLARE @t int;
+SELECT @t = id_torneo FROM comp.Torneo WHERE anio = 2034;
+EXEC comp.usp_ParametroReglamento_Alta @t, 'MAX_CONVOCADOS', 26, NULL;
+EXEC comp.usp_ParametroReglamento_Alta @t, 'MAX_CAMBIOS', 1, 'Valor bajo solo para test';
+EXEC comp.usp_ParametroReglamento_Alta @t, 'MAX_VENTANAS', 1, 'Valor bajo solo para test';
+EXEC comp.usp_ParametroReglamento_Alta @t, 'CAMBIOS_EXTRA_ALARGUE', 1, NULL;
+EXEC comp.usp_ParametroReglamento_Alta @t, 'VENTANAS_EXTRA_ALARGUE', 1, NULL;
+EXEC comp.usp_Grupo_Alta @t, 'A';
+GO
+
+-- Selecciones: Mexico y Canada en el grupo A, Chile sin grupo
+DECLARE @t int, @gA int, @mex int, @can int, @chi int;
+SELECT @t = id_torneo FROM comp.Torneo WHERE anio = 2034;
+SELECT @gA = id_grupo FROM comp.Grupo WHERE id_torneo = @t AND letra = 'A';
+SELECT @mex = id_pais FROM cat.Pais WHERE nombre = 'Mexico';
+SELECT @can = id_pais FROM cat.Pais WHERE nombre = 'Canada';
+SELECT @chi = id_pais FROM cat.Pais WHERE nombre = 'Chile';
+EXEC comp.usp_Seleccion_Alta @t, @mex, @gA;
+EXEC comp.usp_Seleccion_Alta @t, @can, @gA;
+EXEC comp.usp_Seleccion_Alta @t, @chi, NULL;
+GO
+
+-- Jugadores: 6 de Mexico (M1 arquero, el resto defensores) y 1 de Canada
+DECLARE @t int, @mex int, @can int, @s_mex int, @s_can int, @arq int, @def int, @p int;
+SELECT @t = id_torneo FROM comp.Torneo WHERE anio = 2034;
+SELECT @mex = id_pais FROM cat.Pais WHERE nombre = 'Mexico';
+SELECT @can = id_pais FROM cat.Pais WHERE nombre = 'Canada';
+SELECT @s_mex = id_seleccion FROM comp.Seleccion WHERE id_torneo = @t AND id_pais = @mex;
+SELECT @s_can = id_seleccion FROM comp.Seleccion WHERE id_torneo = @t AND id_pais = @can;
+SELECT @arq = id_posicion FROM comp.Posicion WHERE nombre = 'Arquero';
+SELECT @def = id_posicion FROM comp.Posicion WHERE nombre = 'Defensor';
+
+EXEC comp.usp_Persona_Alta 'Mexicano', 'Uno', '1995-01-01', @mex, 'DNI', 'P2-M1';
+SELECT @p = id_persona FROM comp.Persona WHERE nro_documento = 'P2-M1';
+EXEC comp.usp_Jugador_Alta @p, @arq;
+EXEC comp.usp_Convocado_Alta @s_mex, @p, 1, NULL, '2034-05-20';
+
+EXEC comp.usp_Persona_Alta 'Mexicano', 'Dos', '1995-01-01', @mex, 'DNI', 'P2-M2';
+SELECT @p = id_persona FROM comp.Persona WHERE nro_documento = 'P2-M2';
+EXEC comp.usp_Jugador_Alta @p, @def;
+EXEC comp.usp_Convocado_Alta @s_mex, @p, 2, NULL, '2034-05-20';
+
+EXEC comp.usp_Persona_Alta 'Mexicano', 'Tres', '1995-01-01', @mex, 'DNI', 'P2-M3';
+SELECT @p = id_persona FROM comp.Persona WHERE nro_documento = 'P2-M3';
+EXEC comp.usp_Jugador_Alta @p, @def;
+EXEC comp.usp_Convocado_Alta @s_mex, @p, 3, NULL, '2034-05-20';
+
+EXEC comp.usp_Persona_Alta 'Mexicano', 'Cuatro', '1995-01-01', @mex, 'DNI', 'P2-M4';
+SELECT @p = id_persona FROM comp.Persona WHERE nro_documento = 'P2-M4';
+EXEC comp.usp_Jugador_Alta @p, @def;
+EXEC comp.usp_Convocado_Alta @s_mex, @p, 4, NULL, '2034-05-20';
+
+EXEC comp.usp_Persona_Alta 'Mexicano', 'Cinco', '1995-01-01', @mex, 'DNI', 'P2-M5';
+SELECT @p = id_persona FROM comp.Persona WHERE nro_documento = 'P2-M5';
+EXEC comp.usp_Jugador_Alta @p, @def;
+EXEC comp.usp_Convocado_Alta @s_mex, @p, 5, NULL, '2034-05-20';
+
+EXEC comp.usp_Persona_Alta 'Mexicano', 'Seis', '1995-01-01', @mex, 'DNI', 'P2-M6';
+SELECT @p = id_persona FROM comp.Persona WHERE nro_documento = 'P2-M6';
+EXEC comp.usp_Jugador_Alta @p, @def;
+EXEC comp.usp_Convocado_Alta @s_mex, @p, 6, NULL, '2034-05-20';
+
+EXEC comp.usp_Persona_Alta 'Canadiense', 'Uno', '1995-01-01', @can, 'DNI', 'P2-C1';
+SELECT @p = id_persona FROM comp.Persona WHERE nro_documento = 'P2-C1';
+EXEC comp.usp_Jugador_Alta @p, @arq;
+EXEC comp.usp_Convocado_Alta @s_can, @p, 1, NULL, '2034-05-20';
+GO
+
