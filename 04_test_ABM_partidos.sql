@@ -27,12 +27,12 @@ go
    ================================================================= */
 
 --ALTA OK: los 5 periodos (solo los que falten)
-IF (SELECT COUNT(*) FROM disc.Periodo WHERE orden = 1) = 0 EXEC comp.usp_Periodo_Alta 'Primer tiempo', 1;
-IF (SELECT COUNT(*) FROM disc.Periodo WHERE orden = 2) = 0 EXEC comp.usp_Periodo_Alta 'Segundo tiempo', 2;
-IF (SELECT COUNT(*) FROM disc.Periodo WHERE orden = 3) = 0 EXEC comp.usp_Periodo_Alta 'Alargue 1', 3;
-IF (SELECT COUNT(*) FROM disc.Periodo WHERE orden = 4) = 0 EXEC comp.usp_Periodo_Alta 'Alargue 2', 4;
-IF (SELECT COUNT(*) FROM disc.Periodo WHERE orden = 5) = 0 EXEC comp.usp_Periodo_Alta 'Definicion por penales', 5;
-SELECT * FROM disc.Periodo ORDER BY orden;
+IF (SELECT COUNT(*) FROM comp.Periodo WHERE orden = 1) = 0 EXEC comp.usp_Periodo_Alta 'Primer tiempo', 1;
+IF (SELECT COUNT(*) FROM comp.Periodo WHERE orden = 2) = 0 EXEC comp.usp_Periodo_Alta 'Segundo tiempo', 2;
+IF (SELECT COUNT(*) FROM comp.Periodo WHERE orden = 3) = 0 EXEC comp.usp_Periodo_Alta 'Alargue 1', 3;
+IF (SELECT COUNT(*) FROM comp.Periodo WHERE orden = 4) = 0 EXEC comp.usp_Periodo_Alta 'Alargue 2', 4;
+IF (SELECT COUNT(*) FROM comp.Periodo WHERE orden = 5) = 0 EXEC comp.usp_Periodo_Alta 'Definicion por penales', 5;
+SELECT * FROM comp.Periodo ORDER BY orden;
 -- Esperado: 5 filas con orden 1 a 5
 GO
 
@@ -48,9 +48,9 @@ GO
 
 --MODIFICACION OK: Alargue 2 pasa a llamarse Segundo alargue
 DECLARE @id int;
-SELECT @id = id_periodo FROM disc.Periodo WHERE orden = 4;
+SELECT @id = id_periodo FROM comp.Periodo WHERE orden = 4;
 EXEC comp.usp_Periodo_Modificacion @id, 'Segundo alargue', 4;
-SELECT * FROM disc.Periodo WHERE id_periodo = @id;
+SELECT * FROM comp.Periodo WHERE id_periodo = @id;
 -- Esperado: 1 fila con nombre 'Segundo alargue'
 GO
 
@@ -354,7 +354,7 @@ INNER JOIN cat.Pais pa ON pa.id_pais = s.id_pais
 WHERE p.id_torneo = @t AND p.nro_partido = 1 AND pa.nombre = 'Mexico';
 SELECT @c = c.id_convocado FROM comp.Convocado c INNER JOIN comp.Persona pe ON pe.id_persona = c.id_jugador WHERE pe.nro_documento = 'P2-M5';
 SELECT @a = id_alineacion FROM comp.Alineacion WHERE id_partido_seleccion = @ps AND id_convocado = @c;
-SELECT @p1t = id_periodo FROM disc.Periodo WHERE orden = 1;
+SELECT @p1t = id_periodo FROM comp.Periodo WHERE orden = 1;
 SELECT @p2 = id_partido FROM comp.Partido WHERE id_torneo = @t AND nro_partido = 2;
 
 
@@ -459,7 +459,7 @@ SELECT @sale = a.id_alineacion FROM comp.Alineacion a INNER JOIN comp.Convocado 
 INNER JOIN comp.Persona pe ON pe.id_persona = c.id_jugador WHERE a.id_partido_seleccion = @ps AND pe.nro_documento = 'P2-M2';
 SELECT @entra = a.id_alineacion FROM comp.Alineacion a INNER JOIN comp.Convocado c ON c.id_convocado = a.id_convocado
 INNER JOIN comp.Persona pe ON pe.id_persona = c.id_jugador WHERE a.id_partido_seleccion = @ps AND pe.nro_documento = 'P2-M3';
-SELECT @p1t = id_periodo FROM disc.Periodo WHERE orden = 1;
+SELECT @p1t = id_periodo FROM comp.Periodo WHERE orden = 1;
 EXEC comp.usp_Sustitucion_Alta @sale, @entra, @p1t, 18, 0, 1, 'Lesion';
 SELECT * FROM comp.Sustitucion WHERE id_alineacion_sale = @sale;
 -- Esperado: 1 fila, minuto 18, ventana 1, motivo 'Lesion'
@@ -477,7 +477,7 @@ SELECT @sale = a.id_alineacion FROM comp.Alineacion a INNER JOIN comp.Convocado 
 INNER JOIN comp.Persona pe ON pe.id_persona = c.id_jugador WHERE a.id_partido_seleccion = @ps AND pe.nro_documento = 'P2-M2';
 SELECT @entra = a.id_alineacion FROM comp.Alineacion a INNER JOIN comp.Convocado c ON c.id_convocado = a.id_convocado
 INNER JOIN comp.Persona pe ON pe.id_persona = c.id_jugador WHERE a.id_partido_seleccion = @ps AND pe.nro_documento = 'P2-M1';
-SELECT @p1t = id_periodo FROM disc.Periodo WHERE orden = 1;
+SELECT @p1t = id_periodo FROM comp.Periodo WHERE orden = 1;
 EXEC comp.usp_Sustitucion_Alta @sale, @entra, @p1t, 30, 0, 1, 'Cansancio';
 /* Esperado:
    usp_Sustitucion_Alta: - Motivo invalido (Tactico / Lesion / Precaucion).
@@ -497,7 +497,7 @@ SELECT @sale = a.id_alineacion FROM comp.Alineacion a INNER JOIN comp.Convocado 
 INNER JOIN comp.Persona pe ON pe.id_persona = c.id_jugador WHERE a.id_partido_seleccion = @ps AND pe.nro_documento = 'P2-M1';
 SELECT @entra = a.id_alineacion FROM comp.Alineacion a INNER JOIN comp.Convocado c ON c.id_convocado = a.id_convocado
 INNER JOIN comp.Persona pe ON pe.id_persona = c.id_jugador WHERE a.id_partido_seleccion = @ps AND pe.nro_documento = 'P2-M5';
-SELECT @p2t = id_periodo FROM disc.Periodo WHERE orden = 2;
+SELECT @p2t = id_periodo FROM comp.Periodo WHERE orden = 2;
 EXEC comp.usp_Sustitucion_Alta @sale, @entra, @p2t, 60, 0, 2, 'Tactico';
 /* Esperado:
    usp_Sustitucion_Alta: - El que entra fue expulsado. - Se supera la cantidad maxima de cambios.
@@ -578,7 +578,7 @@ GO
 
 --PERIODO BAJA ERROR: el primer tiempo tiene una tarjeta
 DECLARE @id int;
-SELECT @id = id_periodo FROM disc.Periodo WHERE orden = 1;
+SELECT @id = id_periodo FROM comp.Periodo WHERE orden = 1;
 EXEC comp.usp_Periodo_Baja @id;
 /* Esperado:
    usp_Periodo_Baja: - Tiene tarjetas. */
@@ -586,9 +586,9 @@ GO
 
 --PERIODO BAJA OK: se borra la definicion por penales (sin uso) y se vuelve a crear
 DECLARE @id int;
-SELECT @id = id_periodo FROM disc.Periodo WHERE orden = 5;
+SELECT @id = id_periodo FROM comp.Periodo WHERE orden = 5;
 EXEC comp.usp_Periodo_Baja @id;
-SELECT * FROM disc.Periodo WHERE orden = 5;
+SELECT * FROM comp.Periodo WHERE orden = 5;
 -- Esperado: 0 filas
 EXEC comp.usp_Periodo_Alta 'Definicion por penales', 5;
 GO
