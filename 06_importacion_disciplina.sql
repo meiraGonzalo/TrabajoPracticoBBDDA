@@ -130,7 +130,7 @@ BEGIN
             END
 
             -- 2) Resolver el pais (texto -> id)
-            SELECT @id_pais = id_pais FROM cat.Pais WHERE nombre = @pais;
+            EXEC imp.usp_BuscarPais @pais, @id_pais OUTPUT;
             IF @id_pais IS NULL
             BEGIN
                 SET @msg = CONCAT('Pais no encontrado en cat.Pais: ', @pais);
