@@ -1415,13 +1415,13 @@ BEGIN
     IF @nombre IS NULL OR @nombre = ''
         SET @err = @err + ' - El nombre es obligatorio.';
 
-    IF EXISTS(SELECT 1 FROM disc.Periodo WHERE nombre = @nombre)
+    IF EXISTS(SELECT 1 FROM comp.Periodo WHERE nombre = @nombre)
         SET @err = @err + ' - Ya existe un periodo con ese nombre.';
 
     IF @orden IS NULL OR @orden < 1 OR @orden > 5
         SET @err = @err + ' - El orden debe estar entre 1 y 5.';
 
-    IF EXISTS(SELECT 1 FROM disc.Periodo WHERE orden = @orden)
+    IF EXISTS(SELECT 1 FROM comp.Periodo WHERE orden = @orden)
         SET @err = @err + ' - Ya existe un periodo con ese orden.';
 
     IF @err <> ''
@@ -1430,7 +1430,7 @@ BEGIN
         THROW 50141, @err, 1;
     END
 
-    INSERT INTO disc.Periodo (nombre, orden) VALUES (@nombre, @orden);
+    INSERT INTO comp.Periodo (nombre, orden) VALUES (@nombre, @orden);
 END
 GO
 
@@ -1443,19 +1443,19 @@ BEGIN
     DECLARE @err nvarchar(2000);
     SET @err = '';
 
-    IF NOT EXISTS(SELECT 1 FROM disc.Periodo WHERE id_periodo = @id_periodo)
+    IF NOT EXISTS(SELECT 1 FROM comp.Periodo WHERE id_periodo = @id_periodo)
         SET @err = @err + ' - El periodo no existe.';
 
     IF @nombre IS NULL OR @nombre = ''
         SET @err = @err + ' - El nombre es obligatorio.';
 
-    IF EXISTS(SELECT 1 FROM disc.Periodo WHERE nombre = @nombre AND id_periodo <> @id_periodo)
+    IF EXISTS(SELECT 1 FROM comp.Periodo WHERE nombre = @nombre AND id_periodo <> @id_periodo)
         SET @err = @err + ' - Otro periodo ya usa ese nombre.';
 
     IF @orden IS NULL OR @orden < 1 OR @orden > 5
         SET @err = @err + ' - El orden debe estar entre 1 y 5.';
 
-    IF EXISTS(SELECT 1 FROM disc.Periodo WHERE orden = @orden AND id_periodo <> @id_periodo) 
+    IF EXISTS(SELECT 1 FROM comp.Periodo WHERE orden = @orden AND id_periodo <> @id_periodo) 
         SET @err = @err + ' - Otro periodo ya usa ese orden.';
 
     IF @err <> ''
@@ -1464,7 +1464,7 @@ BEGIN
         THROW 50142, @err, 1;
     END
 
-    UPDATE disc.Periodo SET nombre = @nombre, orden = @orden WHERE id_periodo = @id_periodo;
+    UPDATE comp.Periodo SET nombre = @nombre, orden = @orden WHERE id_periodo = @id_periodo;
 END
 GO
 
@@ -1475,7 +1475,7 @@ BEGIN
     DECLARE @err nvarchar(2000);
     SET @err = '';
 
-    IF NOT EXISTS(SELECT 1 FROM disc.Periodo WHERE id_periodo = @id_periodo) 
+    IF NOT EXISTS(SELECT 1 FROM comp.Periodo WHERE id_periodo = @id_periodo) 
         SET @err = @err + ' - El periodo no existe.';
 
     IF EXISTS(SELECT 1 FROM comp.Sustitucion WHERE id_periodo = @id_periodo) 
@@ -1493,7 +1493,7 @@ BEGIN
         THROW 50143, @err, 1;
     END
 
-    DELETE FROM disc.Periodo WHERE id_periodo = @id_periodo;
+    DELETE FROM comp.Periodo WHERE id_periodo = @id_periodo;
 END
 GO
 
