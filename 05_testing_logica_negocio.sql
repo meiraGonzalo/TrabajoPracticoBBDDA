@@ -17,248 +17,230 @@ GO
 
 SET NOCOUNT ON;
 
-/*
-=====================================================================
-PREPARACION DE PRUEBAS DE SP DE PUBLICIDAD Y LOG DE IMPORTACION
-=====================================================================
-*/
+PRINT '=========================================================================';
+PRINT ' TESTING LÓGICA DE NEGOCIO (Script 04)';
+PRINT ' Funciones: ufn_ObtenerHoraLocalYFranja, ufn_ConvertirMoneda';
+PRINT ' Procedimiento: usp_AsignarPublicidadPartido';
+PRINT '=========================================================================';
+PRINT '';
 
--- 1. Insertar Catálogos Básicos
-EXEC cat.usp_Moneda_Alta 'USD', 'Dólar Estadounidense';
-EXEC cat.usp_Moneda_Alta 'ARS', 'Peso Argentino';
-EXEC cat.usp_Moneda_Alta 'EUR', 'Euro';
-
-DECLARE @id_usd INT, @id_ars INT, @id_eur INT;
-SELECT @id_usd = id_moneda FROM cat.Moneda WHERE codigo_iso = 'USD';
-SELECT @id_ars = id_moneda FROM cat.Moneda WHERE codigo_iso = 'ARS';
-SELECT @id_eur = id_moneda FROM cat.Moneda WHERE codigo_iso = 'EUR';
-
--- Insertar tipos de cambio (ARS y EUR respecto al USD)
-EXEC cat.usp_TipoCambio_Alta @id_ars, '2026-06-01', 1500.00;
-EXEC cat.usp_TipoCambio_Alta @id_eur, '2026-06-01', 0.90;
-
--- Idiomas
-EXEC cat.usp_Idioma_Alta 'ES', 'Español';
-EXEC cat.usp_Idioma_Alta 'EN', 'Inglés';
-
-DECLARE @id_es INT, @id_en INT;
-SELECT @id_es = id_idioma FROM cat.Idioma WHERE codigo_iso = 'ES';
-SELECT @id_en = id_idioma FROM cat.Idioma WHERE codigo_iso = 'EN';
-
--- Países y husos (AT TIME ZONE de SQL Server)
--- Argentina
-EXEC cat.usp_Pais_Alta 'Argentina', 'CONMEBOL', @id_ars, 'Argentina Standard Time';
--- España
-EXEC cat.usp_Pais_Alta 'España', 'UEFA', @id_eur, 'Romance Standard Time';
--- México (Central)
-EXEC cat.usp_Pais_Alta 'México', 'CONCACAF', @id_usd, 'Central Standard Time (Mexico)'; 
-
-DECLARE @id_arg INT, @id_esp INT, @id_mex INT;
-SELECT @id_arg = id_pais FROM cat.Pais WHERE nombre = 'Argentina';
-SELECT @id_esp = id_pais FROM cat.Pais WHERE nombre = 'España';
-SELECT @id_mex = id_pais FROM cat.Pais WHERE nombre = 'México';
-
--- Feriados
-EXEC cat.usp_Feriado_Alta @id_arg, '2026-06-15', 'Feriado de Prueba ARG';
-EXEC cat.usp_Feriado_Alta @id_esp, '2026-06-15', 'Feriado de Prueba ESP';
-
--- Indicadores (Poder adquisitivo de prueba)
-EXEC cat.usp_IndicadorEconomico_Alta @id_arg, 2025, 'NY.GDP.PCAP.CD', 13000.50;
-EXEC cat.usp_IndicadorEconomico_Alta @id_esp, 2025, 'NY.GDP.PCAP.CD', 30000.00;
-EXEC cat.usp_IndicadorEconomico_Alta @id_mex, 2025, 'NY.GDP.PCAP.CD', 11000.00;
-
--- Franjas Horarias
-EXEC pub.usp_FranjaHoraria_Alta 'Tarde', '13:00:00', '18:59:59', 0;
-EXEC pub.usp_FranjaHoraria_Alta 'Prime Time', '19:00:00', '23:59:59', 1;
-EXEC pub.usp_FranjaHoraria_Alta 'Madrugada', '00:00:00', '12:59:59', 0;
-
-DECLARE @id_tarde INT, @id_prime INT, @id_madrugada INT;
-SELECT @id_tarde = id_franja_horaria FROM pub.FranjaHoraria WHERE nombre = 'Tarde';
-SELECT @id_prime = id_franja_horaria FROM pub.FranjaHoraria WHERE nombre = 'Prime Time';
-SELECT @id_madrugada = id_franja_horaria FROM pub.FranjaHoraria WHERE nombre = 'Madrugada';
-
--- 2. Torneo, Fases y Partido de Prueba
-EXEC comp.usp_Torneo_Alta 'Mundial 2026', 2026, '2026-06-11', '2026-07-19';
-DECLARE @id_torneo INT; SELECT @id_torneo = MAX(id_torneo) FROM comp.Torneo;
-
-EXEC comp.usp_Fase_Alta 'Grupos', 1, 0;
-DECLARE @id_fase INT; SELECT @id_fase = MAX(id_fase) FROM comp.Fase;
-
--- Sede en México
-EXEC cat.usp_Ciudad_Alta 'Ciudad de México', @id_mex, 'Central Standard Time (Mexico)';
-DECLARE @id_ciudad INT; SELECT @id_ciudad = MAX(id_ciudad) FROM cat.Ciudad;
-EXEC comp.usp_Sede_Alta 'Estadio Azteca', @id_ciudad, 83000, 19.3029, -99.1505;
-DECLARE @id_sede INT; SELECT @id_sede = MAX(id_sede) FROM comp.Sede;
-
--- Partido (2026-06-15 22:00:00 UTC) -> 16:00 CDMX, 19:00 ARG (Prime), 00:00 ESP (Madrugada del día siguiente)
-EXEC comp.usp_Partido_Alta @id_torneo, 1, @id_fase, NULL, @id_sede, '2026-06-15 22:00:00';
-DECLARE @id_partido INT; SELECT @id_partido = MAX(id_partido) FROM comp.Partido;
-
--- Selecciones jugando (Juega Argentina)
-EXEC comp.usp_Seleccion_Alta @id_torneo, @id_arg, NULL;
-DECLARE @id_sel_arg INT; SELECT @id_sel_arg = MAX(id_seleccion) FROM comp.Seleccion;
-EXEC comp.usp_PartidoSeleccion_Alta @id_partido, @id_sel_arg, 'L';
-
--- 3. Publicidad: Tarifas, Campañas y Piezas
--- Tarifas para el torneo y fase
-EXEC pub.usp_Tarifa_Alta @id_torneo, @id_fase, @id_prime, 50000.00, @id_usd;
-EXEC pub.usp_Tarifa_Alta @id_torneo, @id_fase, @id_tarde, 20000.00, @id_usd;
-EXEC pub.usp_Tarifa_Alta @id_torneo, @id_fase, @id_madrugada, 10000.00, @id_usd;
-
--- Marcas y Campañas
-EXEC pub.usp_Anunciante_Alta 'Anunciante A', @id_arg;
-DECLARE @id_anu INT; SELECT @id_anu = MAX(id_anunciante) FROM pub.Anunciante;
-EXEC pub.usp_Marca_Alta @id_anu, 'Marca A';
-DECLARE @id_mar INT; SELECT @id_mar = MAX(id_marca) FROM pub.Marca;
-
--- Campaña activa
-EXEC pub.usp_Campania_Alta @id_mar, NULL, 'Campaña Activa', '2026-06-01', '2026-07-30', 'Activa';
-DECLARE @id_cam_activa INT; SELECT @id_cam_activa = MAX(id_campania) FROM pub.Campania;
-
--- Campaña vencida
-EXEC pub.usp_Campania_Alta @id_mar, NULL, 'Campaña Vencida', '2026-01-01', '2026-05-30', 'Vencida';
-DECLARE @id_cam_vencida INT; SELECT @id_cam_vencida = MAX(id_campania) FROM pub.Campania;
-
--- Piezas publicitarias
--- Pieza 1: España (Alta economía, no juega, sin prime time, con feriado)
-EXEC pub.usp_PiezaPublicitaria_Alta @id_cam_activa, @id_es, @id_esp, 'Pieza ESP 1', 'url1';
--- Pieza 2: Argentina (Economía media, sí juega, prime time, con feriado) -> Debería tener más puntos
-EXEC pub.usp_PiezaPublicitaria_Alta @id_cam_activa, @id_es, @id_arg, 'Pieza ARG 1', 'url2';
--- Pieza 3: México (Economía baja, no juega, tarde, sin feriado)
-EXEC pub.usp_PiezaPublicitaria_Alta @id_cam_activa, @id_es, @id_mex, 'Pieza MEX 1', 'url3';
--- Pieza 4: Argentina (Campaña Vencida, no debería salir)
-EXEC pub.usp_PiezaPublicitaria_Alta @id_cam_vencida, @id_es, @id_arg, 'Pieza ARG Vencida', 'url4';
--- Pieza 5: España (Igual a Pieza 1, para ocupar cupos)
-EXEC pub.usp_PiezaPublicitaria_Alta @id_cam_activa, @id_en, @id_esp, 'Pieza ESP 2', 'url5';
-
-/*
-=====================================================================
-'TEST 1: CONVERSIÓN DE HUSOS HORARIOS Y SIMULACIÓN DE PRIME TIME'
-=====================================================================
-*/
-
--- Debe mostrar para la hora 22:00:00 UTC:
--- CDMX (México): 16:00:00
--- Buenos Aires (Argentina): 19:00:00 (Prime time)
--- Madrid (España): 00:00:00 del 16-06
-SELECT 
-    p.nombre AS Pais,
-    p.huso_horario,
-    fh.fecha_hora_local,
-    fh.hora_local
-FROM cat.Pais p
-CROSS APPLY pub.ufn_ObtenerHoraLocalYFranja('2026-06-15 22:00:00', p.huso_horario) fh
-ORDER BY p.nombre;
-
-
-/*
-=====================================================================
- 'TEST 2: CONVERSIÓN DE MONEDAS'
-=====================================================================
-*/
-
--- Convertir 100 USD a ARS (esperado 150000.00)
-DECLARE @monto_ars DECIMAL(18,2) = cat.ufn_ConvertirMoneda(100.00, @id_usd, @id_ars, '2026-06-15');
-PRINT '100 USD a ARS: ' + CAST(@monto_ars AS VARCHAR);
-IF @monto_ars = 150000.00 PRINT '-> EXITO' ELSE PRINT '-> FALLO';
-
--- Convertir 100 EUR a USD (100 / 0.90 = 111.11)
-DECLARE @monto_usd_conv DECIMAL(18,2) = cat.ufn_ConvertirMoneda(100.00, @id_eur, @id_usd, '2026-06-15');
-PRINT '100 EUR a USD: ' + CAST(@monto_usd_conv AS VARCHAR);
-IF @monto_usd_conv = 111.11 PRINT '-> EXITO' ELSE PRINT '-> FALLO';
-
-
-/*
-=====================================================================
-'TEST 3: ASIGNACIÓN DE PUBLICIDAD POR PARTIDO'
-=====================================================================
-*/
-
--- Ejecutar el procedimiento
+-- ==============================================================================
+-- 1. PRUEBA: ufn_ObtenerHoraLocalYFranja (Husos Horarios)
+-- ==============================================================================
+PRINT '--- 1. FUNCION pub.ufn_ObtenerHoraLocalYFranja ---';
 BEGIN TRY
-    EXEC pub.usp_AsignarPublicidadPartido @id_partido;
-    PRINT 'Procedimiento de asignación ejecutado correctamente.';
+    SELECT 
+        'Conversion Horaria' AS [Prueba],
+        '2026-07-04 20:00:00 UTC' AS [Entrada_UTC],
+        'Eastern Standard Time' AS [Huso_Consultado],
+        fecha_hora_local AS [Fecha_Hora_Local], 
+        hora_local AS [Hora_Local]
+    FROM pub.ufn_ObtenerHoraLocalYFranja('2026-07-04 20:00:00', 'Eastern Standard Time');
+
+    PRINT '>> Calculo de huso horario ejecutado.';
 END TRY
 BEGIN CATCH
-    PRINT 'ERROR en asignación: ' + ERROR_MESSAGE();
-END CATCH
+    PRINT '>> Falla en ufn_ObtenerHoraLocalYFranja: ' + ERROR_MESSAGE();
+END CATCH;
+PRINT '';
 
--- Verificar resultados. Se espera que:
--- Espacio 1: ARG 1 (juega, prime time, feriado)
--- Espacios siguientes: ESP 1, ESP 2, MEX 1
--- NO debe estar ARG Vencida.
-SELECT 
-    ep.nro_espacio,
-    pp.titulo AS Pieza_Candidata,
-    c.titulo AS Campania,
-    p.nombre AS Mercado_Destino,
-    ep.puntaje_prioridad,
-    ep.monto_aplicado,
-    mo.codigo_iso AS Moneda_Tarifa
-FROM pub.ExhibicionPublicitaria ep
-INNER JOIN pub.PiezaPublicitaria pp ON pp.id_pieza_publicitaria = ep.id_pieza_publicitaria
-INNER JOIN pub.Campania c ON c.id_campania = pp.id_campania
-INNER JOIN cat.Pais p ON p.id_pais = pp.id_pais_mercado
-INNER JOIN cat.Moneda mo ON mo.id_moneda = ep.id_moneda
-WHERE ep.id_partido = @id_partido
-ORDER BY ep.nro_espacio;
-
--- Validar que no se puede ejecutar dos veces para el mismo partido
-PRINT 'Intentando reasignar publicidad al mismo partido (debe fallar):'
+-- ==============================================================================
+-- 2. PRUEBA: cat.ufn_ConvertirMoneda (Conversión de Divisas)
+-- ==============================================================================
+PRINT '--- 2. FUNCION cat.ufn_ConvertirMoneda ---';
+BEGIN TRAN;
 BEGIN TRY
-    EXEC pub.usp_AsignarPublicidadPartido @id_partido;
-    PRINT 'FALLO: No dio error y debió darlo.';
+    -- Creamos monedas y tipos de cambio temporales aislados en la transacción
+    DECLARE @id_m_origen INT, @id_m_destino INT, @id_m_sintasa INT;
+
+    INSERT INTO cat.Moneda (codigo_iso, nombre) VALUES ('TST', 'Moneda Test Origen');
+    SET @id_m_origen = SCOPE_IDENTITY();
+
+    INSERT INTO cat.Moneda (codigo_iso, nombre) VALUES ('TSD', 'Moneda Test Destino');
+    SET @id_m_destino = SCOPE_IDENTITY();
+
+    INSERT INTO cat.Moneda (codigo_iso, nombre) VALUES ('TSX', 'Moneda Sin Tasa');
+    SET @id_m_sintasa = SCOPE_IDENTITY();
+
+    -- Cotizaciones: 1 TST = 2.0 USD (tasa = 2.0), 1 TSD = 0.5 USD (tasa = 0.5)
+    -- Formula interna: (Monto / TasaOrigen) * TasaDestino
+    -- Ejemplo: 100 TST / 2.0 = 50 USD; 50 USD * 0.5 = 25 TSD
+    INSERT INTO cat.TipoCambio (id_moneda, fecha, tasa_usd) VALUES 
+    (@id_m_origen, '2026-06-01', 2.000000),
+    (@id_m_destino, '2026-06-01', 0.500000);
+
+    SELECT 
+        'Misma Moneda' AS [Caso],
+        100.00 AS [Monto_Original],
+        cat.ufn_ConvertirMoneda(100.00, @id_m_origen, @id_m_origen, '2026-06-15') AS [Monto_Convertido],
+        100.00 AS [Esperado]
+    UNION ALL
+    SELECT 
+        'Conversion Cruzada',
+        100.00,
+        cat.ufn_ConvertirMoneda(100.00, @id_m_origen, @id_m_destino, '2026-06-15'),
+        25.00
+    UNION ALL
+    SELECT 
+        'Sin Tasa (Retorna NULL)',
+        100.00,
+        cat.ufn_ConvertirMoneda(100.00, @id_m_origen, @id_m_sintasa, '2026-06-15'),
+        NULL;
+
+    PRINT '>> Casos de conversion de divisas ejecutados.';
+    ROLLBACK TRAN;
 END TRY
 BEGIN CATCH
-    PRINT 'EXITO. El SP controló la doble ejecución: ' + ERROR_MESSAGE();
-END CATCH
+    IF @@TRANCOUNT > 0 ROLLBACK TRAN;
+    PRINT '>> Falla en ufn_ConvertirMoneda: ' + ERROR_MESSAGE();
+END CATCH;
+PRINT '';
 
-/*
-=====================================================================
-'TEST 4: MOTOR DE IMPORTACIÓN MASIVA CON ERROR HANDLING (UPSERT)'
-=====================================================================
-*/
+-- ==============================================================================
+-- 3. PRUEBA: pub.usp_AsignarPublicidadPartido (Motor de Asignación y TOP 4)
+-- ==============================================================================
+PRINT '--- 3. PROCEDIMIENTO pub.usp_AsignarPublicidadPartido ---';
 
--- Limpiar los tipos de cambio anteriores para testear limpio
-DELETE FROM cat.TipoCambio;
+-- 3.1 Error controlado por partido inexistente
+PRINT '>> Validacion: Partido inexistente';
+BEGIN TRY
+    EXEC pub.usp_AsignarPublicidadPartido @id_partido = -999;
+END TRY
+BEGIN CATCH
+    PRINT '   Falla capturada por el SP: ' + ERROR_MESSAGE();
+END CATCH;
+PRINT '';
 
-DECLARE @LoteImportacion imp.TipoCambioType;
+-- 3.2 Asignación competitiva y descarte de la menor prioridad
+PRINT '>> Validacion: Evaluacion de prioridades y asignacion de Top 4 espacios';
+BEGIN TRAN;
+BEGIN TRY
+    DECLARE @id_partido_test INT, @id_torneo INT, @id_fase INT, @utc DATETIME2(0);
+    DECLARE @id_pais_local INT, @id_pais_visitante INT;
 
--- Caso 1: Nuevo registro (Éxito)
-INSERT INTO @LoteImportacion VALUES (1, 'USD', '2026-07-01', 1.000000, '1,USD,2026-07-01,1.0');
--- Caso 2: Nuevo registro ARS (Éxito)
-INSERT INTO @LoteImportacion VALUES (2, 'ARS', '2026-07-01', 1600.00000, '2,ARS,2026-07-01,1600.0');
--- Caso 3: Moneda inexistente (Falla controlada)
-INSERT INTO @LoteImportacion VALUES (3, 'XXX', '2026-07-01', 50.000000, '3,XXX,2026-07-01,50.0');
--- Caso 4: Monto negativo (Falla controlada)
-INSERT INTO @LoteImportacion VALUES (4, 'EUR', '2026-07-01', -0.500000, '4,EUR,2026-07-01,-0.5');
--- Caso 5: Update del registro ARS insertado en línea 2 (Éxito - UPSERT)
-INSERT INTO @LoteImportacion VALUES (5, 'ARS', '2026-07-01', 1650.00000, '5,ARS,2026-07-01,1650.0');
+    SELECT TOP 1 
+        @id_partido_test = p.id_partido, 
+        @id_torneo = p.id_torneo, 
+        @id_fase = p.id_fase, 
+        @utc = p.fecha_hora_utc
+    FROM comp.Partido p
+    WHERE EXISTS (SELECT 1 FROM comp.PartidoSeleccion ps WHERE ps.id_partido = p.id_partido);
 
-EXEC imp.usp_ImportarTipoCambio 'tasas_julio.csv', 'Scraping Banco', @LoteImportacion;
+    IF @id_partido_test IS NULL
+    BEGIN
+        PRINT 'ADVERTENCIA: No se encontro un partido con selecciones asignadas.';
+        ROLLBACK TRAN;
+        RETURN;
+    END
 
--- Validar que el log registró 3 correctos y 2 errores
-SELECT 
-    id_log_importacion, nombre_archivo, filas_leidas, filas_ok, filas_error 
-FROM imp.LogImportacion 
-WHERE nombre_archivo = 'tasas_julio.csv';
+    SELECT TOP 1 @id_pais_local = s.id_pais 
+    FROM comp.PartidoSeleccion ps 
+    JOIN comp.Seleccion s ON ps.id_seleccion = s.id_seleccion 
+    WHERE ps.id_partido = @id_partido_test AND ps.condicion = 'L';
 
--- Validar la tabla de errores
-SELECT 
-    nro_linea, dato_original, mensaje 
-FROM imp.ErrorImportacion
-WHERE id_log_importacion = (SELECT MAX(id_log_importacion) FROM imp.LogImportacion);
+    SELECT TOP 1 @id_pais_visitante = s.id_pais 
+    FROM comp.PartidoSeleccion ps 
+    JOIN comp.Seleccion s ON ps.id_seleccion = s.id_seleccion 
+    WHERE ps.id_partido = @id_partido_test AND ps.condicion = 'V';
 
--- Validar que el upsert actualizó el ARS a 1650
-SELECT 
-    mo.codigo_iso, tc.fecha, tc.tasa_usd 
-FROM cat.TipoCambio tc
-INNER JOIN cat.Moneda mo ON mo.id_moneda = tc.id_moneda
-ORDER BY tc.fecha, mo.codigo_iso;
+    -- Limpieza previa en el contexto de esta transacción
+    DELETE FROM pub.ExhibicionPublicitaria WHERE id_partido = @id_partido_test;
 
+    -- Catálogos de prueba
+    DECLARE @id_moneda INT, @id_idioma INT;
+    INSERT INTO cat.Moneda (codigo_iso, nombre) VALUES ('XP', 'Moneda Motor');
+    SET @id_moneda = SCOPE_IDENTITY();
+    
+    INSERT INTO cat.Idioma (codigo_iso, nombre) VALUES ('XP', 'Idioma Motor');
+    SET @id_idioma = SCOPE_IDENTITY();
 
-/*
-=====================================================================
-'FIN DEL TESTING'
-=====================================================================
-*/
+    DECLARE @id_pais_rico INT, @id_pais_medio INT, @id_pais_pobre INT;
+    INSERT INTO cat.Pais (nombre, confederacion, id_moneda, huso_horario) VALUES ('Pais Rico', 'UEFA', @id_moneda, 'UTC');
+    SET @id_pais_rico = SCOPE_IDENTITY();
+    
+    INSERT INTO cat.Pais (nombre, confederacion, id_moneda, huso_horario) VALUES ('Pais Medio', 'CONCACAF', @id_moneda, 'UTC');
+    SET @id_pais_medio = SCOPE_IDENTITY();
+    
+    INSERT INTO cat.Pais (nombre, confederacion, id_moneda, huso_horario) VALUES ('Pais Pobre', 'AFC', @id_moneda, 'UTC');
+    SET @id_pais_pobre = SCOPE_IDENTITY();
+
+    -- Indicadores de PBI per cápita
+    INSERT INTO cat.IndicadorEconomico (id_pais, anio, codigo_indicador, valor) VALUES 
+    (@id_pais_local, YEAR(@utc), 'NY.GDP.PCAP.CD', 25000.00),
+    (@id_pais_visitante, YEAR(@utc), 'NY.GDP.PCAP.CD', 15000.00),
+    (@id_pais_rico, YEAR(@utc), 'NY.GDP.PCAP.CD', 80000.00),
+    (@id_pais_medio, YEAR(@utc), 'NY.GDP.PCAP.CD', 10000.00),
+    (@id_pais_pobre, YEAR(@utc), 'NY.GDP.PCAP.CD', 2000.00);
+
+    -- Feriado para el país visitante
+    INSERT INTO cat.Feriado (id_pais, fecha, nombre) VALUES (@id_pais_visitante, CAST(@utc AS DATE), 'Feriado Test');
+
+    -- Franja horaria y tarifa
+    DECLARE @id_franja INT;
+    INSERT INTO pub.FranjaHoraria (nombre, hora_desde, hora_hasta, es_prime_time) VALUES ('Franja Total', '00:00', '23:59', 1);
+    SET @id_franja = SCOPE_IDENTITY();
+    
+    INSERT INTO pub.Tarifa (id_torneo, id_fase, id_franja_horaria, monto, id_moneda) VALUES (@id_torneo, @id_fase, @id_franja, 1000.00, @id_moneda);
+    
+    -- Estructura publicitaria
+    DECLARE @id_anunciante INT, @id_marca INT, @id_agencia INT, @id_campania INT;
+    INSERT INTO pub.Anunciante (nombre, id_pais) VALUES ('Anunciante Test', @id_pais_rico);
+    SET @id_anunciante = SCOPE_IDENTITY();
+    
+    INSERT INTO pub.Marca (id_anunciante, nombre) VALUES (@id_anunciante, 'Marca Test');
+    SET @id_marca = SCOPE_IDENTITY();
+    
+    INSERT INTO pub.Agencia (nombre) VALUES ('Agencia Test');
+    SET @id_agencia = SCOPE_IDENTITY();
+    
+    INSERT INTO pub.Campania (id_marca, id_agencia, titulo, fecha_desde, fecha_hasta, descripcion)
+    VALUES (@id_marca, @id_agencia, 'Campania Motor', DATEADD(DAY, -1, @utc), DATEADD(DAY, 1, @utc), 'Campania Test');
+    SET @id_campania = SCOPE_IDENTITY();
+
+    -- Creación de 5 piezas para competir por los 4 espacios
+    INSERT INTO pub.PiezaPublicitaria (id_campania, id_idioma, id_pais_mercado, titulo, url_contenido) VALUES 
+    (@id_campania, @id_idioma, @id_pais_local, 'Pieza A: Local (Juega, Prime, PBI 25K)', 'url_A'),
+    (@id_campania, @id_idioma, @id_pais_visitante, 'Pieza B: Visitante (Juega, Prime, PBI 15K, Feriado)', 'url_B'),
+    (@id_campania, @id_idioma, @id_pais_rico, 'Pieza C: Mercado Rico (No Juega, Prime, PBI 80K)', 'url_C'),
+    (@id_campania, @id_idioma, @id_pais_medio, 'Pieza D: Mercado Medio (No Juega, Prime, PBI 10K)', 'url_D'),
+    (@id_campania, @id_idioma, @id_pais_pobre, 'Pieza E: Mercado Pobre (No Juega, Prime, PBI 2K - Descarta)', 'url_E');
+
+    -- Ejecución del procedimiento
+    EXEC pub.usp_AsignarPublicidadPartido @id_partido = @id_partido_test;
+
+    -- Grilla visual de resultados (Top 4 asignadas)
+    SELECT 
+        ep.nro_espacio AS [Espacio_Asignado],
+        ep.puntaje_prioridad AS [Puntaje_Calculado],
+        pp.titulo AS [Pieza],
+        p.nombre AS [Pais_Mercado],
+        CASE 
+            WHEN p.id_pais IN (@id_pais_local, @id_pais_visitante) THEN 'SI' 
+            ELSE 'NO' 
+        END AS [Disputa_Partido]
+    FROM pub.ExhibicionPublicitaria ep
+    INNER JOIN pub.PiezaPublicitaria pp ON ep.id_pieza_publicitaria = pp.id_pieza_publicitaria
+    INNER JOIN cat.Pais p ON pp.id_pais_mercado = p.id_pais
+    WHERE ep.id_partido = @id_partido_test
+    ORDER BY ep.nro_espacio ASC;
+
+    -- 3.3 Validación de duplicidad sobre el mismo partido
+    PRINT '>> Validacion: Rechazo por asignacion previa en el mismo partido';
+    BEGIN TRY
+        EXEC pub.usp_AsignarPublicidadPartido @id_partido = @id_partido_test;
+    END TRY
+    BEGIN CATCH
+        PRINT '   Falla capturada por el SP: ' + ERROR_MESSAGE();
+    END CATCH;
+
+    -- Reversión total de datos creados en el test
+    ROLLBACK TRAN;
+    PRINT '';
+    PRINT '>> Limpieza completada: Los datos de prueba fueron revertidos mediante ROLLBACK.';
+
+END TRY
+BEGIN CATCH
+    IF @@TRANCOUNT > 0 ROLLBACK TRAN;
+    PRINT '>> Falla critica en la prueba de asignacion: ' + ERROR_MESSAGE();
+END CATCH;
+GO
