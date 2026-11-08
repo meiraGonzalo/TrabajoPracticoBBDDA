@@ -1,0 +1,3002 @@
+[
+  {
+    "REF_AREA": "USA",
+    "TIME_PERIOD": 2025,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 90026.52,
+    "countryiso3code": "USA",
+    "date": 2025,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 90026.52
+  },
+  {
+    "REF_AREA": "USA",
+    "TIME_PERIOD": 2024,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 86169.66,
+    "countryiso3code": "USA",
+    "date": 2024,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 86169.66
+  },
+  {
+    "REF_AREA": "USA",
+    "TIME_PERIOD": 2023,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 82586.78,
+    "countryiso3code": "USA",
+    "date": 2023,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 82586.78
+  },
+  {
+    "REF_AREA": "USA",
+    "TIME_PERIOD": 2022,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 78008.69,
+    "countryiso3code": "USA",
+    "date": 2022,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 78008.69
+  },
+  {
+    "REF_AREA": "USA",
+    "TIME_PERIOD": 2021,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 71441.23,
+    "countryiso3code": "USA",
+    "date": 2021,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 71441.23
+  },
+  {
+    "REF_AREA": "USA",
+    "TIME_PERIOD": 2020,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 64465.3,
+    "countryiso3code": "USA",
+    "date": 2020,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 64465.3
+  },
+  {
+    "REF_AREA": "MEX",
+    "TIME_PERIOD": 2025,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 13889.23,
+    "countryiso3code": "MEX",
+    "date": 2025,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 13889.23
+  },
+  {
+    "REF_AREA": "MEX",
+    "TIME_PERIOD": 2024,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 13988.04,
+    "countryiso3code": "MEX",
+    "date": 2024,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 13988.04
+  },
+  {
+    "REF_AREA": "MEX",
+    "TIME_PERIOD": 2023,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 13830.84,
+    "countryiso3code": "MEX",
+    "date": 2023,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 13830.84
+  },
+  {
+    "REF_AREA": "MEX",
+    "TIME_PERIOD": 2022,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 11405.79,
+    "countryiso3code": "MEX",
+    "date": 2022,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 11405.79
+  },
+  {
+    "REF_AREA": "MEX",
+    "TIME_PERIOD": 2021,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 10314.05,
+    "countryiso3code": "MEX",
+    "date": 2021,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 10314.05
+  },
+  {
+    "REF_AREA": "MEX",
+    "TIME_PERIOD": 2020,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 8841.27,
+    "countryiso3code": "MEX",
+    "date": 2020,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 8841.27
+  },
+  {
+    "REF_AREA": "CAN",
+    "TIME_PERIOD": 2025,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 55697.66,
+    "countryiso3code": "CAN",
+    "date": 2025,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 55697.66
+  },
+  {
+    "REF_AREA": "CAN",
+    "TIME_PERIOD": 2024,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 55015.71,
+    "countryiso3code": "CAN",
+    "date": 2024,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 55015.71
+  },
+  {
+    "REF_AREA": "CAN",
+    "TIME_PERIOD": 2023,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 54847.54,
+    "countryiso3code": "CAN",
+    "date": 2023,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 54847.54
+  },
+  {
+    "REF_AREA": "CAN",
+    "TIME_PERIOD": 2022,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 56496.93,
+    "countryiso3code": "CAN",
+    "date": 2022,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 56496.93
+  },
+  {
+    "REF_AREA": "CAN",
+    "TIME_PERIOD": 2021,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 52886.64,
+    "countryiso3code": "CAN",
+    "date": 2021,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 52886.64
+  },
+  {
+    "REF_AREA": "CAN",
+    "TIME_PERIOD": 2020,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 43537.9,
+    "countryiso3code": "CAN",
+    "date": 2020,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 43537.9
+  },
+  {
+    "REF_AREA": "ARG",
+    "TIME_PERIOD": 2025,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 14898.09,
+    "countryiso3code": "ARG",
+    "date": 2025,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 14898.09
+  },
+  {
+    "REF_AREA": "ARG",
+    "TIME_PERIOD": 2024,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 13969.78,
+    "countryiso3code": "ARG",
+    "date": 2024,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 13969.78
+  },
+  {
+    "REF_AREA": "ARG",
+    "TIME_PERIOD": 2023,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 14261.85,
+    "countryiso3code": "ARG",
+    "date": 2023,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 14261.85
+  },
+  {
+    "REF_AREA": "ARG",
+    "TIME_PERIOD": 2022,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 13962.19,
+    "countryiso3code": "ARG",
+    "date": 2022,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 13962.19
+  },
+  {
+    "REF_AREA": "ARG",
+    "TIME_PERIOD": 2021,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 10738.02,
+    "countryiso3code": "ARG",
+    "date": 2021,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 10738.02
+  },
+  {
+    "REF_AREA": "ARG",
+    "TIME_PERIOD": 2020,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 8535.6,
+    "countryiso3code": "ARG",
+    "date": 2020,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 8535.6
+  },
+  {
+    "REF_AREA": "BRA",
+    "TIME_PERIOD": 2025,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 10713.29,
+    "countryiso3code": "BRA",
+    "date": 2025,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 10713.29
+  },
+  {
+    "REF_AREA": "BRA",
+    "TIME_PERIOD": 2024,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 10310.55,
+    "countryiso3code": "BRA",
+    "date": 2024,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 10310.55
+  },
+  {
+    "REF_AREA": "BRA",
+    "TIME_PERIOD": 2023,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 10377.59,
+    "countryiso3code": "BRA",
+    "date": 2023,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 10377.59
+  },
+  {
+    "REF_AREA": "BRA",
+    "TIME_PERIOD": 2022,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 9281.33,
+    "countryiso3code": "BRA",
+    "date": 2022,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 9281.33
+  },
+  {
+    "REF_AREA": "BRA",
+    "TIME_PERIOD": 2021,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 7972.54,
+    "countryiso3code": "BRA",
+    "date": 2021,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 7972.54
+  },
+  {
+    "REF_AREA": "BRA",
+    "TIME_PERIOD": 2020,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 7074.19,
+    "countryiso3code": "BRA",
+    "date": 2020,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 7074.19
+  },
+  {
+    "REF_AREA": "URY",
+    "TIME_PERIOD": 2025,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 25215.82,
+    "countryiso3code": "URY",
+    "date": 2025,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 25215.82
+  },
+  {
+    "REF_AREA": "URY",
+    "TIME_PERIOD": 2024,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 24308.5,
+    "countryiso3code": "URY",
+    "date": 2024,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 24308.5
+  },
+  {
+    "REF_AREA": "URY",
+    "TIME_PERIOD": 2023,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 23378.64,
+    "countryiso3code": "URY",
+    "date": 2023,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 23378.64
+  },
+  {
+    "REF_AREA": "URY",
+    "TIME_PERIOD": 2022,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 21009.29,
+    "countryiso3code": "URY",
+    "date": 2022,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 21009.29
+  },
+  {
+    "REF_AREA": "URY",
+    "TIME_PERIOD": 2021,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 17881.81,
+    "countryiso3code": "URY",
+    "date": 2021,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 17881.81
+  },
+  {
+    "REF_AREA": "URY",
+    "TIME_PERIOD": 2020,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 15757.53,
+    "countryiso3code": "URY",
+    "date": 2020,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 15757.53
+  },
+  {
+    "REF_AREA": "COL",
+    "TIME_PERIOD": 2025,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 8561.62,
+    "countryiso3code": "COL",
+    "date": 2025,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 8561.62
+  },
+  {
+    "REF_AREA": "COL",
+    "TIME_PERIOD": 2024,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 7951.09,
+    "countryiso3code": "COL",
+    "date": 2024,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 7951.09
+  },
+  {
+    "REF_AREA": "COL",
+    "TIME_PERIOD": 2023,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 7012.49,
+    "countryiso3code": "COL",
+    "date": 2023,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 7012.49
+  },
+  {
+    "REF_AREA": "COL",
+    "TIME_PERIOD": 2022,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 6680.45,
+    "countryiso3code": "COL",
+    "date": 2022,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 6680.45
+  },
+  {
+    "REF_AREA": "COL",
+    "TIME_PERIOD": 2021,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 6222.62,
+    "countryiso3code": "COL",
+    "date": 2021,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 6222.62
+  },
+  {
+    "REF_AREA": "COL",
+    "TIME_PERIOD": 2020,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 5339.69,
+    "countryiso3code": "COL",
+    "date": 2020,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 5339.69
+  },
+  {
+    "REF_AREA": "CHL",
+    "TIME_PERIOD": 2025,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 17994.59,
+    "countryiso3code": "CHL",
+    "date": 2025,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 17994.59
+  },
+  {
+    "REF_AREA": "CHL",
+    "TIME_PERIOD": 2024,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 16658.97,
+    "countryiso3code": "CHL",
+    "date": 2024,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 16658.97
+  },
+  {
+    "REF_AREA": "CHL",
+    "TIME_PERIOD": 2023,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 17081.52,
+    "countryiso3code": "CHL",
+    "date": 2023,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 17081.52
+  },
+  {
+    "REF_AREA": "CHL",
+    "TIME_PERIOD": 2022,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 15399.1,
+    "countryiso3code": "CHL",
+    "date": 2022,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 15399.1
+  },
+  {
+    "REF_AREA": "CHL",
+    "TIME_PERIOD": 2021,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 16216.18,
+    "countryiso3code": "CHL",
+    "date": 2021,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 16216.18
+  },
+  {
+    "REF_AREA": "CHL",
+    "TIME_PERIOD": 2020,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 13117.99,
+    "countryiso3code": "CHL",
+    "date": 2020,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 13117.99
+  },
+  {
+    "REF_AREA": "ECU",
+    "TIME_PERIOD": 2025,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 7125.28,
+    "countryiso3code": "ECU",
+    "date": 2025,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 7125.28
+  },
+  {
+    "REF_AREA": "ECU",
+    "TIME_PERIOD": 2024,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 6826.53,
+    "countryiso3code": "ECU",
+    "date": 2024,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 6826.53
+  },
+  {
+    "REF_AREA": "ECU",
+    "TIME_PERIOD": 2023,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 6718.14,
+    "countryiso3code": "ECU",
+    "date": 2023,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 6718.14
+  },
+  {
+    "REF_AREA": "ECU",
+    "TIME_PERIOD": 2022,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 6515.59,
+    "countryiso3code": "ECU",
+    "date": 2022,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 6515.59
+  },
+  {
+    "REF_AREA": "ECU",
+    "TIME_PERIOD": 2021,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 6061.32,
+    "countryiso3code": "ECU",
+    "date": 2021,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 6061.32
+  },
+  {
+    "REF_AREA": "ECU",
+    "TIME_PERIOD": 2020,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 5463.65,
+    "countryiso3code": "ECU",
+    "date": 2020,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 5463.65
+  },
+  {
+    "REF_AREA": "PRY",
+    "TIME_PERIOD": 2025,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 7026.62,
+    "countryiso3code": "PRY",
+    "date": 2025,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 7026.62
+  },
+  {
+    "REF_AREA": "PRY",
+    "TIME_PERIOD": 2024,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 6456.61,
+    "countryiso3code": "PRY",
+    "date": 2024,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 6456.61
+  },
+  {
+    "REF_AREA": "PRY",
+    "TIME_PERIOD": 2023,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 6303.26,
+    "countryiso3code": "PRY",
+    "date": 2023,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 6303.26
+  },
+  {
+    "REF_AREA": "PRY",
+    "TIME_PERIOD": 2022,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 6189.1,
+    "countryiso3code": "PRY",
+    "date": 2022,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 6189.1
+  },
+  {
+    "REF_AREA": "PRY",
+    "TIME_PERIOD": 2021,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 5974.91,
+    "countryiso3code": "PRY",
+    "date": 2021,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 5974.91
+  },
+  {
+    "REF_AREA": "PRY",
+    "TIME_PERIOD": 2020,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 5365.47,
+    "countryiso3code": "PRY",
+    "date": 2020,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 5365.47
+  },
+  {
+    "REF_AREA": "PER",
+    "TIME_PERIOD": 2025,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 9684.41,
+    "countryiso3code": "PER",
+    "date": 2025,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 9684.41
+  },
+  {
+    "REF_AREA": "PER",
+    "TIME_PERIOD": 2024,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 8526.3,
+    "countryiso3code": "PER",
+    "date": 2024,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 8526.3
+  },
+  {
+    "REF_AREA": "PER",
+    "TIME_PERIOD": 2023,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 7919.05,
+    "countryiso3code": "PER",
+    "date": 2023,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 7919.05
+  },
+  {
+    "REF_AREA": "PER",
+    "TIME_PERIOD": 2022,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 7353.75,
+    "countryiso3code": "PER",
+    "date": 2022,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 7353.75
+  },
+  {
+    "REF_AREA": "PER",
+    "TIME_PERIOD": 2021,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 6828.53,
+    "countryiso3code": "PER",
+    "date": 2021,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 6828.53
+  },
+  {
+    "REF_AREA": "PER",
+    "TIME_PERIOD": 2020,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 6133.33,
+    "countryiso3code": "PER",
+    "date": 2020,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 6133.33
+  },
+  {
+    "REF_AREA": "VEN",
+    "TIME_PERIOD": 2025,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 3494.81,
+    "countryiso3code": "VEN",
+    "date": 2025,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 3494.81
+  },
+  {
+    "REF_AREA": "VEN",
+    "TIME_PERIOD": 2024,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 4244.46,
+    "countryiso3code": "VEN",
+    "date": 2024,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 4244.46
+  },
+  {
+    "REF_AREA": "VEN",
+    "TIME_PERIOD": 2023,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 3617.47,
+    "countryiso3code": "VEN",
+    "date": 2023,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 3617.47
+  },
+  {
+    "REF_AREA": "VEN",
+    "TIME_PERIOD": 2022,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 3155.04,
+    "countryiso3code": "VEN",
+    "date": 2022,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 3155.04
+  },
+  {
+    "REF_AREA": "VEN",
+    "TIME_PERIOD": 2021,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 2004.94,
+    "countryiso3code": "VEN",
+    "date": 2021,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 2004.94
+  },
+  {
+    "REF_AREA": "VEN",
+    "TIME_PERIOD": 2020,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 1506.04,
+    "countryiso3code": "VEN",
+    "date": 2020,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 1506.04
+  },
+  {
+    "REF_AREA": "BOL",
+    "TIME_PERIOD": 2025,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 5147.81,
+    "countryiso3code": "BOL",
+    "date": 2025,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 5147.81
+  },
+  {
+    "REF_AREA": "BOL",
+    "TIME_PERIOD": 2024,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 4421.17,
+    "countryiso3code": "BOL",
+    "date": 2024,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 4421.17
+  },
+  {
+    "REF_AREA": "BOL",
+    "TIME_PERIOD": 2023,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 4274.71,
+    "countryiso3code": "BOL",
+    "date": 2023,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 4274.71
+  },
+  {
+    "REF_AREA": "BOL",
+    "TIME_PERIOD": 2022,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 4219.46,
+    "countryiso3code": "BOL",
+    "date": 2022,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 4219.46
+  },
+  {
+    "REF_AREA": "BOL",
+    "TIME_PERIOD": 2021,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 4010.76,
+    "countryiso3code": "BOL",
+    "date": 2021,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 4010.76
+  },
+  {
+    "REF_AREA": "BOL",
+    "TIME_PERIOD": 2020,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 3580.97,
+    "countryiso3code": "BOL",
+    "date": 2020,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 3580.97
+  },
+  {
+    "REF_AREA": "ESP",
+    "TIME_PERIOD": 2025,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 38627.25,
+    "countryiso3code": "ESP",
+    "date": 2025,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 38627.25
+  },
+  {
+    "REF_AREA": "ESP",
+    "TIME_PERIOD": 2024,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 35326.77,
+    "countryiso3code": "ESP",
+    "date": 2024,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 35326.77
+  },
+  {
+    "REF_AREA": "ESP",
+    "TIME_PERIOD": 2023,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 33493.22,
+    "countryiso3code": "ESP",
+    "date": 2023,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 33493.22
+  },
+  {
+    "REF_AREA": "ESP",
+    "TIME_PERIOD": 2022,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 30319.5,
+    "countryiso3code": "ESP",
+    "date": 2022,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 30319.5
+  },
+  {
+    "REF_AREA": "ESP",
+    "TIME_PERIOD": 2021,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 30799.48,
+    "countryiso3code": "ESP",
+    "date": 2021,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 30799.48
+  },
+  {
+    "REF_AREA": "ESP",
+    "TIME_PERIOD": 2020,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 27233.94,
+    "countryiso3code": "ESP",
+    "date": 2020,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 27233.94
+  },
+  {
+    "REF_AREA": "FRA",
+    "TIME_PERIOD": 2025,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 48985.73,
+    "countryiso3code": "FRA",
+    "date": 2025,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 48985.73
+  },
+  {
+    "REF_AREA": "FRA",
+    "TIME_PERIOD": 2024,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 46103.08,
+    "countryiso3code": "FRA",
+    "date": 2024,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 46103.08
+  },
+  {
+    "REF_AREA": "FRA",
+    "TIME_PERIOD": 2023,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 44700.14,
+    "countryiso3code": "FRA",
+    "date": 2023,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 44700.14
+  },
+  {
+    "REF_AREA": "FRA",
+    "TIME_PERIOD": 2022,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 40988.64,
+    "countryiso3code": "FRA",
+    "date": 2022,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 40988.64
+  },
+  {
+    "REF_AREA": "FRA",
+    "TIME_PERIOD": 2021,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 43725.1,
+    "countryiso3code": "FRA",
+    "date": 2021,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 43725.1
+  },
+  {
+    "REF_AREA": "FRA",
+    "TIME_PERIOD": 2020,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 39169.86,
+    "countryiso3code": "FRA",
+    "date": 2020,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 39169.86
+  },
+  {
+    "REF_AREA": "DEU",
+    "TIME_PERIOD": 2025,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 60496.44,
+    "countryiso3code": "DEU",
+    "date": 2025,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 60496.44
+  },
+  {
+    "REF_AREA": "DEU",
+    "TIME_PERIOD": 2024,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 56103.73,
+    "countryiso3code": "DEU",
+    "date": 2024,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 56103.73
+  },
+  {
+    "REF_AREA": "DEU",
+    "TIME_PERIOD": 2023,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 54776.77,
+    "countryiso3code": "DEU",
+    "date": 2023,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 54776.77
+  },
+  {
+    "REF_AREA": "DEU",
+    "TIME_PERIOD": 2022,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 50506.52,
+    "countryiso3code": "DEU",
+    "date": 2022,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 50506.52
+  },
+  {
+    "REF_AREA": "DEU",
+    "TIME_PERIOD": 2021,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 52349.25,
+    "countryiso3code": "DEU",
+    "date": 2021,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 52349.25
+  },
+  {
+    "REF_AREA": "DEU",
+    "TIME_PERIOD": 2020,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 47394.87,
+    "countryiso3code": "DEU",
+    "date": 2020,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 47394.87
+  },
+  {
+    "REF_AREA": "ITA",
+    "TIME_PERIOD": 2025,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 43308.64,
+    "countryiso3code": "ITA",
+    "date": 2025,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 43308.64
+  },
+  {
+    "REF_AREA": "ITA",
+    "TIME_PERIOD": 2024,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 40429.62,
+    "countryiso3code": "ITA",
+    "date": 2024,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 40429.62
+  },
+  {
+    "REF_AREA": "ITA",
+    "TIME_PERIOD": 2023,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 39279.7,
+    "countryiso3code": "ITA",
+    "date": 2023,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 39279.7
+  },
+  {
+    "REF_AREA": "ITA",
+    "TIME_PERIOD": 2022,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 35653.9,
+    "countryiso3code": "ITA",
+    "date": 2022,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 35653.9
+  },
+  {
+    "REF_AREA": "ITA",
+    "TIME_PERIOD": 2021,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 36852.54,
+    "countryiso3code": "ITA",
+    "date": 2021,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 36852.54
+  },
+  {
+    "REF_AREA": "ITA",
+    "TIME_PERIOD": 2020,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 32091.49,
+    "countryiso3code": "ITA",
+    "date": 2020,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 32091.49
+  },
+  {
+    "REF_AREA": "GBR",
+    "TIME_PERIOD": 2025,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 57601.96,
+    "countryiso3code": "GBR",
+    "date": 2025,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 57601.96
+  },
+  {
+    "REF_AREA": "GBR",
+    "TIME_PERIOD": 2024,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 53341.31,
+    "countryiso3code": "GBR",
+    "date": 2024,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 53341.31
+  },
+  {
+    "REF_AREA": "GBR",
+    "TIME_PERIOD": 2023,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 49919.69,
+    "countryiso3code": "GBR",
+    "date": 2023,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 49919.69
+  },
+  {
+    "REF_AREA": "GBR",
+    "TIME_PERIOD": 2022,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 47034.78,
+    "countryiso3code": "GBR",
+    "date": 2022,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 47034.78
+  },
+  {
+    "REF_AREA": "GBR",
+    "TIME_PERIOD": 2021,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 47695.65,
+    "countryiso3code": "GBR",
+    "date": 2021,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 47695.65
+  },
+  {
+    "REF_AREA": "GBR",
+    "TIME_PERIOD": 2020,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 40815.13,
+    "countryiso3code": "GBR",
+    "date": 2020,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 40815.13
+  },
+  {
+    "REF_AREA": "NLD",
+    "TIME_PERIOD": 2025,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 73683.92,
+    "countryiso3code": "NLD",
+    "date": 2025,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 73683.92
+  },
+  {
+    "REF_AREA": "NLD",
+    "TIME_PERIOD": 2024,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 67465.32,
+    "countryiso3code": "NLD",
+    "date": 2024,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 67465.32
+  },
+  {
+    "REF_AREA": "NLD",
+    "TIME_PERIOD": 2023,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 63515.6,
+    "countryiso3code": "NLD",
+    "date": 2023,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 63515.6
+  },
+  {
+    "REF_AREA": "NLD",
+    "TIME_PERIOD": 2022,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 59123.32,
+    "countryiso3code": "NLD",
+    "date": 2022,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 59123.32
+  },
+  {
+    "REF_AREA": "NLD",
+    "TIME_PERIOD": 2021,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 60141.99,
+    "countryiso3code": "NLD",
+    "date": 2021,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 60141.99
+  },
+  {
+    "REF_AREA": "NLD",
+    "TIME_PERIOD": 2020,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 53467.93,
+    "countryiso3code": "NLD",
+    "date": 2020,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 53467.93
+  },
+  {
+    "REF_AREA": "PRT",
+    "TIME_PERIOD": 2025,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 32081.81,
+    "countryiso3code": "PRT",
+    "date": 2025,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 32081.81
+  },
+  {
+    "REF_AREA": "PRT",
+    "TIME_PERIOD": 2024,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 29328.31,
+    "countryiso3code": "PRT",
+    "date": 2024,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 29328.31
+  },
+  {
+    "REF_AREA": "PRT",
+    "TIME_PERIOD": 2023,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 27634.62,
+    "countryiso3code": "PRT",
+    "date": 2023,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 27634.62
+  },
+  {
+    "REF_AREA": "PRT",
+    "TIME_PERIOD": 2022,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 24620.52,
+    "countryiso3code": "PRT",
+    "date": 2022,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 24620.52
+  },
+  {
+    "REF_AREA": "PRT",
+    "TIME_PERIOD": 2021,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 24711.45,
+    "countryiso3code": "PRT",
+    "date": 2021,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 24711.45
+  },
+  {
+    "REF_AREA": "PRT",
+    "TIME_PERIOD": 2020,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 22299.4,
+    "countryiso3code": "PRT",
+    "date": 2020,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 22299.4
+  },
+  {
+    "REF_AREA": "BEL",
+    "TIME_PERIOD": 2025,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 60750.27,
+    "countryiso3code": "BEL",
+    "date": 2025,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 60750.27
+  },
+  {
+    "REF_AREA": "BEL",
+    "TIME_PERIOD": 2024,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 56581.94,
+    "countryiso3code": "BEL",
+    "date": 2024,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 56581.94
+  },
+  {
+    "REF_AREA": "BEL",
+    "TIME_PERIOD": 2023,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 55244.68,
+    "countryiso3code": "BEL",
+    "date": 2023,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 55244.68
+  },
+  {
+    "REF_AREA": "BEL",
+    "TIME_PERIOD": 2022,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 50639.03,
+    "countryiso3code": "BEL",
+    "date": 2022,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 50639.03
+  },
+  {
+    "REF_AREA": "BEL",
+    "TIME_PERIOD": 2021,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 51658.24,
+    "countryiso3code": "BEL",
+    "date": 2021,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 51658.24
+  },
+  {
+    "REF_AREA": "BEL",
+    "TIME_PERIOD": 2020,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 45906.29,
+    "countryiso3code": "BEL",
+    "date": 2020,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 45906.29
+  },
+  {
+    "REF_AREA": "HRV",
+    "TIME_PERIOD": 2025,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 27103.91,
+    "countryiso3code": "HRV",
+    "date": 2025,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 27103.91
+  },
+  {
+    "REF_AREA": "HRV",
+    "TIME_PERIOD": 2024,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 24049.94,
+    "countryiso3code": "HRV",
+    "date": 2024,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 24049.94
+  },
+  {
+    "REF_AREA": "HRV",
+    "TIME_PERIOD": 2023,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 22183.5,
+    "countryiso3code": "HRV",
+    "date": 2023,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 22183.5
+  },
+  {
+    "REF_AREA": "HRV",
+    "TIME_PERIOD": 2022,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 18465.53,
+    "countryiso3code": "HRV",
+    "date": 2022,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 18465.53
+  },
+  {
+    "REF_AREA": "HRV",
+    "TIME_PERIOD": 2021,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 17788.76,
+    "countryiso3code": "HRV",
+    "date": 2021,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 17788.76
+  },
+  {
+    "REF_AREA": "HRV",
+    "TIME_PERIOD": 2020,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 14807.56,
+    "countryiso3code": "HRV",
+    "date": 2020,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 14807.56
+  },
+  {
+    "REF_AREA": "DNK",
+    "TIME_PERIOD": 2025,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 76970.15,
+    "countryiso3code": "DNK",
+    "date": 2025,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 76970.15
+  },
+  {
+    "REF_AREA": "DNK",
+    "TIME_PERIOD": 2024,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 71026.48,
+    "countryiso3code": "DNK",
+    "date": 2024,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 71026.48
+  },
+  {
+    "REF_AREA": "DNK",
+    "TIME_PERIOD": 2023,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 68043.55,
+    "countryiso3code": "DNK",
+    "date": 2023,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 68043.55
+  },
+  {
+    "REF_AREA": "DNK",
+    "TIME_PERIOD": 2022,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 67781.09,
+    "countryiso3code": "DNK",
+    "date": 2022,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 67781.09
+  },
+  {
+    "REF_AREA": "DNK",
+    "TIME_PERIOD": 2021,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 69340.73,
+    "countryiso3code": "DNK",
+    "date": 2021,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 69340.73
+  },
+  {
+    "REF_AREA": "DNK",
+    "TIME_PERIOD": 2020,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 60985.49,
+    "countryiso3code": "DNK",
+    "date": 2020,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 60985.49
+  },
+  {
+    "REF_AREA": "CHE",
+    "TIME_PERIOD": 2025,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 114769.01,
+    "countryiso3code": "CHE",
+    "date": 2025,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 114769.01
+  },
+  {
+    "REF_AREA": "CHE",
+    "TIME_PERIOD": 2024,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 107702.07,
+    "countryiso3code": "CHE",
+    "date": 2024,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 107702.07
+  },
+  {
+    "REF_AREA": "CHE",
+    "TIME_PERIOD": 2023,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 104449.75,
+    "countryiso3code": "CHE",
+    "date": 2023,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 104449.75
+  },
+  {
+    "REF_AREA": "CHE",
+    "TIME_PERIOD": 2022,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 97809.1,
+    "countryiso3code": "CHE",
+    "date": 2022,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 97809.1
+  },
+  {
+    "REF_AREA": "CHE",
+    "TIME_PERIOD": 2021,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 96582.87,
+    "countryiso3code": "CHE",
+    "date": 2021,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 96582.87
+  },
+  {
+    "REF_AREA": "CHE",
+    "TIME_PERIOD": 2020,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 87529.7,
+    "countryiso3code": "CHE",
+    "date": 2020,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 87529.7
+  },
+  {
+    "REF_AREA": "SRB",
+    "TIME_PERIOD": 2025,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 15262.05,
+    "countryiso3code": "SRB",
+    "date": 2025,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 15262.05
+  },
+  {
+    "REF_AREA": "SRB",
+    "TIME_PERIOD": 2024,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 13677.78,
+    "countryiso3code": "SRB",
+    "date": 2024,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 13677.78
+  },
+  {
+    "REF_AREA": "SRB",
+    "TIME_PERIOD": 2023,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 12281.71,
+    "countryiso3code": "SRB",
+    "date": 2023,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 12281.71
+  },
+  {
+    "REF_AREA": "SRB",
+    "TIME_PERIOD": 2022,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 10024.82,
+    "countryiso3code": "SRB",
+    "date": 2022,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 10024.82
+  },
+  {
+    "REF_AREA": "SRB",
+    "TIME_PERIOD": 2021,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 9680.53,
+    "countryiso3code": "SRB",
+    "date": 2021,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 9680.53
+  },
+  {
+    "REF_AREA": "SRB",
+    "TIME_PERIOD": 2020,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 8098.71,
+    "countryiso3code": "SRB",
+    "date": 2020,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 8098.71
+  },
+  {
+    "REF_AREA": "POL",
+    "TIME_PERIOD": 2025,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 28419.58,
+    "countryiso3code": "POL",
+    "date": 2025,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 28419.58
+  },
+  {
+    "REF_AREA": "POL",
+    "TIME_PERIOD": 2024,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 25103.57,
+    "countryiso3code": "POL",
+    "date": 2024,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 25103.57
+  },
+  {
+    "REF_AREA": "POL",
+    "TIME_PERIOD": 2023,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 22145.27,
+    "countryiso3code": "POL",
+    "date": 2023,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 22145.27
+  },
+  {
+    "REF_AREA": "POL",
+    "TIME_PERIOD": 2022,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 18891.21,
+    "countryiso3code": "POL",
+    "date": 2022,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 18891.21
+  },
+  {
+    "REF_AREA": "POL",
+    "TIME_PERIOD": 2021,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 18635.51,
+    "countryiso3code": "POL",
+    "date": 2021,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 18635.51
+  },
+  {
+    "REF_AREA": "POL",
+    "TIME_PERIOD": 2020,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 16150.93,
+    "countryiso3code": "POL",
+    "date": 2020,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 16150.93
+  },
+  {
+    "REF_AREA": "AUT",
+    "TIME_PERIOD": 2025,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 62930.04,
+    "countryiso3code": "AUT",
+    "date": 2025,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 62930.04
+  },
+  {
+    "REF_AREA": "AUT",
+    "TIME_PERIOD": 2024,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 58268.88,
+    "countryiso3code": "AUT",
+    "date": 2024,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 58268.88
+  },
+  {
+    "REF_AREA": "AUT",
+    "TIME_PERIOD": 2023,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 56579.5,
+    "countryiso3code": "AUT",
+    "date": 2023,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 56579.5
+  },
+  {
+    "REF_AREA": "AUT",
+    "TIME_PERIOD": 2022,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 52336.77,
+    "countryiso3code": "AUT",
+    "date": 2022,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 52336.77
+  },
+  {
+    "REF_AREA": "AUT",
+    "TIME_PERIOD": 2021,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 53648.64,
+    "countryiso3code": "AUT",
+    "date": 2021,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 53648.64
+  },
+  {
+    "REF_AREA": "AUT",
+    "TIME_PERIOD": 2020,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 48716.41,
+    "countryiso3code": "AUT",
+    "date": 2020,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 48716.41
+  },
+  {
+    "REF_AREA": "SWE",
+    "TIME_PERIOD": 2025,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 63133.21,
+    "countryiso3code": "SWE",
+    "date": 2025,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 63133.21
+  },
+  {
+    "REF_AREA": "SWE",
+    "TIME_PERIOD": 2024,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 57222.71,
+    "countryiso3code": "SWE",
+    "date": 2024,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 57222.71
+  },
+  {
+    "REF_AREA": "SWE",
+    "TIME_PERIOD": 2023,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 54950.28,
+    "countryiso3code": "SWE",
+    "date": 2023,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 54950.28
+  },
+  {
+    "REF_AREA": "SWE",
+    "TIME_PERIOD": 2022,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 54836.89,
+    "countryiso3code": "SWE",
+    "date": 2022,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 54836.89
+  },
+  {
+    "REF_AREA": "SWE",
+    "TIME_PERIOD": 2021,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 60647.54,
+    "countryiso3code": "SWE",
+    "date": 2021,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 60647.54
+  },
+  {
+    "REF_AREA": "SWE",
+    "TIME_PERIOD": 2020,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 52568.57,
+    "countryiso3code": "SWE",
+    "date": 2020,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 52568.57
+  },
+  {
+    "REF_AREA": "UKR",
+    "TIME_PERIOD": 2025,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 5865.88,
+    "countryiso3code": "UKR",
+    "date": 2025,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 5865.88
+  },
+  {
+    "REF_AREA": "UKR",
+    "TIME_PERIOD": 2024,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 5391.62,
+    "countryiso3code": "UKR",
+    "date": 2024,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 5391.62
+  },
+  {
+    "REF_AREA": "UKR",
+    "TIME_PERIOD": 2023,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 5139.6,
+    "countryiso3code": "UKR",
+    "date": 2023,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 5139.6
+  },
+  {
+    "REF_AREA": "UKR",
+    "TIME_PERIOD": 2022,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 4199.67,
+    "countryiso3code": "UKR",
+    "date": 2022,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 4199.67
+  },
+  {
+    "REF_AREA": "UKR",
+    "TIME_PERIOD": 2021,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 4775.95,
+    "countryiso3code": "UKR",
+    "date": 2021,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 4775.95
+  },
+  {
+    "REF_AREA": "UKR",
+    "TIME_PERIOD": 2020,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 3709.77,
+    "countryiso3code": "UKR",
+    "date": 2020,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 3709.77
+  },
+  {
+    "REF_AREA": "TUR",
+    "TIME_PERIOD": 2025,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 18599.44,
+    "countryiso3code": "TUR",
+    "date": 2025,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 18599.44
+  },
+  {
+    "REF_AREA": "TUR",
+    "TIME_PERIOD": 2024,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 15892.72,
+    "countryiso3code": "TUR",
+    "date": 2024,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 15892.72
+  },
+  {
+    "REF_AREA": "TUR",
+    "TIME_PERIOD": 2023,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 13375.09,
+    "countryiso3code": "TUR",
+    "date": 2023,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 13375.09
+  },
+  {
+    "REF_AREA": "TUR",
+    "TIME_PERIOD": 2022,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 10897.84,
+    "countryiso3code": "TUR",
+    "date": 2022,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 10897.84
+  },
+  {
+    "REF_AREA": "TUR",
+    "TIME_PERIOD": 2021,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 9981.76,
+    "countryiso3code": "TUR",
+    "date": 2021,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 9981.76
+  },
+  {
+    "REF_AREA": "TUR",
+    "TIME_PERIOD": 2020,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 8798.12,
+    "countryiso3code": "TUR",
+    "date": 2020,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 8798.12
+  },
+  {
+    "REF_AREA": "CZE",
+    "TIME_PERIOD": 2025,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 35917.27,
+    "countryiso3code": "CZE",
+    "date": 2025,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 35917.27
+  },
+  {
+    "REF_AREA": "CZE",
+    "TIME_PERIOD": 2024,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 31827.76,
+    "countryiso3code": "CZE",
+    "date": 2024,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 31827.76
+  },
+  {
+    "REF_AREA": "CZE",
+    "TIME_PERIOD": 2023,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 31761.59,
+    "countryiso3code": "CZE",
+    "date": 2023,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 31761.59
+  },
+  {
+    "REF_AREA": "CZE",
+    "TIME_PERIOD": 2022,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 28282.22,
+    "countryiso3code": "CZE",
+    "date": 2022,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 28282.22
+  },
+  {
+    "REF_AREA": "CZE",
+    "TIME_PERIOD": 2021,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 27696.46,
+    "countryiso3code": "CZE",
+    "date": 2021,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 27696.46
+  },
+  {
+    "REF_AREA": "CZE",
+    "TIME_PERIOD": 2020,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 23472.89,
+    "countryiso3code": "CZE",
+    "date": 2020,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 23472.89
+  },
+  {
+    "REF_AREA": "CRI",
+    "TIME_PERIOD": 2025,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 19970.1,
+    "countryiso3code": "CRI",
+    "date": 2025,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 19970.1
+  },
+  {
+    "REF_AREA": "CRI",
+    "TIME_PERIOD": 2024,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 18853.28,
+    "countryiso3code": "CRI",
+    "date": 2024,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 18853.28
+  },
+  {
+    "REF_AREA": "CRI",
+    "TIME_PERIOD": 2023,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 17140.77,
+    "countryiso3code": "CRI",
+    "date": 2023,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 17140.77
+  },
+  {
+    "REF_AREA": "CRI",
+    "TIME_PERIOD": 2022,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 13971.76,
+    "countryiso3code": "CRI",
+    "date": 2022,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 13971.76
+  },
+  {
+    "REF_AREA": "CRI",
+    "TIME_PERIOD": 2021,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 12962.27,
+    "countryiso3code": "CRI",
+    "date": 2021,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 12962.27
+  },
+  {
+    "REF_AREA": "CRI",
+    "TIME_PERIOD": 2020,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 12475.69,
+    "countryiso3code": "CRI",
+    "date": 2020,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 12475.69
+  },
+  {
+    "REF_AREA": "PAN",
+    "TIME_PERIOD": 2025,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 19789.73,
+    "countryiso3code": "PAN",
+    "date": 2025,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 19789.73
+  },
+  {
+    "REF_AREA": "PAN",
+    "TIME_PERIOD": 2024,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 19161.22,
+    "countryiso3code": "PAN",
+    "date": 2024,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 19161.22
+  },
+  {
+    "REF_AREA": "PAN",
+    "TIME_PERIOD": 2023,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 18797.19,
+    "countryiso3code": "PAN",
+    "date": 2023,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 18797.19
+  },
+  {
+    "REF_AREA": "PAN",
+    "TIME_PERIOD": 2022,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 17378.61,
+    "countryiso3code": "PAN",
+    "date": 2022,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 17378.61
+  },
+  {
+    "REF_AREA": "PAN",
+    "TIME_PERIOD": 2021,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 15509.81,
+    "countryiso3code": "PAN",
+    "date": 2021,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 15509.81
+  },
+  {
+    "REF_AREA": "PAN",
+    "TIME_PERIOD": 2020,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 13290.56,
+    "countryiso3code": "PAN",
+    "date": 2020,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 13290.56
+  },
+  {
+    "REF_AREA": "JAM",
+    "TIME_PERIOD": 2025,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 8002.92,
+    "countryiso3code": "JAM",
+    "date": 2025,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 8002.92
+  },
+  {
+    "REF_AREA": "JAM",
+    "TIME_PERIOD": 2024,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 7753.81,
+    "countryiso3code": "JAM",
+    "date": 2024,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 7753.81
+  },
+  {
+    "REF_AREA": "JAM",
+    "TIME_PERIOD": 2023,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 7542.4,
+    "countryiso3code": "JAM",
+    "date": 2023,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 7542.4
+  },
+  {
+    "REF_AREA": "JAM",
+    "TIME_PERIOD": 2022,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 6626.48,
+    "countryiso3code": "JAM",
+    "date": 2022,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 6626.48
+  },
+  {
+    "REF_AREA": "JAM",
+    "TIME_PERIOD": 2021,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 5625.68,
+    "countryiso3code": "JAM",
+    "date": 2021,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 5625.68
+  },
+  {
+    "REF_AREA": "JAM",
+    "TIME_PERIOD": 2020,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 5299.05,
+    "countryiso3code": "JAM",
+    "date": 2020,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 5299.05
+  },
+  {
+    "REF_AREA": "HND",
+    "TIME_PERIOD": 2025,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 3598.21,
+    "countryiso3code": "HND",
+    "date": 2025,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 3598.21
+  },
+  {
+    "REF_AREA": "HND",
+    "TIME_PERIOD": 2024,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 3415.96,
+    "countryiso3code": "HND",
+    "date": 2024,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 3415.96
+  },
+  {
+    "REF_AREA": "HND",
+    "TIME_PERIOD": 2023,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 3227.46,
+    "countryiso3code": "HND",
+    "date": 2023,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 3227.46
+  },
+  {
+    "REF_AREA": "HND",
+    "TIME_PERIOD": 2022,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 3003.29,
+    "countryiso3code": "HND",
+    "date": 2022,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 3003.29
+  },
+  {
+    "REF_AREA": "HND",
+    "TIME_PERIOD": 2021,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 2735.15,
+    "countryiso3code": "HND",
+    "date": 2021,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 2735.15
+  },
+  {
+    "REF_AREA": "HND",
+    "TIME_PERIOD": 2020,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 2307.61,
+    "countryiso3code": "HND",
+    "date": 2020,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 2307.61
+  },
+  {
+    "REF_AREA": "MAR",
+    "TIME_PERIOD": 2025,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 4672.47,
+    "countryiso3code": "MAR",
+    "date": 2025,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 4672.47
+  },
+  {
+    "REF_AREA": "MAR",
+    "TIME_PERIOD": 2024,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 4153.19,
+    "countryiso3code": "MAR",
+    "date": 2024,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 4153.19
+  },
+  {
+    "REF_AREA": "MAR",
+    "TIME_PERIOD": 2023,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 3813.73,
+    "countryiso3code": "MAR",
+    "date": 2023,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 3813.73
+  },
+  {
+    "REF_AREA": "MAR",
+    "TIME_PERIOD": 2022,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 3463.14,
+    "countryiso3code": "MAR",
+    "date": 2022,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 3463.14
+  },
+  {
+    "REF_AREA": "MAR",
+    "TIME_PERIOD": 2021,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 3785.94,
+    "countryiso3code": "MAR",
+    "date": 2021,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 3785.94
+  },
+  {
+    "REF_AREA": "MAR",
+    "TIME_PERIOD": 2020,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 3268.03,
+    "countryiso3code": "MAR",
+    "date": 2020,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 3268.03
+  },
+  {
+    "REF_AREA": "SEN",
+    "TIME_PERIOD": 2025,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 1954.71,
+    "countryiso3code": "SEN",
+    "date": 2025,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 1954.71
+  },
+  {
+    "REF_AREA": "SEN",
+    "TIME_PERIOD": 2024,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 1738.73,
+    "countryiso3code": "SEN",
+    "date": 2024,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 1738.73
+  },
+  {
+    "REF_AREA": "SEN",
+    "TIME_PERIOD": 2023,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 1698.03,
+    "countryiso3code": "SEN",
+    "date": 2023,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 1698.03
+  },
+  {
+    "REF_AREA": "SEN",
+    "TIME_PERIOD": 2022,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 1574.03,
+    "countryiso3code": "SEN",
+    "date": 2022,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 1574.03
+  },
+  {
+    "REF_AREA": "SEN",
+    "TIME_PERIOD": 2021,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 1598.11,
+    "countryiso3code": "SEN",
+    "date": 2021,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 1598.11
+  },
+  {
+    "REF_AREA": "SEN",
+    "TIME_PERIOD": 2020,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 1461.09,
+    "countryiso3code": "SEN",
+    "date": 2020,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 1461.09
+  },
+  {
+    "REF_AREA": "EGY",
+    "TIME_PERIOD": 2025,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 3085.81,
+    "countryiso3code": "EGY",
+    "date": 2025,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 3085.81
+  },
+  {
+    "REF_AREA": "EGY",
+    "TIME_PERIOD": 2024,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 3338.47,
+    "countryiso3code": "EGY",
+    "date": 2024,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 3338.47
+  },
+  {
+    "REF_AREA": "EGY",
+    "TIME_PERIOD": 2023,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 3456.79,
+    "countryiso3code": "EGY",
+    "date": 2023,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 3456.79
+  },
+  {
+    "REF_AREA": "EGY",
+    "TIME_PERIOD": 2022,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 4233.31,
+    "countryiso3code": "EGY",
+    "date": 2022,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 4233.31
+  },
+  {
+    "REF_AREA": "EGY",
+    "TIME_PERIOD": 2021,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 3827.35,
+    "countryiso3code": "EGY",
+    "date": 2021,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 3827.35
+  },
+  {
+    "REF_AREA": "EGY",
+    "TIME_PERIOD": 2020,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 3511.11,
+    "countryiso3code": "EGY",
+    "date": 2020,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 3511.11
+  },
+  {
+    "REF_AREA": "NGA",
+    "TIME_PERIOD": 2025,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 1224.25,
+    "countryiso3code": "NGA",
+    "date": 2025,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 1224.25
+  },
+  {
+    "REF_AREA": "NGA",
+    "TIME_PERIOD": 2024,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 1084.16,
+    "countryiso3code": "NGA",
+    "date": 2024,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 1084.16
+  },
+  {
+    "REF_AREA": "NGA",
+    "TIME_PERIOD": 2023,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 2138.76,
+    "countryiso3code": "NGA",
+    "date": 2023,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 2138.76
+  },
+  {
+    "REF_AREA": "NGA",
+    "TIME_PERIOD": 2022,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 2899.16,
+    "countryiso3code": "NGA",
+    "date": 2022,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 2899.16
+  },
+  {
+    "REF_AREA": "NGA",
+    "TIME_PERIOD": 2021,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 2787.49,
+    "countryiso3code": "NGA",
+    "date": 2021,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 2787.49
+  },
+  {
+    "REF_AREA": "NGA",
+    "TIME_PERIOD": 2020,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 2797.18,
+    "countryiso3code": "NGA",
+    "date": 2020,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 2797.18
+  },
+  {
+    "REF_AREA": "DZA",
+    "TIME_PERIOD": 2025,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 6051.0,
+    "countryiso3code": "DZA",
+    "date": 2025,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 6051.0
+  },
+  {
+    "REF_AREA": "DZA",
+    "TIME_PERIOD": 2024,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 5752.99,
+    "countryiso3code": "DZA",
+    "date": 2024,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 5752.99
+  },
+  {
+    "REF_AREA": "DZA",
+    "TIME_PERIOD": 2023,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 5370.48,
+    "countryiso3code": "DZA",
+    "date": 2023,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 5370.48
+  },
+  {
+    "REF_AREA": "DZA",
+    "TIME_PERIOD": 2022,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 4960.3,
+    "countryiso3code": "DZA",
+    "date": 2022,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 4960.3
+  },
+  {
+    "REF_AREA": "DZA",
+    "TIME_PERIOD": 2021,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 4160.56,
+    "countryiso3code": "DZA",
+    "date": 2021,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 4160.56
+  },
+  {
+    "REF_AREA": "DZA",
+    "TIME_PERIOD": 2020,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 3743.54,
+    "countryiso3code": "DZA",
+    "date": 2020,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 3743.54
+  },
+  {
+    "REF_AREA": "CMR",
+    "TIME_PERIOD": 2025,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 1972.38,
+    "countryiso3code": "CMR",
+    "date": 2025,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 1972.38
+  },
+  {
+    "REF_AREA": "CMR",
+    "TIME_PERIOD": 2024,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 1830.01,
+    "countryiso3code": "CMR",
+    "date": 2024,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 1830.01
+  },
+  {
+    "REF_AREA": "CMR",
+    "TIME_PERIOD": 2023,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 1720.48,
+    "countryiso3code": "CMR",
+    "date": 2023,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 1720.48
+  },
+  {
+    "REF_AREA": "CMR",
+    "TIME_PERIOD": 2022,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 1604.88,
+    "countryiso3code": "CMR",
+    "date": 2022,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 1604.88
+  },
+  {
+    "REF_AREA": "CMR",
+    "TIME_PERIOD": 2021,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 1672.33,
+    "countryiso3code": "CMR",
+    "date": 2021,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 1672.33
+  },
+  {
+    "REF_AREA": "CMR",
+    "TIME_PERIOD": 2020,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 1555.6,
+    "countryiso3code": "CMR",
+    "date": 2020,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 1555.6
+  },
+  {
+    "REF_AREA": "TUN",
+    "TIME_PERIOD": 2025,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 4656.64,
+    "countryiso3code": "TUN",
+    "date": 2025,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 4656.64
+  },
+  {
+    "REF_AREA": "TUN",
+    "TIME_PERIOD": 2024,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 4187.64,
+    "countryiso3code": "TUN",
+    "date": 2024,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 4187.64
+  },
+  {
+    "REF_AREA": "TUN",
+    "TIME_PERIOD": 2023,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 3951.12,
+    "countryiso3code": "TUN",
+    "date": 2023,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 3951.12
+  },
+  {
+    "REF_AREA": "TUN",
+    "TIME_PERIOD": 2022,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 3707.29,
+    "countryiso3code": "TUN",
+    "date": 2022,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 3707.29
+  },
+  {
+    "REF_AREA": "TUN",
+    "TIME_PERIOD": 2021,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 3906.94,
+    "countryiso3code": "TUN",
+    "date": 2021,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 3906.94
+  },
+  {
+    "REF_AREA": "TUN",
+    "TIME_PERIOD": 2020,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 3548.65,
+    "countryiso3code": "TUN",
+    "date": 2020,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 3548.65
+  },
+  {
+    "REF_AREA": "GHA",
+    "TIME_PERIOD": 2025,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 3257.16,
+    "countryiso3code": "GHA",
+    "date": 2025,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 3257.16
+  },
+  {
+    "REF_AREA": "GHA",
+    "TIME_PERIOD": 2024,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 2419.25,
+    "countryiso3code": "GHA",
+    "date": 2024,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 2419.25
+  },
+  {
+    "REF_AREA": "GHA",
+    "TIME_PERIOD": 2023,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 2383.9,
+    "countryiso3code": "GHA",
+    "date": 2023,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 2383.9
+  },
+  {
+    "REF_AREA": "GHA",
+    "TIME_PERIOD": 2022,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 2229.89,
+    "countryiso3code": "GHA",
+    "date": 2022,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 2229.89
+  },
+  {
+    "REF_AREA": "GHA",
+    "TIME_PERIOD": 2021,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 2445.19,
+    "countryiso3code": "GHA",
+    "date": 2021,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 2445.19
+  },
+  {
+    "REF_AREA": "GHA",
+    "TIME_PERIOD": 2020,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 2195.45,
+    "countryiso3code": "GHA",
+    "date": 2020,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 2195.45
+  },
+  {
+    "REF_AREA": "ZAF",
+    "TIME_PERIOD": 2025,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 6597.71,
+    "countryiso3code": "ZAF",
+    "date": 2025,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 6597.71
+  },
+  {
+    "REF_AREA": "ZAF",
+    "TIME_PERIOD": 2024,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 6267.19,
+    "countryiso3code": "ZAF",
+    "date": 2024,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 6267.19
+  },
+  {
+    "REF_AREA": "ZAF",
+    "TIME_PERIOD": 2023,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 6034.27,
+    "countryiso3code": "ZAF",
+    "date": 2023,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 6034.27
+  },
+  {
+    "REF_AREA": "ZAF",
+    "TIME_PERIOD": 2022,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 6534.25,
+    "countryiso3code": "ZAF",
+    "date": 2022,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 6534.25
+  },
+  {
+    "REF_AREA": "ZAF",
+    "TIME_PERIOD": 2021,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 6828.76,
+    "countryiso3code": "ZAF",
+    "date": 2021,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 6828.76
+  },
+  {
+    "REF_AREA": "ZAF",
+    "TIME_PERIOD": 2020,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 5580.6,
+    "countryiso3code": "ZAF",
+    "date": 2020,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 5580.6
+  },
+  {
+    "REF_AREA": "JPN",
+    "TIME_PERIOD": 2025,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 35951.04,
+    "countryiso3code": "JPN",
+    "date": 2025,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 35951.04
+  },
+  {
+    "REF_AREA": "JPN",
+    "TIME_PERIOD": 2024,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 33797.1,
+    "countryiso3code": "JPN",
+    "date": 2024,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 33797.1
+  },
+  {
+    "REF_AREA": "JPN",
+    "TIME_PERIOD": 2023,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 35215.0,
+    "countryiso3code": "JPN",
+    "date": 2023,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 35215.0
+  },
+  {
+    "REF_AREA": "JPN",
+    "TIME_PERIOD": 2022,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 35548.26,
+    "countryiso3code": "JPN",
+    "date": 2022,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 35548.26
+  },
+  {
+    "REF_AREA": "JPN",
+    "TIME_PERIOD": 2021,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 41580.74,
+    "countryiso3code": "JPN",
+    "date": 2021,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 41580.74
+  },
+  {
+    "REF_AREA": "JPN",
+    "TIME_PERIOD": 2020,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 41098.97,
+    "countryiso3code": "JPN",
+    "date": 2020,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 41098.97
+  },
+  {
+    "REF_AREA": "KOR",
+    "TIME_PERIOD": 2025,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 36226.97,
+    "countryiso3code": "KOR",
+    "date": 2025,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 36226.97
+  },
+  {
+    "REF_AREA": "KOR",
+    "TIME_PERIOD": 2024,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 36238.64,
+    "countryiso3code": "KOR",
+    "date": 2024,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 36238.64
+  },
+  {
+    "REF_AREA": "KOR",
+    "TIME_PERIOD": 2023,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 35674.1,
+    "countryiso3code": "KOR",
+    "date": 2023,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 35674.1
+  },
+  {
+    "REF_AREA": "KOR",
+    "TIME_PERIOD": 2022,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 34822.4,
+    "countryiso3code": "KOR",
+    "date": 2022,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 34822.4
+  },
+  {
+    "REF_AREA": "KOR",
+    "TIME_PERIOD": 2021,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 37518.46,
+    "countryiso3code": "KOR",
+    "date": 2021,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 37518.46
+  },
+  {
+    "REF_AREA": "KOR",
+    "TIME_PERIOD": 2020,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 33645.77,
+    "countryiso3code": "KOR",
+    "date": 2020,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 33645.77
+  },
+  {
+    "REF_AREA": "AUS",
+    "TIME_PERIOD": 2025,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 65129.72,
+    "countryiso3code": "AUS",
+    "date": 2025,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 65129.72
+  },
+  {
+    "REF_AREA": "AUS",
+    "TIME_PERIOD": 2024,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 64609.99,
+    "countryiso3code": "AUS",
+    "date": 2024,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 64609.99
+  },
+  {
+    "REF_AREA": "AUS",
+    "TIME_PERIOD": 2023,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 65058.38,
+    "countryiso3code": "AUS",
+    "date": 2023,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 65058.38
+  },
+  {
+    "REF_AREA": "AUS",
+    "TIME_PERIOD": 2022,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 65169.52,
+    "countryiso3code": "AUS",
+    "date": 2022,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 65169.52
+  },
+  {
+    "REF_AREA": "AUS",
+    "TIME_PERIOD": 2021,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 60758.9,
+    "countryiso3code": "AUS",
+    "date": 2021,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 60758.9
+  },
+  {
+    "REF_AREA": "AUS",
+    "TIME_PERIOD": 2020,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 51983.45,
+    "countryiso3code": "AUS",
+    "date": 2020,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 51983.45
+  },
+  {
+    "REF_AREA": "SAU",
+    "TIME_PERIOD": 2025,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 34536.66,
+    "countryiso3code": "SAU",
+    "date": 2025,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 34536.66
+  },
+  {
+    "REF_AREA": "SAU",
+    "TIME_PERIOD": 2024,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 35527.79,
+    "countryiso3code": "SAU",
+    "date": 2024,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 35527.79
+  },
+  {
+    "REF_AREA": "SAU",
+    "TIME_PERIOD": 2023,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 36156.86,
+    "countryiso3code": "SAU",
+    "date": 2023,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 36156.86
+  },
+  {
+    "REF_AREA": "SAU",
+    "TIME_PERIOD": 2022,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 38510.23,
+    "countryiso3code": "SAU",
+    "date": 2022,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 38510.23
+  },
+  {
+    "REF_AREA": "SAU",
+    "TIME_PERIOD": 2021,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 31920.77,
+    "countryiso3code": "SAU",
+    "date": 2021,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 31920.77
+  },
+  {
+    "REF_AREA": "SAU",
+    "TIME_PERIOD": 2020,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 24338.83,
+    "countryiso3code": "SAU",
+    "date": 2020,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 24338.83
+  },
+  {
+    "REF_AREA": "QAT",
+    "TIME_PERIOD": 2025,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 72524.91,
+    "countryiso3code": "QAT",
+    "date": 2025,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 72524.91
+  },
+  {
+    "REF_AREA": "QAT",
+    "TIME_PERIOD": 2024,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 75685.09,
+    "countryiso3code": "QAT",
+    "date": 2024,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 75685.09
+  },
+  {
+    "REF_AREA": "QAT",
+    "TIME_PERIOD": 2023,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 80195.87,
+    "countryiso3code": "QAT",
+    "date": 2023,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 80195.87
+  },
+  {
+    "REF_AREA": "QAT",
+    "TIME_PERIOD": 2022,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 88701.46,
+    "countryiso3code": "QAT",
+    "date": 2022,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 88701.46
+  },
+  {
+    "REF_AREA": "QAT",
+    "TIME_PERIOD": 2021,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 71751.88,
+    "countryiso3code": "QAT",
+    "date": 2021,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 71751.88
+  },
+  {
+    "REF_AREA": "QAT",
+    "TIME_PERIOD": 2020,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 51683.51,
+    "countryiso3code": "QAT",
+    "date": 2020,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 51683.51
+  },
+  {
+    "REF_AREA": "NZL",
+    "TIME_PERIOD": 2025,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 49591.04,
+    "countryiso3code": "NZL",
+    "date": 2025,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 49591.04
+  },
+  {
+    "REF_AREA": "NZL",
+    "TIME_PERIOD": 2024,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 49432.36,
+    "countryiso3code": "NZL",
+    "date": 2024,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 49432.36
+  },
+  {
+    "REF_AREA": "NZL",
+    "TIME_PERIOD": 2023,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 49302.34,
+    "countryiso3code": "NZL",
+    "date": 2023,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 49302.34
+  },
+  {
+    "REF_AREA": "NZL",
+    "TIME_PERIOD": 2022,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 49141.63,
+    "countryiso3code": "NZL",
+    "date": 2022,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 49141.63
+  },
+  {
+    "REF_AREA": "NZL",
+    "TIME_PERIOD": 2021,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 49902.15,
+    "countryiso3code": "NZL",
+    "date": 2021,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 49902.15
+  },
+  {
+    "REF_AREA": "NZL",
+    "TIME_PERIOD": 2020,
+    "INDICATOR": "NY.GDP.PCAP.CD",
+    "OBS_VALUE": 42054.67,
+    "countryiso3code": "NZL",
+    "date": 2020,
+    "indicator": "NY.GDP.PCAP.CD",
+    "value": 42054.67
+  }
+]

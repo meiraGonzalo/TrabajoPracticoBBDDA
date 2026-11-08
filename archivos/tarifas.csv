@@ -1,0 +1,29 @@
+anio_torneo,fase,franja,monto,codigo_moneda
+2026,Grupos,Madrugada,15000.00,USD
+2026,Grupos,Mañana,25000.00,USD
+2026,Grupos,Tarde,35000.00,USD
+2026,Grupos,Prime Time,50000.00,USD
+2026,Dieciseisavos,Madrugada,20000.00,USD
+2026,Dieciseisavos,Mañana,30000.00,USD
+2026,Dieciseisavos,Tarde,42000.00,USD
+2026,Dieciseisavos,Prime Time,60000.00,USD
+2026,Octavos,Madrugada,25000.00,USD
+2026,Octavos,Mañana,38000.00,USD
+2026,Octavos,Tarde,52000.00,USD
+2026,Octavos,Prime Time,75000.00,USD
+2026,Cuartos,Madrugada,35000.00,USD
+2026,Cuartos,Mañana,50000.00,USD
+2026,Cuartos,Tarde,70000.00,USD
+2026,Cuartos,Prime Time,100000.00,USD
+2026,Semifinal,Madrugada,50000.00,USD
+2026,Semifinal,Mañana,75000.00,USD
+2026,Semifinal,Tarde,105000.00,USD
+2026,Semifinal,Prime Time,150000.00,USD
+2026,Tercer puesto,Madrugada,40000.00,USD
+2026,Tercer puesto,Mañana,60000.00,USD
+2026,Tercer puesto,Tarde,85000.00,USD
+2026,Tercer puesto,Prime Time,120000.00,USD
+2026,Final,Madrugada,80000.00,USD
+2026,Final,Mañana,120000.00,USD
+2026,Final,Tarde,180000.00,USD
+2026,Final,Prime Time,250000.00,USD
