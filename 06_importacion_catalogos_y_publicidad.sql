@@ -20,6 +20,7 @@ GO
    PARTE 0: LIMPIEZA INICIAL DE TABLAS Y REINICIO DE IDENTIDADES
    ============================================================================== */
 
+/*
 SET NOCOUNT ON;
 
 BEGIN TRANSACTION;
@@ -50,13 +51,12 @@ BEGIN TRY
     IF OBJECT_ID('disc.Arbitro', 'U') IS NOT NULL            DELETE FROM disc.Arbitro;
     IF OBJECT_ID('comp.Grupo', 'U') IS NOT NULL              DELETE FROM comp.Grupo;
     IF OBJECT_ID('comp.ParametroReglamento', 'U') IS NOT NULL DELETE FROM comp.ParametroReglamento;
-    IF OBJECT_ID('comp.Torneo', 'U') IS NOT NULL             DELETE FROM comp.Torneo;
-    IF OBJECT_ID('comp.Fase', 'U') IS NOT NULL               DELETE FROM comp.Fase;
+
 
     ----------------------------------------------------------------------------
     -- PASO 0.2: Vaciado de las tablas
     ----------------------------------------------------------------------------
-    
+
     -- Módulo Publicidad y Tarifas (Hijas primero)
     DELETE FROM pub.ExhibicionPublicitaria;
     DELETE FROM pub.Tarifa;
@@ -81,6 +81,8 @@ BEGIN TRY
     DELETE FROM cat.Idioma;
     DELETE FROM cat.Moneda;
 
+    IF OBJECT_ID('comp.Torneo', 'U') IS NOT NULL             DELETE FROM comp.Torneo;
+    IF OBJECT_ID('comp.Fase', 'U') IS NOT NULL               DELETE FROM comp.Fase;
     ----------------------------------------------------------------------------
     -- PASO 0.3: Limpieza de Tablas de Staging
     ----------------------------------------------------------------------------
@@ -125,6 +127,8 @@ BEGIN CATCH
     THROW 50000, @error_msg, 1;
 END CATCH;
 GO
+
+*/
 
 /* =================================================================
    PARTE 1: TABLAS DE STAGING 
@@ -1121,7 +1125,7 @@ GO
 /* =================================================================
    PARTE 3: ORDEN DE EJECUCION
    ================================================================= */
-
+/*
 -- 1. Catalogos Raiz (Independientes)
  EXEC imp.usp_ImportarMonedas_CSV         'C:\Mundial2026_Datos\monedas.csv';
  EXEC imp.usp_ImportarIdiomas_CSV         'C:\Mundial2026_Datos\idiomas.csv';
@@ -1140,12 +1144,13 @@ GO
 -- 4. Modulo Comercial Global (Depende de Marcas, Paises e Idiomas)
  EXEC imp.usp_ImportarPublicidad_CSV          'C:\Mundial2026_Datos\dossier_publicidad.csv';
 
- 
+ */
 
  /* =================================================================
    PARTE 4: Verificacion
    ================================================================= */
 
+/*
    -- 1. cat.Moneda
 SELECT 'cat.Moneda' AS Tabla, * FROM cat.Moneda;
 
@@ -1201,3 +1206,4 @@ SELECT 'imp.LogImportacion' AS Tabla, * FROM imp.LogImportacion;
 SELECT 'imp.ErrorImportacion' AS Tabla, * FROM imp.ErrorImportacion;
 
 GO
+*/
