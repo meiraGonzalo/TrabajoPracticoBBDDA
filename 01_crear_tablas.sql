@@ -432,6 +432,12 @@ CREATE UNIQUE INDEX UQ_Marca_id_anunciante_nombre ON pub.Marca (id_anunciante, n
 CREATE UNIQUE INDEX UQ_Tarifa_id_torneo_id_fase_id_franja_horaria ON pub.Tarifa (id_torneo, id_fase, id_franja_horaria);
 CREATE UNIQUE INDEX UQ_ExhibicionPublicitaria_id_partido_nro_espacio ON pub.ExhibicionPublicitaria (id_partido, nro_espacio);
 GO
+/* ===================== INDICES DE APOYO (FK mas consultadas) ===================== */
+CREATE INDEX IX_Tarjeta_id_alineacion ON disc.Tarjeta (id_alineacion) INCLUDE (tipo_tarjeta);
+CREATE INDEX IX_Gol_id_alineacion_autor ON disc.Gol (id_alineacion_autor);
+CREATE INDEX IX_Designacion_id_arbitro ON disc.Designacion (id_arbitro);
+CREATE INDEX IX_Suspension_id_convocado_estado ON disc.Suspension (id_convocado, estado);
+GO
 
 /* ===================== FOREIGN KEYS ===================== */
 ALTER TABLE cat.Pais ADD CONSTRAINT FK_Pais_id_moneda FOREIGN KEY (id_moneda) REFERENCES cat.Moneda (id_moneda);
@@ -560,6 +566,15 @@ ALTER TABLE disc.Suspension WITH CHECK ADD CONSTRAINT CK_Suspension_Sancionado
   CHECK ( (id_convocado IS NOT NULL AND id_cuerpo_tecnico IS NULL)
        OR (id_convocado IS NULL     AND id_cuerpo_tecnico IS NOT NULL) );
 
+ALTER TABLE disc.Tarjeta WITH CHECK ADD CONSTRAINT CK_Tarjeta_Minuto
+  CHECK (minuto <= 130);
+
+ALTER TABLE disc.Gol WITH CHECK ADD CONSTRAINT CK_Gol_Minuto
+  CHECK (minuto <= 130);
+
+-- Quien asiste no puede ser quien convierte el gol
+ALTER TABLE disc.Gol WITH CHECK ADD CONSTRAINT CK_Gol_AutorAsistencia
+  CHECK (id_alineacion_asistencia IS NULL OR id_alineacion_asistencia <> id_alineacion_autor);
 /* ---------- Arbitros ---------- */
 
 ALTER TABLE disc.Arbitro WITH CHECK ADD CONSTRAINT CK_Arbitro_Categoria
@@ -571,6 +586,8 @@ ALTER TABLE disc.Designacion WITH CHECK ADD CONSTRAINT CK_Designacion_Rol
 ALTER TABLE disc.InformeArbitral WITH CHECK ADD CONSTRAINT CK_InformeArbitral_Tipo
   CHECK (tipo IN ('INFORME','SANCION'));
 
+ALTER TABLE disc.InformeArbitral WITH CHECK ADD CONSTRAINT CK_InformeArbitral_Calificacion
+  CHECK (calificacion IS NULL OR calificacion BETWEEN 0 AND 10);
 /* ---------- Publicidad ---------- */
 
 ALTER TABLE pub.ExhibicionPublicitaria WITH CHECK ADD CONSTRAINT CK_Exhibicion_NroEspacio
