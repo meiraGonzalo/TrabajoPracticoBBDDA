@@ -45,7 +45,7 @@ CREATE DATABASE MundialDB
    ( NAME = N'MundialDB_log',
      FILENAME = N'C:\MundialDB\MundialDB_log.ldf',
      SIZE = 128MB, FILEGROWTH = 64MB )
- COLLATE Modern_Spanish_CI_AS;
+ COLLATE Modern_Spanish_CI_AI;
 GO
 
 /* --- 3. Opciones de la base ----------------------------------------- */
