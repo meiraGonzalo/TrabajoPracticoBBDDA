@@ -5,11 +5,10 @@
  Entrega 6 - Procesos de Importacion (Version Corregida y Robusta v5)
  Grupo 02 - Comision 02-5600
  Objetivo: Importacion de tablas de Catalogo y Publicidad.
- Integrantes: 
- Miro, Saba.
- Mendez Camacho, Tatiana Antonella
- Rocha Escalera, Sheila
- Meira Da Cruz Saleiro, Gonzalo
+ Integrantes: Mendez Camacho, Tatiana Antonella         nickGithub: tatimendez
+              Rocha Escalera, Sheila Belisa             nickGithub: sheilarocha02
+              Meira da Cruz Saleiro, Gonzalo            nickGithub: meiraGonzalo
+              Miro, Saba Alejandro                      nickGithub: SabaM10
 =====================================================================
 */
 

@@ -4,11 +4,10 @@
  TP: Sistema de Registro y Gestion del Mundial de Futbol
  Entrega 5 - Script 05: Testing de Lógica de Negocio (Publicidad, Importación, Husos, Monedas)
  Grupo 02 - Comision 02-5600
- Integrantes: 
- Miro, Saba.
- Mendez Camacho, Tatiana Antonella
- Rocha Escalera, Sheila
- Meira Da Cruz Saleiro, Gonzalo
+ Integrantes: Mendez Camacho, Tatiana Antonella         nickGithub: tatimendez
+              Rocha Escalera, Sheila Belisa             nickGithub: sheilarocha02
+              Meira da Cruz Saleiro, Gonzalo            nickGithub: meiraGonzalo
+              Miro, Saba Alejandro                      nickGithub: SabaM10
 =====================================================================
 */
 

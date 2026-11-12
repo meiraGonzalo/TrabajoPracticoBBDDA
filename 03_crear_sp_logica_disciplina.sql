@@ -4,7 +4,10 @@
  TP: Sistema de Registro y Gestion del Mundial de Futbol
  Entrega 5 - Script 03 (modulo Disciplina y Arbitros): SP de LOGICA
  Grupo 02 - Comision 02-5600
- Integrantes: Miro, Saba.
+ Integrantes: Mendez Camacho, Tatiana Antonella         nickGithub: tatimendez
+              Rocha Escalera, Sheila Belisa             nickGithub: sheilarocha02
+              Meira da Cruz Saleiro, Gonzalo            nickGithub: meiraGonzalo
+              Miro, Saba Alejandro                      nickGithub: SabaM10
  Objetivo: procedimientos de logica de negocio del modulo disciplina.
            Afectan varias tablas en transaccion.
 =====================================================================

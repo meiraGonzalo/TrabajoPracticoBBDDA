@@ -4,9 +4,10 @@
  TP: Sistema de Registro y Gestion del Mundial de Futbol
  Entrega 5 - 03: Testing de los SP de ABM - Selecciones y convocatoria
  Grupo 02 - Comision 02-5600
- Integrantes: Mendez Camacho, Tatiana (nickGithub: tatimendez)
-              Rocha Escalera, Sheila Belisa nickGithub: sheilarocha02
-              Meira da Cruz Saleiro, Gonzalo nickGithub: meiraGonzalo
+ Integrantes: Mendez Camacho, Tatiana Antonella         nickGithub: tatimendez
+              Rocha Escalera, Sheila Belisa             nickGithub: sheilarocha02
+              Meira da Cruz Saleiro, Gonzalo            nickGithub: meiraGonzalo
+              Miro, Saba Alejandro                      nickGithub: SabaM10
  Fecha: 08/10/2026
  Objetivo: probar todos los SP de ABM. Por cada SP hay
            casos OK y casos que disparan las validaciones

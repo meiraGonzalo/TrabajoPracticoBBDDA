@@ -2,7 +2,10 @@
 =====================================================================
  Entrega 5 - Testing del ABM de Disciplina (1:1 con el script 02)
  Grupo 02 - Comision 02-5600
- Integrante: Miro, Saba.
+ Integrantes: Mendez Camacho, Tatiana Antonella         nickGithub: tatimendez
+              Rocha Escalera, Sheila Belisa             nickGithub: sheilarocha02
+              Meira da Cruz Saleiro, Gonzalo            nickGithub: meiraGonzalo
+              Miro, Saba Alejandro                      nickGithub: SabaM10
  Objetivo: testear los SP de ABM del modulo disciplina.
 =====================================================================
 */
