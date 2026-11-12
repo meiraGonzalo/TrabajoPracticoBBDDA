@@ -4,7 +4,10 @@
  TP: Sistema de Registro y Gestion del Mundial de Futbol
  Entrega 5 - Script 00: Creacion de la base de datos y schemas
  Grupo 02 - Comision 02-5600
- Integrantes: Miro, Saba.
+ Integrantes: Mendez Camacho, Tatiana Antonella   nickGithub: tatimendez
+              Rocha Escalera, Sheila Belisa       nickGithub: sheilarocha02
+              Meira da Cruz Saleiro, Gonzalo      nickGithub: meiraGonzalo
+              Miro, Saba Alejandro                nickGithub: SabaM10
  Fecha: 2026-10-08
  Objetivo: crear la base MundialDB (filegroups, opciones, collation) y
            los schemas de organizacion. DEBE EJECUTARSE PRIMERO (orden 00).
