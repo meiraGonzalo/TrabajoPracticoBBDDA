@@ -27,7 +27,7 @@ BEGIN TRY
     PRINT '>> Iniciando vaciado total de la base de datos (Eliminando dependencias cruzadas)...';
 
     ----------------------------------------------------------------------------
-    -- PASO 0.1: Limpieza profunda de módulos externos que bloquean tus catálogos
+    -- PASO 0.1: Limpieza de módulos externos
     ----------------------------------------------------------------------------
     IF OBJECT_ID('disc.InformeArbitral', 'U') IS NOT NULL    DELETE FROM disc.InformeArbitral;
     IF OBJECT_ID('disc.Designacion', 'U') IS NOT NULL        DELETE FROM disc.Designacion;
@@ -268,8 +268,7 @@ BEGIN
                      WITH (
                          FIRSTROW = 2, 
                          FIELDTERMINATOR = '','', 
-                         ROWTERMINATOR = ''
-'', 
+                         ROWTERMINATOR = ''0x0a'', 
                          CODEPAGE = ''65001''
                      );';
         EXEC sp_executesql @sql;
@@ -348,8 +347,7 @@ BEGIN
                      WITH (
                          FIRSTROW = 2, 
                          FIELDTERMINATOR = '','', 
-                         ROWTERMINATOR = ''
-'', 
+                         ROWTERMINATOR = ''0x0a'', 
                          CODEPAGE = ''65001''
                      );';
         EXEC sp_executesql @sql;
@@ -428,8 +426,7 @@ BEGIN
                      WITH (
                          FIRSTROW = 2, 
                          FIELDTERMINATOR = '','', 
-                         ROWTERMINATOR = ''
-'', 
+                         ROWTERMINATOR = ''0x0a'', 
                          CODEPAGE = ''65001''
                      );';
         EXEC sp_executesql @sql;
@@ -515,8 +512,7 @@ BEGIN
                      WITH (
                          FIRSTROW = 2, 
                          FIELDTERMINATOR = '','', 
-                         ROWTERMINATOR = ''
-'', 
+                         ROWTERMINATOR = ''0x0a'', 
                          CODEPAGE = ''65001''
                      );';
         EXEC sp_executesql @sql;
@@ -597,8 +593,7 @@ BEGIN
                      WITH (
                          FIRSTROW = 2, 
                          FIELDTERMINATOR = '','', 
-                         ROWTERMINATOR = ''
-'', 
+                         ROWTERMINATOR = ''0x0a'', 
                          CODEPAGE = ''65001''
                      );';
         EXEC sp_executesql @sql;
@@ -677,8 +672,7 @@ BEGIN
                      WITH (
                          FIRSTROW = 2, 
                          FIELDTERMINATOR = '','', 
-                         ROWTERMINATOR = ''
-'', 
+                         ROWTERMINATOR = ''0x0a'', 
                          CODEPAGE = ''65001''
                      );';
         EXEC sp_executesql @sql;
@@ -765,8 +759,7 @@ BEGIN
                      WITH (
                          FIRSTROW = 2, 
                          FIELDTERMINATOR = '','', 
-                         ROWTERMINATOR = ''
-'', 
+                         ROWTERMINATOR = ''0x0a'', 
                          CODEPAGE = ''65001''
                      );';
         EXEC sp_executesql @sql;
@@ -1038,8 +1031,7 @@ BEGIN
                      WITH (
                          FIRSTROW = 2, 
                          FIELDTERMINATOR = '','', 
-                         ROWTERMINATOR = ''
-'', 
+                         ROWTERMINATOR = ''0x0a'', 
                          CODEPAGE = ''65001''
                      );';
         EXEC sp_executesql @sql;
@@ -1124,7 +1116,7 @@ GO
 /* =================================================================
    PARTE 3: ORDEN DE EJECUCION
    ================================================================= */
-/*
+
 -- 1. Catalogos Raiz (Independientes)
  EXEC imp.usp_ImportarMonedas_CSV         'C:\Mundial2026_Datos\monedas.csv';
  EXEC imp.usp_ImportarIdiomas_CSV         'C:\Mundial2026_Datos\idiomas.csv';
@@ -1143,13 +1135,13 @@ GO
 -- 4. Modulo Comercial Global (Depende de Marcas, Paises e Idiomas)
  EXEC imp.usp_ImportarPublicidad_CSV          'C:\Mundial2026_Datos\dossier_publicidad.csv';
 
- */
+ 
 
  /* =================================================================
    PARTE 4: Verificacion
    ================================================================= */
 
-/*
+
    -- 1. cat.Moneda
 SELECT 'cat.Moneda' AS Tabla, * FROM cat.Moneda;
 
@@ -1205,4 +1197,3 @@ SELECT 'imp.LogImportacion' AS Tabla, * FROM imp.LogImportacion;
 SELECT 'imp.ErrorImportacion' AS Tabla, * FROM imp.ErrorImportacion;
 
 GO
-*/
