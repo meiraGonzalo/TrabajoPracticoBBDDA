@@ -42,11 +42,10 @@ BEGIN
     DECLARE @id_log INT;
     DECLARE @filas_leidas INT = 0, @filas_ok INT = 0, @filas_error INT = 0;
     DECLARE @fecha_inicio DATETIME2(0) = SYSDATETIME();
+    DECLARE @msg NVARCHAR(500);
 
-    INSERT INTO imp.LogImportacion (nombre_archivo, fuente, fecha_inicio)
-    VALUES (@archivo, @fuente, @fecha_inicio);
-
-    SET @id_log = SCOPE_IDENTITY();
+    EXEC imp.usp_LogImportacion_Alta @archivo, @fuente, @fecha_inicio, NULL, NULL, NULL, NULL;
+    SELECT @id_log = MAX(id_log_importacion) FROM imp.LogImportacion;
 
 
     -- ============ PARTE 2: cargar el XML a la staging ============
@@ -70,8 +69,12 @@ BEGIN
                            @xml_out = @xml OUTPUT;
     END TRY
     BEGIN CATCH
-        -- Corte total: sin archivo no hay nada que importar
-        THROW 50600, 'No se pudo leer el archivo XML (ruta inexistente o sin permisos de lectura del servicio SQL).', 1;
+        -- Corte total: sin archivo no hay nada que importar.
+        -- Se registra el error y se cierra el log antes de cortar, para que no quede abierto.
+        SET @msg = 'No se pudo leer el archivo XML (ruta inexistente o sin permisos de lectura del servicio SQL).';
+        EXEC imp.usp_ErrorImportacion_Alta @id_log, NULL, @archivo, @msg;
+        EXEC imp.usp_LogImportacion_Modificacion @id_log, SYSDATETIME(), 0, 0, 0;
+        THROW 50600, @msg, 1;
     END CATCH;
 
     -- C. Desarmar el XML: una fila de staging por cada <Arbitro>
@@ -87,7 +90,7 @@ BEGIN
     SET @filas_leidas = @@ROWCOUNT;
 
 
-        -- ============ PARTE 3: validar y upsertear fila por fila ============
+    -- ============ PARTE 3: validar y upsertear fila por fila ============
 
     DECLARE @i INT = 1;
     DECLARE @max INT = ISNULL((SELECT MAX(id_stg) FROM imp.stg_Arbitro), 0);
@@ -96,7 +99,6 @@ BEGIN
             @pais NVARCHAR(200),   @categoria NVARCHAR(200);
     DECLARE @id_pais INT, @id_persona INT;
     DECLARE @dato NVARCHAR(1000);   -- fila original, para guardarla si falla
-    DECLARE @msg  NVARCHAR(500);
 
     WHILE @i <= @max
     BEGIN
@@ -113,7 +115,7 @@ BEGIN
         SET @dato = CONCAT(@nombre, ' | ', @apellido, ' | ', @pais, ' | ', @categoria);
 
         BEGIN TRY
-            -- 1) Validaciones propias del import
+            -- 1) Validaciones propias del import (no escriben nada, van antes de la transaccion)
             IF @nombre IS NULL OR @nombre = ''
                 THROW 50601, 'Falta el nombre.', 1;
             IF @apellido IS NULL OR @apellido = ''
@@ -137,6 +139,9 @@ BEGIN
                 THROW 50605, @msg, 1;
             END
 
+            -- Desde aca se escribe: Persona y Arbitro van juntos o no va ninguno
+            BEGIN TRANSACTION;
+
             -- 3) Persona: si ya existe (nombre + apellido + pais) la reutilizamos; si no, la damos de alta
             SELECT @id_persona = id_persona
             FROM comp.Persona
@@ -158,9 +163,13 @@ BEGIN
             ELSE
                 EXEC disc.usp_Arbitro_Alta @id_persona, @categoria;
 
+            COMMIT TRANSACTION;
             SET @filas_ok += 1;
         END TRY
         BEGIN CATCH
+            -- Si fallo algo despues de abrir la transaccion, se deshace (no queda una Persona huerfana)
+            IF XACT_STATE() <> 0 ROLLBACK TRANSACTION;
+
             -- El error de una fila NO corta el loop: se registra y se sigue con la siguiente
             SET @filas_error += 1;
             SET @msg = ERROR_MESSAGE();
@@ -172,16 +181,11 @@ BEGIN
 
     -- ============ PARTE 4: cerrar el log y mostrar resumen ============
 
-    UPDATE imp.LogImportacion
-    SET fecha_fin    = SYSDATETIME(),
-        filas_leidas = @filas_leidas,
-        filas_ok     = @filas_ok,
-        filas_error  = @filas_error
-    WHERE id_log_importacion = @id_log;
+    EXEC imp.usp_LogImportacion_Modificacion @id_log, SYSDATETIME(), @filas_leidas, @filas_ok, @filas_error;
 
     SELECT @id_log AS id_log_importacion,
            @filas_leidas AS filas_leidas,
            @filas_ok AS filas_ok,
            @filas_error AS filas_error;
-    END
-    GO
+END
+GO
