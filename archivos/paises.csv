@@ -1,0 +1,51 @@
+nombre,confederacion,codigo_moneda,huso_horario
+Estados Unidos,CONCACAF,USD,Eastern Standard Time
+México,CONCACAF,MXN,Central Standard Time (Mexico)
+Canadá,CONCACAF,CAD,Eastern Standard Time
+Argentina,CONMEBOL,ARS,Argentina Standard Time
+Brasil,CONMEBOL,BRL,E. South America Standard Time
+Uruguay,CONMEBOL,UYU,Montevideo Standard Time
+Colombia,CONMEBOL,COP,SA Pacific Standard Time
+Chile,CONMEBOL,CLP,Pacific SA Standard Time
+Ecuador,CONMEBOL,USD,SA Pacific Standard Time
+Paraguay,CONMEBOL,PYG,Paraguay Standard Time
+Perú,CONMEBOL,PEN,SA Pacific Standard Time
+Venezuela,CONMEBOL,VES,Venezuela Standard Time
+Bolivia,CONMEBOL,BOB,SA Western Standard Time
+España,UEFA,EUR,Romance Standard Time
+Francia,UEFA,EUR,Romance Standard Time
+Alemania,UEFA,EUR,W. Europe Standard Time
+Italia,UEFA,EUR,W. Europe Standard Time
+Inglaterra,UEFA,GBP,GMT Standard Time
+Países Bajos,UEFA,EUR,W. Europe Standard Time
+Portugal,UEFA,EUR,GMT Standard Time
+Bélgica,UEFA,EUR,Romance Standard Time
+Croacia,UEFA,EUR,Central European Standard Time
+Dinamarca,UEFA,DKK,Central European Standard Time
+Suiza,UEFA,CHF,W. Europe Standard Time
+Serbia,UEFA,RSD,Central European Standard Time
+Polonia,UEFA,PLN,Central European Standard Time
+Austria,UEFA,EUR,W. Europe Standard Time
+Suecia,UEFA,SEK,W. Europe Standard Time
+Ucrania,UEFA,UAH,FLE Standard Time
+Turquía,UEFA,TRY,Turkey Standard Time
+Chequia,UEFA,CZK,Central European Standard Time
+Costa Rica,CONCACAF,CRC,Central America Standard Time
+Panamá,CONCACAF,USD,SA Pacific Standard Time
+Jamaica,CONCACAF,JMD,SA Pacific Standard Time
+Honduras,CONCACAF,HNL,Central America Standard Time
+Marruecos,CAF,MAD,Morocco Standard Time
+Senegal,CAF,XOF,Greenwich Standard Time
+Egipto,CAF,EGP,Egypt Standard Time
+Nigeria,CAF,NGN,W. Central Africa Standard Time
+Argelia,CAF,DZD,W. Central Africa Standard Time
+Camerún,CAF,XAF,W. Central Africa Standard Time
+Túnez,CAF,TND,W. Central Africa Standard Time
+Ghana,CAF,GHS,Greenwich Standard Time
+Sudáfrica,CAF,ZAR,South Africa Standard Time
+Japón,AFC,JPY,Tokyo Standard Time
+Corea del Sur,AFC,KRW,Korea Standard Time
+Australia,AFC,AUD,AUS Eastern Standard Time
+Arabia Saudita,AFC,SAR,Arab Standard Time
+Catar,AFC,QAR,Arab Standard Time
+Nueva Zelanda,OFC,NZD,New Zealand Standard Time

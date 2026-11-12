@@ -3,7 +3,7 @@
  UNLaM - 3641 Bases de Datos Aplicada
  TP: Sistema de Registro y Gestion del Mundial de Futbol
  Entrega 5 - Testing de la LOGICA de Disciplina (1:1 con el script 03)
- Grupo 02 - Comision 02-5600
+ Grupo 02 - Comision 02-5600 
  Integrantes: Mendez Camacho, Tatiana Antonella         nickGithub: tatimendez
               Rocha Escalera, Sheila Belisa             nickGithub: sheilarocha02
               Meira da Cruz Saleiro, Gonzalo            nickGithub: meiraGonzalo

@@ -4,7 +4,10 @@
  TP: Sistema de Registro y Gestion del Mundial de Futbol
  Entrega 5 - Script 00: Creacion de la base de datos y schemas
  Grupo 02 - Comision 02-5600
- Integrantes: Miro, Saba.
+ Integrantes: Mendez Camacho, Tatiana Antonella   nickGithub: tatimendez
+              Rocha Escalera, Sheila Belisa       nickGithub: sheilarocha02
+              Meira da Cruz Saleiro, Gonzalo      nickGithub: meiraGonzalo
+              Miro, Saba Alejandro                nickGithub: SabaM10
  Fecha: 2026-10-08
  Objetivo: crear la base MundialDB (filegroups, opciones, collation) y
            los schemas de organizacion. DEBE EJECUTARSE PRIMERO (orden 00).
@@ -42,7 +45,7 @@ CREATE DATABASE MundialDB
    ( NAME = N'MundialDB_log',
      FILENAME = N'C:\MundialDB\MundialDB_log.ldf',
      SIZE = 128MB, FILEGROWTH = 64MB )
- COLLATE Modern_Spanish_CI_AS;
+ COLLATE Modern_Spanish_CI_AI;
 GO
 
 /* --- 3. Opciones de la base ----------------------------------------- */
