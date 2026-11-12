@@ -4,10 +4,10 @@
  TP: Sistema de Registro y Gestion del Mundial de Futbol
  Entrega 5 - Script 01: Creacion de tablas, indices, FK y CHECK (con schemas)
  Grupo 02 - Comision 02-5600
- Integrantes: Miro, Saba.
-              Mendez Camacho, Tatiana Antonella
-              Rocha Escalera, Sheila
-              Meira Da Cruz Saleiro, Gonzalo
+ Integrantes: Mendez Camacho, Tatiana Antonella   nickGithub: tatimendez
+              Rocha Escalera, Sheila Belisa       nickGithub: sheilarocha02
+              Meira da Cruz Saleiro, Gonzalo      nickGithub: meiraGonzalo
+              Miro, Saba Alejandro                nickGithub: SabaM10
  Fecha: 2026-10-08
  Objetivo: crear todas las tablas del modelo con sus restricciones.
            Requiere ejecutar antes el script 00 (crea MundialDB y los schemas
