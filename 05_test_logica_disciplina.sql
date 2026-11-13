@@ -195,16 +195,16 @@ GO
 -- Helper de los tests: muestra las tarjetas y suspensiones de un jugador (procedimiento temporal, solo en esta sesion)
 IF OBJECT_ID('tempdb..#ver_jugador') IS NOT NULL DROP PROCEDURE #ver_jugador;
 GO
-CREATE PROCEDURE #ver_jugador @doc varchar(30), @momento varchar(20)
+CREATE PROCEDURE #ver_jugador @doc varchar(30), @momento varchar(40)
 AS
 BEGIN
-    SELECT @momento + ' - tarjetas' AS tabla, a.nro AS partido, t.id_tarjeta, t.tipo_tarjeta, t.minuto
+    SELECT @momento AS momento, 'tarjetas' AS tabla, a.nro AS partido, t.id_tarjeta, t.tipo_tarjeta, t.minuto
     FROM #ali a
     LEFT JOIN disc.Tarjeta t ON t.id_alineacion = a.id_alineacion
     WHERE a.doc = @doc
     ORDER BY a.nro, t.id_tarjeta;
 
-    SELECT @momento + ' - suspensiones' AS tabla, s.id_suspension, s.id_tarjeta_origen,
+    SELECT @momento AS momento, 'suspensiones' AS tabla, s.id_suspension, s.id_tarjeta_origen,
            p.nro_partido AS cumple_en_partido, s.estado
     FROM disc.Suspension s
     LEFT JOIN comp.Partido p ON p.id_partido = s.id_partido_cumple
