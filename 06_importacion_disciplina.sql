@@ -42,8 +42,10 @@ BEGIN
     DECLARE @id_log INT;
     DECLARE @filas_leidas INT = 0, @filas_ok INT = 0, @filas_error INT = 0;
     DECLARE @fecha_inicio DATETIME2(0) = SYSDATETIME();
+    DECLARE @ahora DATETIME2(0);          -- los EXEC no admiten funciones como parametro: se pasa por variable
     DECLARE @msg NVARCHAR(500);
 
+    -- EDICION 1: el log se abre por el ABM de la Entrega 5
     EXEC imp.usp_LogImportacion_Alta @archivo, @fuente, @fecha_inicio, NULL, NULL, NULL, NULL;
     SELECT @id_log = MAX(id_log_importacion) FROM imp.LogImportacion;
 
@@ -69,11 +71,12 @@ BEGIN
                            @xml_out = @xml OUTPUT;
     END TRY
     BEGIN CATCH
-        -- Corte total: sin archivo no hay nada que importar.
+        -- EDICION 2: corte total (sin archivo no hay nada que importar).
         -- Se registra el error y se cierra el log antes de cortar, para que no quede abierto.
         SET @msg = 'No se pudo leer el archivo XML (ruta inexistente o sin permisos de lectura del servicio SQL).';
         EXEC imp.usp_ErrorImportacion_Alta @id_log, NULL, @archivo, @msg;
-        EXEC imp.usp_LogImportacion_Modificacion @id_log, SYSDATETIME(), 0, 0, 0;
+        SET @ahora = SYSDATETIME();
+        EXEC imp.usp_LogImportacion_Modificacion @id_log, @ahora, 0, 0, 0;
         THROW 50600, @msg, 1;
     END CATCH;
 
@@ -139,7 +142,7 @@ BEGIN
                 THROW 50605, @msg, 1;
             END
 
-            -- Desde aca se escribe: Persona y Arbitro van juntos o no va ninguno
+            -- EDICION 3: desde aca se escribe, y Persona y Arbitro van juntos o no va ninguno
             BEGIN TRANSACTION;
 
             -- 3) Persona: si ya existe (nombre + apellido + pais) la reutilizamos; si no, la damos de alta
@@ -181,7 +184,8 @@ BEGIN
 
     -- ============ PARTE 4: cerrar el log y mostrar resumen ============
 
-    EXEC imp.usp_LogImportacion_Modificacion @id_log, SYSDATETIME(), @filas_leidas, @filas_ok, @filas_error;
+    SET @ahora = SYSDATETIME();
+    EXEC imp.usp_LogImportacion_Modificacion @id_log, @ahora, @filas_leidas, @filas_ok, @filas_error;
 
     SELECT @id_log AS id_log_importacion,
            @filas_leidas AS filas_leidas,

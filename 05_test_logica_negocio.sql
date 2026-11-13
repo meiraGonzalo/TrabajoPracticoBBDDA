@@ -4,10 +4,10 @@
  TP: Sistema de Registro y Gestion del Mundial de Futbol
  Entrega 5 - Script 05: Testing de Lógica de Negocio (Publicidad, Importación, Husos, Monedas)
  Grupo 02 - Comision 02-5600
- Integrantes: Mendez Camacho, Tatiana Antonella         nickGithub: tatimendez
-              Rocha Escalera, Sheila Belisa             nickGithub: sheilarocha02
-              Meira da Cruz Saleiro, Gonzalo            nickGithub: meiraGonzalo
-              Miro, Saba Alejandro                      nickGithub: SabaM10
+ Integrantes: Mendez Camacho, Tatiana Antonella          nickGithub: tatimendez
+              Rocha Escalera, Sheila Belisa              nickGithub: sheilarocha02
+              Meira da Cruz Saleiro, Gonzalo             nickGithub: meiraGonzalo
+              Miro, Saba Alejandro                       nickGithub: SabaM10
 =====================================================================
 */
 
@@ -123,24 +123,71 @@ BEGIN TRY
         @id_fase = p.id_fase, 
         @utc = p.fecha_hora_utc
     FROM comp.Partido p
-    WHERE EXISTS (SELECT 1 FROM comp.PartidoSeleccion ps WHERE ps.id_partido = p.id_partido);
+    WHERE EXISTS (SELECT 1 FROM comp.PartidoSeleccion ps WHERE ps.id_partido = p.id_partido AND ps.condicion = 'L')
+      AND EXISTS (SELECT 1 FROM comp.PartidoSeleccion ps WHERE ps.id_partido = p.id_partido AND ps.condicion = 'V');
 
+    -- Si la BD está vacía, se crea la estructura mínima respetando FK y CHECK de comp y cat
     IF @id_partido_test IS NULL
     BEGIN
-        PRINT 'ADVERTENCIA: No se encontro un partido con selecciones asignadas.';
-        ROLLBACK TRAN;
-        RETURN;
+        DECLARE @id_mon_base INT, @id_ciudad_sede INT, @id_sede INT;
+        DECLARE @id_sel_local INT, @id_sel_visitante INT;
+
+        INSERT INTO cat.Moneda (codigo_iso, nombre) VALUES ('XMB', 'Moneda Base Test');
+        SET @id_mon_base = SCOPE_IDENTITY();
+
+        INSERT INTO cat.Pais (nombre, confederacion, id_moneda, huso_horario) VALUES ('Pais Local Test', 'CONMEBOL', @id_mon_base, 'UTC');
+        SET @id_pais_local = SCOPE_IDENTITY();
+
+        INSERT INTO cat.Pais (nombre, confederacion, id_moneda, huso_horario) VALUES ('Pais Visitante Test', 'UEFA', @id_mon_base, 'UTC');
+        SET @id_pais_visitante = SCOPE_IDENTITY();
+
+        INSERT INTO cat.Ciudad (nombre, id_pais, huso_horario) VALUES ('Ciudad Sede Test', @id_pais_local, 'UTC');
+        SET @id_ciudad_sede = SCOPE_IDENTITY();
+
+        SELECT TOP 1 @id_torneo = id_torneo FROM comp.Torneo;
+        IF @id_torneo IS NULL
+        BEGIN
+            INSERT INTO comp.Torneo (nombre, anio) VALUES ('Mundial Test 2026', 2026);
+            SET @id_torneo = SCOPE_IDENTITY();
+        END
+
+        SELECT TOP 1 @id_fase = id_fase FROM comp.Fase;
+        IF @id_fase IS NULL
+        BEGIN
+            INSERT INTO comp.Fase (nombre, orden, es_eliminatoria) VALUES ('Grupos', 1, 0);
+            SET @id_fase = SCOPE_IDENTITY();
+        END
+
+        INSERT INTO comp.Sede (nombre_estadio, id_ciudad, capacidad) VALUES ('Estadio Test', @id_ciudad_sede, 50000);
+        SET @id_sede = SCOPE_IDENTITY();
+
+        INSERT INTO comp.Seleccion (id_torneo, id_pais) VALUES (@id_torneo, @id_pais_local);
+        SET @id_sel_local = SCOPE_IDENTITY();
+
+        INSERT INTO comp.Seleccion (id_torneo, id_pais) VALUES (@id_torneo, @id_pais_visitante);
+        SET @id_sel_visitante = SCOPE_IDENTITY();
+
+        SET @utc = '2026-06-15 20:00:00';
+        INSERT INTO comp.Partido (id_torneo, nro_partido, id_fase, id_grupo, id_sede, fecha_hora_utc, fecha_hora_local, estado)
+        VALUES (@id_torneo, 999, @id_fase, NULL, @id_sede, @utc, @utc, 'PROGRAMADO');
+        SET @id_partido_test = SCOPE_IDENTITY();
+
+        INSERT INTO comp.PartidoSeleccion (id_partido, id_seleccion, condicion) VALUES
+        (@id_partido_test, @id_sel_local, 'L'),
+        (@id_partido_test, @id_sel_visitante, 'V');
     END
+    ELSE
+    BEGIN
+        SELECT TOP 1 @id_pais_local = s.id_pais 
+        FROM comp.PartidoSeleccion ps 
+        JOIN comp.Seleccion s ON ps.id_seleccion = s.id_seleccion 
+        WHERE ps.id_partido = @id_partido_test AND ps.condicion = 'L';
 
-    SELECT TOP 1 @id_pais_local = s.id_pais 
-    FROM comp.PartidoSeleccion ps 
-    JOIN comp.Seleccion s ON ps.id_seleccion = s.id_seleccion 
-    WHERE ps.id_partido = @id_partido_test AND ps.condicion = 'L';
-
-    SELECT TOP 1 @id_pais_visitante = s.id_pais 
-    FROM comp.PartidoSeleccion ps 
-    JOIN comp.Seleccion s ON ps.id_seleccion = s.id_seleccion 
-    WHERE ps.id_partido = @id_partido_test AND ps.condicion = 'V';
+        SELECT TOP 1 @id_pais_visitante = s.id_pais 
+        FROM comp.PartidoSeleccion ps 
+        JOIN comp.Seleccion s ON ps.id_seleccion = s.id_seleccion 
+        WHERE ps.id_partido = @id_partido_test AND ps.condicion = 'V';
+    END
 
     -- Limpieza previa en el contexto de esta transacción
     DELETE FROM pub.ExhibicionPublicitaria WHERE id_partido = @id_partido_test;

@@ -132,34 +132,116 @@ GO
 /* =================================================================
    PARTE 1: TABLAS DE STAGING 
    ================================================================= */
+
+-- 1.1 Monedas (3.1 imp.usp_ImportarMonedas_CSV)
 IF OBJECT_ID('imp.stg_Moneda', 'U') IS NULL
     CREATE TABLE imp.stg_Moneda (
         codigo_iso CHAR(3),
-        nombre VARCHAR(50)
+        nombre     VARCHAR(50)
     );
 GO
 
+-- 1.2 Idiomas (3.2 imp.usp_ImportarIdiomas_CSV)
 IF OBJECT_ID('imp.stg_Idioma', 'U') IS NULL
     CREATE TABLE imp.stg_Idioma (
         codigo_iso CHAR(2),
-        nombre VARCHAR(50)
+        nombre     VARCHAR(50)
     );
 GO
 
+-- 1.3 Países (3.3 imp.usp_ImportarPaises_CSV)
 IF OBJECT_ID('imp.stg_Pais', 'U') IS NULL
     CREATE TABLE imp.stg_Pais (
-        nombre VARCHAR(100),
+        nombre        VARCHAR(100),
         confederacion VARCHAR(20),
         codigo_moneda CHAR(3),
+        huso_horario  VARCHAR(50)
+    );
+GO
+
+-- 1.4 Ciudades (3.4 imp.usp_ImportarCiudades_CSV)
+IF OBJECT_ID('imp.stg_Ciudad', 'U') IS NULL
+    CREATE TABLE imp.stg_Ciudad (
+        nombre       NVARCHAR(100),
+        pais         VARCHAR(100),
         huso_horario VARCHAR(50)
     );
 GO
 
+-- 1.5 Franjas Horarias (3.5 imp.usp_ImportarFranjasHorarias_CSV)
+IF OBJECT_ID('imp.stg_FranjaHoraria', 'U') IS NULL
+    CREATE TABLE imp.stg_FranjaHoraria (
+        nombre        VARCHAR(30),
+        hora_desde    TIME(0),
+        hora_hasta    TIME(0),
+        es_prime_time BIT
+    );
+GO
+
+-- 1.6 Tarifas (3.6 imp.usp_ImportarTarifas_CSV)
+IF OBJECT_ID('imp.stg_Tarifa', 'U') IS NULL
+    CREATE TABLE imp.stg_Tarifa (
+        anio_torneo   SMALLINT,
+        fase          VARCHAR(30),
+        franja        VARCHAR(30),
+        monto         DECIMAL(12,2),
+        codigo_moneda CHAR(3)
+    );
+GO
+
+-- 1.7 Tipos de Cambio (3.7 imp.usp_ImportarTipoCambio_CSV)
+IF OBJECT_ID('imp.stg_TipoCambio', 'U') IS NULL
+    CREATE TABLE imp.stg_TipoCambio (
+        fecha           DATE,
+        moneda_base     CHAR(3),
+        moneda_cotizada CHAR(3),
+        tasa            DECIMAL(18,6)
+    );
+GO
+
+-- 1.8 Indicadores Económicos (3.8 imp.usp_ImportarIndicadorEconomico_JSON)
+IF OBJECT_ID('imp.stg_IndicadorEconomico', 'U') IS NULL
+    CREATE TABLE imp.stg_IndicadorEconomico (
+        pais             NVARCHAR(100),
+        anio             SMALLINT,
+        codigo_indicador VARCHAR(30),
+        valor            DECIMAL(18,2)
+    );
+GO
+
+-- 1.9 Feriados (3.9 imp.usp_ImportarFeriados_JSON)
+IF OBJECT_ID('imp.stg_Feriado', 'U') IS NULL
+    CREATE TABLE imp.stg_Feriado (
+        fecha  DATE,
+        nombre VARCHAR(150),
+        pais   NVARCHAR(100)
+    );
+GO
+
+-- 1.10 Publicidad (3.10 imp.usp_ImportarPublicidad_CSV)
+IF OBJECT_ID('imp.stg_Publicidad', 'U') IS NULL
+    CREATE TABLE imp.stg_Publicidad (
+        anunciante           VARCHAR(100),
+        pais_anunciante      NVARCHAR(100),
+        marca                VARCHAR(100),
+        agencia              VARCHAR(100),
+        campania             VARCHAR(150),
+        fecha_desde          DATE,
+        fecha_hasta          DATE,
+        descripcion_campania VARCHAR(500),
+        mercado_objetivo     NVARCHAR(100),
+        pieza_titulo         VARCHAR(150),
+        pieza_idioma         CHAR(2),
+        pieza_url            VARCHAR(300)
+    );
+GO
+
+-- Tabla auxiliar de equivalencias ISO Alpha-2 / Alpha-3 -> Nombre en cat.Pais
 DROP TABLE IF EXISTS imp.stg_PaisEquivalencia;
 GO
 
 CREATE TABLE imp.stg_PaisEquivalencia (
-    codigo_iso VARCHAR(3) PRIMARY KEY, 
+    codigo_iso  VARCHAR(3) PRIMARY KEY, 
     nombre_pais VARCHAR(100) NOT NULL
 );
 
