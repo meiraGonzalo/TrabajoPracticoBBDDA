@@ -12,6 +12,61 @@ USE MundialDB;
 GO
 SET NOCOUNT ON;
 
+
+-- 0. Ejecutar sp importacion
+EXEC imp.usp_ImportarMonedas_CSV         'C:\Mundial2026_Datos\monedas.csv';
+GO
+EXEC imp.usp_ImportarIdiomas_CSV         'C:\Mundial2026_Datos\idiomas.csv';
+GO
+EXEC imp.usp_ImportarFranjasHorarias_CSV 'C:\Mundial2026_Datos\franjas_comerciales.csv';
+GO
+/* 2) Paises (necesitan las monedas), ciudades y equivalencias */
+EXEC imp.usp_ImportarPaises_CSV          'C:\Mundial2026_Datos\paises.csv';
+GO
+EXEC imp.usp_ImportarCiudades_CSV        'C:\Mundial2026_Datos\ciudades.csv';
+GO
+EXEC imp.usp_Importar_EquivalenciasPais  'C:\MundialDB\equivalencias_paises_2026.csv';
+GO
+/* 3) Datos fijos que no salen de ningun archivo: torneo 2026 y posiciones */
+IF NOT EXISTS (SELECT 1 FROM comp.Torneo WHERE anio = 2026)
+    EXEC comp.usp_Torneo_Alta 'Copa Mundial de la FIFA 2026', 2026, '2026-06-11', '2026-07-19';
+GO
+DECLARE @t int; SELECT @t = id_torneo FROM comp.Torneo WHERE anio = 2026;
+IF NOT EXISTS (SELECT 1 FROM comp.ParametroReglamento WHERE id_torneo = @t AND clave = 'MIN_CONVOCADOS')
+    EXEC comp.usp_ParametroReglamento_Alta @t, 'MIN_CONVOCADOS', 23, NULL;
+IF NOT EXISTS (SELECT 1 FROM comp.ParametroReglamento WHERE id_torneo = @t AND clave = 'MAX_CONVOCADOS')
+    EXEC comp.usp_ParametroReglamento_Alta @t, 'MAX_CONVOCADOS', 26, NULL;
+GO
+IF NOT EXISTS (SELECT 1 FROM comp.Posicion WHERE nombre = 'Arquero')       EXEC comp.usp_Posicion_Alta 'Arquero';
+IF NOT EXISTS (SELECT 1 FROM comp.Posicion WHERE nombre = 'Defensor')      EXEC comp.usp_Posicion_Alta 'Defensor';
+IF NOT EXISTS (SELECT 1 FROM comp.Posicion WHERE nombre = 'Mediocampista') EXEC comp.usp_Posicion_Alta 'Mediocampista';
+IF NOT EXISTS (SELECT 1 FROM comp.Posicion WHERE nombre = 'Delantero')     EXEC comp.usp_Posicion_Alta 'Delantero';
+GO
+/* 4) Economia y precios (necesitan paises, monedas, franjas y el torneo) */
+EXEC imp.usp_ImportarTipoCambio_CSV          'C:\Mundial2026_Datos\tipos_cambio_frankfurter.csv';
+GO
+EXEC imp.usp_ImportarIndicadorEconomico_JSON 'C:\Mundial2026_Datos\indicadores_bm.json';
+GO
+EXEC imp.usp_ImportarFeriados_JSON           'C:\Mundial2026_Datos\feriados_nagerdate.json';
+GO
+EXEC imp.usp_ImportarTarifas_CSV             'C:\Mundial2026_Datos\tarifas.csv';
+GO
+/* 5) Scraping del Mundial */
+EXEC imp.usp_Importar_Sedes      'C:\MundialDB\sedes_2026.csv';
+GO
+EXEC imp.usp_Importar_Partidos   'C:\MundialDB\partidos_2026.csv', 2026;
+GO
+EXEC imp.usp_Importar_Plantillas 'C:\MundialDB\plantillas_2026.csv', 2026;
+GO
+EXEC imp.usp_ImportarArbitros    'C:\MundialDB\arbitros.xml';
+GO
+/* 6) Publicidad (necesita paises e idiomas) */
+EXEC imp.usp_ImportarPublicidad_CSV 'C:\Mundial2026_Datos\dossier_publicidad.csv';
+GO
+
+
+
+
 /* =================================================================
    1. RESUMEN: filas de TODAS las tablas de la base
    ================================================================= */
@@ -150,8 +205,7 @@ SELECT TOP 30 * FROM pub.FranjaHoraria;
 SELECT TOP 30 * FROM pub.Tarifa;
 GO
 
-select * from comp.Convocado c inner join comp.club cl on c.id_club = cl.id_club inner join comp.Persona j on c.id_jugador = j.id_jugador
-select * from comp.Club
+
 
 SELECT pa.nombre                        AS seleccion,
        c.dorsal,
