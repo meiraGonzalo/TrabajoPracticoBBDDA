@@ -192,4 +192,147 @@ BEGIN
     -- e) armar aaaa-mm-dd y convertir
     SET @fecha = TRY_CONVERT(date, @anio + '-' + RIGHT('0' + CAST(@mes AS varchar(2)), 2) + '-' + RIGHT('0' + @dia, 2));
 END
+
 GO
+
+
+
+
+
+---sp para equivaler paises
+
+IF OBJECT_ID('imp.stg_equivalencias') IS NULL
+BEGIN
+    CREATE TABLE imp.stg_equivalencias (
+        nro_fila       int IDENTITY(1,1) NOT NULL,
+        nombre_externo nvarchar(100) NULL,
+        nombre_pais    nvarchar(100) NULL
+    );
+END
+GO
+
+-- Vista para el BULK INSERT: mismas columnas que el archivo, sin nro_fila
+CREATE OR ALTER VIEW imp.vw_stg_equivalencias_carga
+AS
+    SELECT nombre_externo, nombre_pais
+    FROM imp.stg_equivalencias;
+GO
+
+CREATE OR ALTER PROCEDURE imp.usp_Importar_EquivalenciasPais
+    @archivo varchar(260)
+AS
+BEGIN
+    SET NOCOUNT ON;
+    DECLARE @err nvarchar(2000), @msg nvarchar(2000), @sql nvarchar(1000);
+    DECLARE @id_log int, @ahora datetime2(0);
+    DECLARE @i int, @max int, @linea int, @nuevas int, @actualizadas int, @errores int, @ok int;
+    DECLARE @externo nvarchar(100), @pais nvarchar(100), @id_pais int;
+    DECLARE @dato nvarchar(1000), @err_fila nvarchar(2000);
+
+    -- Validacion general
+    SET @err = '';
+    IF @archivo IS NULL OR @archivo = ''
+        SET @err = @err + ' - La ruta del archivo es obligatoria.';
+    IF @err <> ''
+    BEGIN
+        SET @err = 'usp_Importar_EquivalenciasPais:' + @err;
+        THROW 50705, @err, 1;
+    END
+
+    SET @nuevas = 0;
+    SET @actualizadas = 0;
+    SET @errores = 0;
+
+    -- 1) Abrir el registro de la importacion
+    SET @ahora = SYSDATETIME();
+    EXEC imp.usp_LogImportacion_Alta @archivo, 'Wikipedia - nombres de paises en castellano (scraping)',
+                                     @ahora, NULL, NULL, NULL, NULL;
+    SELECT @id_log = MAX(id_log_importacion) FROM imp.LogImportacion;
+
+    -- 2) Vaciar la staging y cargar el archivo
+    TRUNCATE TABLE imp.stg_equivalencias;
+
+    -- SQL dinamico SOLO porque BULK INSERT no acepta una variable como nombre de archivo
+    SET @sql = N'BULK INSERT imp.vw_stg_equivalencias_carga FROM ''' + @archivo + N'''
+                 WITH (FIELDTERMINATOR = '';'', ROWTERMINATOR = ''\n'', CODEPAGE = ''65001'', FIRSTROW = 2);';
+    BEGIN TRY
+        EXEC (@sql);
+    END TRY
+    BEGIN CATCH
+        SET @msg = 'usp_Importar_EquivalenciasPais: - No se pudo leer el archivo: ' + ERROR_MESSAGE();
+        SET @err = LEFT(@msg, 500);
+        EXEC imp.usp_ErrorImportacion_Alta @id_log, NULL, @archivo, @err;
+        SET @ahora = SYSDATETIME();
+        EXEC imp.usp_LogImportacion_Modificacion @id_log, @ahora, 0, 0, 0;
+        THROW 50705, @msg, 1;
+    END CATCH
+
+    SELECT @max = COUNT(*) FROM imp.stg_equivalencias;
+    SET @i = 1;
+
+    -- 3) Fila por fila (sin cursores)
+    WHILE @i <= @max
+    BEGIN
+        SET @externo = NULL;
+        SET @pais = NULL;
+        SET @id_pais = NULL;
+        SET @linea = @i + 1;      -- linea en el archivo (la 1 son los titulos)
+
+        SELECT @externo = NULLIF(LTRIM(RTRIM(nombre_externo)), ''),
+               @pais    = NULLIF(LTRIM(RTRIM(nombre_pais)), '')
+        FROM imp.stg_equivalencias WHERE nro_fila = @i;
+
+        SET @dato = ISNULL(@externo, '') + ';' + ISNULL(@pais, '');
+
+        BEGIN TRY
+            SET @err_fila = '';
+
+            IF @externo IS NULL
+                SET @err_fila = @err_fila + ' - Falta el nombre externo.';
+
+            SELECT @id_pais = id_pais FROM cat.Pais WHERE nombre = @pais;
+            IF @id_pais IS NULL
+                SET @err_fila = @err_fila + ' - El pais no esta en cat.Pais (' + ISNULL(@pais, 'vacio') + ').';
+
+            IF @err_fila <> ''
+            BEGIN
+                SET @err_fila = 'usp_Importar_EquivalenciasPais:' + @err_fila;
+                THROW 50706, @err_fila, 1;
+            END
+
+            -- Upsert con los SP de ABM
+            IF EXISTS (SELECT 1 FROM imp.EquivalenciaPais WHERE nombre_externo = @externo)
+            BEGIN
+                EXEC imp.usp_EquivalenciaPais_Modificacion @externo, @id_pais;
+                SET @actualizadas = @actualizadas + 1;
+            END
+            ELSE
+            BEGIN
+                EXEC imp.usp_EquivalenciaPais_Alta @externo, @id_pais;
+                SET @nuevas = @nuevas + 1;
+            END
+        END TRY
+        BEGIN CATCH
+            SET @err = LEFT(ERROR_MESSAGE(), 500);
+            EXEC imp.usp_ErrorImportacion_Alta @id_log, @linea, @dato, @err;
+            SET @errores = @errores + 1;
+        END CATCH
+
+        SET @i = @i + 1;
+    END
+
+    -- 4) Cerrar el registro y mostrar el resultado
+    SET @ahora = SYSDATETIME();
+    SET @ok = @nuevas + @actualizadas;
+    EXEC imp.usp_LogImportacion_Modificacion @id_log, @ahora, @max, @ok, @errores;
+
+    SELECT @id_log AS id_log, @max AS filas_leidas, @nuevas AS equivalencias_nuevas,
+           @actualizadas AS equivalencias_actualizadas, @errores AS filas_con_error;
+
+    SELECT nro_linea, dato_original, mensaje
+    FROM imp.ErrorImportacion
+    WHERE id_log_importacion = @id_log
+    ORDER BY nro_linea;
+END
+GO
+
