@@ -107,34 +107,93 @@ END
 GO
 
 
-/* ------------------ Advertencia de cruce arbitral (desde eliminatorias) ------------------ */
+/* =====================================================================
+   disc.usp_Designacion_AdvertenciaCruce
+   Fija (o limpia) la advertencia de cruce de una designacion.
+   Regla: desde dieciseisavos (fase eliminatoria), se advierte si el pais del arbitro tiene una
+   seleccion todavia en carrera, es decir, con un partido eliminatorio no finalizado en la misma
+   fase o en una posterior. Se aplica por el ABM (usp_Designacion_Modificacion).
+   ===================================================================== */
 CREATE OR ALTER PROCEDURE disc.usp_Designacion_AdvertenciaCruce
     @id_designacion int
 AS
 BEGIN
     SET NOCOUNT ON;
-    DECLARE @id_partido int, @pais_arbitro int, @es_eliminatoria bit;
 
-    SELECT @id_partido      = d.id_partido,
-           @pais_arbitro    = pe.id_pais_nacionalidad,
-           @es_eliminatoria = f.es_eliminatoria
+    DECLARE @err nvarchar(2000) = '';
+    DECLARE @id_partido int, @id_torneo int, @rol varchar(20), @id_pais_arbitro int, @pais varchar(100);
+    DECLARE @es_eliminatoria bit, @orden_fase tinyint, @advertencia varchar(200) = NULL;
+
+    SELECT @id_partido = d.id_partido, @rol = d.rol, @id_torneo = p.id_torneo,
+           @id_pais_arbitro = pe.id_pais_nacionalidad, @pais = pa.nombre,
+           @es_eliminatoria = f.es_eliminatoria, @orden_fase = f.orden
     FROM disc.Designacion d
     INNER JOIN comp.Persona pe ON pe.id_persona = d.id_arbitro
+    INNER JOIN cat.Pais pa     ON pa.id_pais    = pe.id_pais_nacionalidad
     INNER JOIN comp.Partido p  ON p.id_partido  = d.id_partido
     INNER JOIN comp.Fase f     ON f.id_fase     = p.id_fase
     WHERE d.id_designacion = @id_designacion;
 
-    -- Solo en fases eliminatorias, si el pais del arbitro tiene seleccion en el torneo
+    IF @id_partido IS NULL
+    BEGIN
+        SET @err = 'usp_Designacion_AdvertenciaCruce: - La designacion no existe.';
+        THROW 50909, @err, 1;
+    END
+
     IF @es_eliminatoria = 1
        AND EXISTS (SELECT 1
                    FROM comp.Seleccion s
-                   INNER JOIN comp.Partido p ON p.id_torneo = s.id_torneo
-                   WHERE p.id_partido = @id_partido AND s.id_pais = @pais_arbitro)
-    BEGIN
-        UPDATE disc.Designacion
-        SET advertencia = 'Posible cruce: el arbitro proviene de un pais con seleccion en el torneo.'
-        WHERE id_designacion = @id_designacion;
-    END
+                   INNER JOIN comp.PartidoSeleccion ps ON ps.id_seleccion = s.id_seleccion
+                   INNER JOIN comp.Partido p2          ON p2.id_partido   = ps.id_partido
+                   INNER JOIN comp.Fase f2             ON f2.id_fase      = p2.id_fase
+                   WHERE s.id_torneo = @id_torneo
+                     AND s.id_pais = @id_pais_arbitro
+                     AND f2.es_eliminatoria = 1
+                     AND f2.orden >= @orden_fase
+                     AND p2.estado <> 'FINALIZADO')
+        SET @advertencia = 'Posible cruce: el arbitro es de ' + @pais + ', con una seleccion todavia en carrera.';
+
+    -- Si no corresponde advertencia, se limpia la que hubiera (queda NULL)
+    EXEC disc.usp_Designacion_Modificacion @id_designacion, @rol, @advertencia;
+END
+GO
+
+
+/* =====================================================================
+   disc.usp_Designacion_Registrar
+   Designa un arbitro para un partido en UNA transaccion:
+     - alta de la designacion (via disc.usp_Designacion_Alta: valida el conflicto de nacionalidad,
+       el rol repetido y el arbitro repetido)
+     - calculo de la advertencia de cruce (via disc.usp_Designacion_AdvertenciaCruce)
+   ===================================================================== */
+CREATE OR ALTER PROCEDURE disc.usp_Designacion_Registrar
+    @id_partido        int,
+    @id_arbitro        int,
+    @rol               varchar(20),
+    @fecha_designacion date
+AS
+BEGIN
+    SET NOCOUNT ON;
+    DECLARE @id_designacion int;
+
+    BEGIN TRY
+        BEGIN TRANSACTION;
+
+        EXEC disc.usp_Designacion_Alta @id_partido, @id_arbitro, @rol, @fecha_designacion, NULL;
+
+        -- el ABM no devuelve el id: la pareja partido + arbitro es unica (UQ_Designacion_id_partido_id_arbitro)
+        SELECT @id_designacion = id_designacion
+        FROM disc.Designacion
+        WHERE id_partido = @id_partido AND id_arbitro = @id_arbitro;
+
+        EXEC disc.usp_Designacion_AdvertenciaCruce @id_designacion;
+
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        IF XACT_STATE() <> 0 ROLLBACK TRANSACTION;
+        THROW;
+    END CATCH
 END
 GO
 
