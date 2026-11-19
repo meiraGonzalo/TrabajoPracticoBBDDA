@@ -79,7 +79,7 @@ BEGIN
       AND (@id_fase IS NULL OR p.id_fase = @id_fase);
 
     -- Tabla 1: goleadores del torneo
-    SELECT RANK() OVER (ORDER BY COUNT(*) DESC) AS puesto,
+    SELECT DENSE_RANK() OVER (ORDER BY COUNT(*) DESC) AS puesto,
            apellido, nombre, seleccion, COUNT(*) AS goles
     FROM #goles
     GROUP BY id_persona, apellido, nombre, seleccion
@@ -87,7 +87,7 @@ BEGIN
 
     -- Tabla 2: goleadores de cada seleccion
     SELECT seleccion,
-           RANK() OVER (PARTITION BY seleccion ORDER BY COUNT(*) DESC) AS puesto,
+           DENSE_RANK() OVER (PARTITION BY seleccion ORDER BY COUNT(*) DESC) AS puesto,
            apellido, nombre, COUNT(*) AS goles
     FROM #goles
     GROUP BY seleccion, id_persona, apellido, nombre
@@ -95,7 +95,7 @@ BEGIN
 
     -- Tabla 3: goleadores de cada fase
     SELECT fase,
-           RANK() OVER (PARTITION BY fase ORDER BY COUNT(*) DESC) AS puesto,
+           DENSE_RANK() OVER (PARTITION BY fase ORDER BY COUNT(*) DESC) AS puesto,
            apellido, nombre, seleccion, COUNT(*) AS goles
     FROM #goles
     GROUP BY orden_fase, fase, id_persona, apellido, nombre, seleccion
