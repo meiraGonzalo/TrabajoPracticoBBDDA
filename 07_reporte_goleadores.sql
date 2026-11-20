@@ -2,13 +2,13 @@
 =====================================================================
  UNLaM - 3641 Bases de Datos Aplicada
  TP: Sistema de Registro y Gestion del Mundial de Futbol
- Entrega 6 - Script 06_importacion_comun: objetos auxiliares para las importaciones
+ Entrega 07 - Reportes de goleadores
  Grupo 02 - Comision 02-5600
  Integrantes: Mendez Camacho, Tatiana Antonella   nickGithub: tatimendez
               Rocha Escalera, Sheila Belisa       nickGithub: sheilarocha02
               Meira da Cruz Saleiro, Gonzalo      nickGithub: meiraGonzalo
               Miro, Saba Alejandro                nickGithub: SabaM10
- Fecha: 05/11/2026
+ Fecha: 19/11/2026
  Objetivo: reporte de goleadores
  Orden: 00 -> 01 -> 02 -> 03 -> 06 (importaciones) -> este script
 =====================================================================
@@ -20,7 +20,7 @@ GO
 -- Tres tablas: goleadores del torneo, por seleccion y por fase.
   
 CREATE OR ALTER PROCEDURE disc.usp_Reporte_Goleadores
-    @anio      smallint,
+    @anio      smallint, 
     @seleccion varchar(100) = NULL,
     @fase      varchar(30)  = NULL
 AS
