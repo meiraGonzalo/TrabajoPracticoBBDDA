@@ -752,9 +752,9 @@ BEGIN
     BEGIN TRY
         SET @sql = N'BULK INSERT imp.stg_Tarifa FROM ''' + @archivo + N''' 
                      WITH (
+                         FORMAT = ''CSV'',
                          FIRSTROW = 2, 
                          FIELDTERMINATOR = '','', 
-                         ROWTERMINATOR = ''0x0a'', 
                          CODEPAGE = ''65001''
                      );';
         EXEC sp_executesql @sql;

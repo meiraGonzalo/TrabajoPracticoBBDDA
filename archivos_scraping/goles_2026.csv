@@ -1,0 +1,309 @@
+nro_partido;seleccion;jugador;minuto;minuto_adicional;tipo
+1;Mexico;Julián Quiñones;9;0;Jugada
+1;Mexico;Raúl Jiménez;67;0;Jugada
+2;South Korea;Hwang In-beom;67;0;Jugada
+2;South Korea;Oh Hyeon-gyu;80;0;Jugada
+2;Czech Republic;Ladislav Krejčí;59;0;Jugada
+3;Czech Republic;Michal Sadílek;6;0;Jugada
+3;South Africa;Teboho Mokoena;83;0;Penal
+4;Mexico;Luis Romo;50;0;Jugada
+5;Mexico;Mateo Chávez;55;0;Jugada
+5;Mexico;Julián Quiñones;61;0;Jugada
+5;Mexico;Álvaro Fidalgo;90;4;Jugada
+6;South Africa;Thapelo Maseko;63;0;Jugada
+7;Canada;Cyle Larin;78;0;Jugada
+7;Bosnia and Herzegovina;Jovo Lukić;21;0;Jugada
+8;Switzerland;Miro Muheim;90;4;En contra
+8;Switzerland;Breel Embolo;17;0;Penal
+9;Switzerland;Johan Manzambi;74;0;Jugada
+9;Switzerland;Johan Manzambi;90;0;Jugada
+9;Switzerland;Rubén Vargas;84;0;Jugada
+9;Switzerland;Granit Xhaka;90;7;Penal
+9;Bosnia and Herzegovina;Ermin Mahmić;90;3;Jugada
+10;Canada;Cyle Larin;16;0;Jugada
+10;Canada;Jonathan David;29;0;Jugada
+10;Canada;Jonathan David;45;3;Jugada
+10;Canada;Jonathan David;90;2;Jugada
+10;Canada;Nathan Saliba;64;0;Jugada
+10;Qatar;Mohamed Manai;75;0;En contra
+11;Switzerland;Rubén Vargas;46;0;Jugada
+11;Switzerland;Johan Manzambi;57;0;Jugada
+11;Canada;Promise David;76;0;Jugada
+12;Bosnia and Herzegovina;Kerim Alajbegović;29;0;Jugada
+12;Qatar;Mahmud Abunada;34;0;En contra
+12;Bosnia and Herzegovina;Ermin Mahmić;80;0;Jugada
+12;Qatar;Hassan Al-Haydos;42;0;Jugada
+13;Brazil;Vinícius Júnior;32;0;Jugada
+13;Morocco;Ismael Saibari;21;0;Jugada
+14;Scotland;John McGinn;28;0;Jugada
+15;Morocco;Ismael Saibari;2;0;Jugada
+16;Brazil;Matheus Cunha;23;0;Jugada
+16;Brazil;Matheus Cunha;36;0;Jugada
+16;Brazil;Vinícius Júnior;45;3;Jugada
+17;Brazil;Vinícius Júnior;7;0;Jugada
+17;Brazil;Vinícius Júnior;45;3;Jugada
+17;Brazil;Matheus Cunha;60;0;Jugada
+18;Morocco;Achraf Hakimi;39;0;Jugada
+18;Morocco;Ismael Saibari;45;1;Jugada
+18;Morocco;Soufiane Rahimi;78;0;Jugada
+18;Morocco;Gessime Yassine;89;0;Jugada
+18;Morocco;Yassine Bounou;10;0;En contra
+18;Haiti;Wilson Isidor;43;0;Jugada
+19;Paraguay;Damián Bobadilla;7;0;En contra
+19;United States;Folarin Balogun;31;0;Jugada
+19;United States;Folarin Balogun;45;5;Jugada
+19;United States;Giovanni Reyna;90;8;Jugada
+19;Paraguay;Maurício;73;0;Jugada
+20;Australia;Nestory Irankunda;27;0;Jugada
+20;Australia;Connor Metcalfe;75;0;Jugada
+21;Australia;Cameron Burgess;11;0;En contra
+21;United States;Alex Freeman;43;0;Jugada
+22;Paraguay;Matías Galarza;2;0;Jugada
+23;Turkey;Arda Güler;10;0;Jugada
+23;Turkey;Barış Alper Yılmaz;31;0;Jugada
+23;Turkey;Kaan Ayhan;90;8;Jugada
+23;United States;Auston Trusty;3;0;Jugada
+23;United States;Sebastian Berhalter;49;0;Jugada
+25;Germany;Felix Nmecha;6;0;Jugada
+25;Germany;Nico Schlotterbeck;38;0;Jugada
+25;Germany;Kai Havertz;45;5;Penal
+25;Germany;Kai Havertz;88;0;Jugada
+25;Germany;Jamal Musiala;47;0;Jugada
+25;Germany;Nathaniel Brown;68;0;Jugada
+25;Germany;Deniz Undav;78;0;Jugada
+25;Curaçao;Livano Comenencia;21;0;Jugada
+26;Ivory Coast;Amad Diallo;90;0;Jugada
+27;Germany;Deniz Undav;68;0;Jugada
+27;Germany;Deniz Undav;90;4;Jugada
+27;Ivory Coast;Franck Kessié;30;0;Jugada
+29;Ivory Coast;Nicolas Pépé;7;0;Jugada
+29;Ivory Coast;Nicolas Pépé;64;0;Jugada
+30;Ecuador;Nilson Angulo;9;0;Jugada
+30;Ecuador;Gonzalo Plata;77;0;Jugada
+30;Germany;Leroy Sané;2;0;Jugada
+31;Netherlands;Virgil van Dijk;51;0;Jugada
+31;Netherlands;Crysencio Summerville;64;0;Jugada
+31;Japan;Keito Nakamura;57;0;Jugada
+31;Japan;Daichi Kamada;88;0;Jugada
+32;Sweden;Yasin Ayari;7;0;Jugada
+32;Sweden;Yasin Ayari;90;6;Jugada
+32;Sweden;Alexander Isak;30;0;Jugada
+32;Sweden;Viktor Gyökeres;59;0;Jugada
+32;Sweden;Mattias Svanberg;84;0;Jugada
+32;Tunisia;Omar Rekik;43;0;Jugada
+33;Netherlands;Brian Brobbey;5;0;Jugada
+33;Netherlands;Brian Brobbey;17;0;Jugada
+33;Netherlands;Cody Gakpo;47;0;Jugada
+33;Netherlands;Cody Gakpo;54;0;Jugada
+33;Netherlands;Crysencio Summerville;89;0;Jugada
+33;Sweden;Anthony Elanga;59;0;Jugada
+34;Japan;Daichi Kamada;4;0;Jugada
+34;Japan;Ayase Ueda;31;0;Jugada
+34;Japan;Ayase Ueda;83;0;Jugada
+34;Japan;Junya Itō;69;0;Jugada
+35;Japan;Daizen Maeda;56;0;Jugada
+35;Sweden;Anthony Elanga;62;0;Jugada
+36;Tunisia;Hazem Mastouri;54;0;Jugada
+36;Tunisia;Ellyes Skhiri;3;0;En contra
+36;Netherlands;Brian Brobbey;7;0;Jugada
+36;Netherlands;Jan Paul van Hecke;62;0;Jugada
+37;Egypt;Mohamed Hany;66;0;En contra
+37;Egypt;Emam Ashour;19;0;Jugada
+38;Iran;Ramin Rezaeian;32;0;Jugada
+38;Iran;Mohammad Mohebi;64;0;Jugada
+38;New Zealand;Elijah Just;7;0;Jugada
+38;New Zealand;Elijah Just;54;0;Jugada
+40;New Zealand;Finn Surman;15;0;Jugada
+40;Egypt;Mostafa Ziko;58;0;Jugada
+40;Egypt;Mohamed Salah;67;0;Jugada
+40;Egypt;Trézéguet;82;0;Jugada
+41;Egypt;Mahmoud Saber;5;0;Jugada
+41;Iran;Ramin Rezaeian;14;0;Jugada
+42;New Zealand;Elijah Just;84;0;Jugada
+42;Belgium;Leandro Trossard;28;0;Jugada
+42;Belgium;Leandro Trossard;50;0;Jugada
+42;Belgium;Kevin De Bruyne;66;0;Jugada
+42;Belgium;Romelu Lukaku;86;0;Jugada
+42;Belgium;Alexis Saelemaekers;90;4;Jugada
+44;Saudi Arabia;Abdulelah Al-Amri;41;0;Jugada
+44;Uruguay;Maximiliano Araújo;80;0;Jugada
+45;Spain;Lamine Yamal;10;0;Jugada
+45;Spain;Mikel Oyarzabal;21;0;Jugada
+45;Spain;Mikel Oyarzabal;24;0;Jugada
+45;Saudi Arabia;Hassan Al-Tambakti;49;0;En contra
+46;Uruguay;Maximiliano Araújo;44;0;Jugada
+46;Uruguay;Agustín Canobbio;45;6;Jugada
+46;Cape Verde;Kevin Pina;21;0;Jugada
+46;Cape Verde;Hélio Varela;61;0;Jugada
+48;Spain;Álex Baena;42;0;Jugada
+49;France;Kylian Mbappé;66;0;Jugada
+49;France;Kylian Mbappé;90;6;Jugada
+49;France;Bradley Barcola;82;0;Jugada
+49;Senegal;Ibrahim Mbaye;90;5;Jugada
+50;Iraq;Aymen Hussein;39;0;Jugada
+50;Norway;Erling Haaland;29;0;Jugada
+50;Norway;Erling Haaland;43;0;Jugada
+50;Norway;Leo Østigård;76;0;Jugada
+50;Iraq;Aymen Hussein;90;6;En contra
+51;France;Kylian Mbappé;14;0;Jugada
+51;France;Kylian Mbappé;54;0;Jugada
+51;France;Ousmane Dembélé;66;0;Jugada
+52;Norway;Marcus Holmgren Pedersen;43;0;Jugada
+52;Norway;Erling Haaland;48;0;Jugada
+52;Norway;Erling Haaland;58;0;Jugada
+52;Senegal;Ismaïla Sarr;53;0;Jugada
+52;Senegal;Ismaïla Sarr;90;3;Jugada
+53;Norway;Thelo Aasgaard;21;0;Jugada
+53;France;Ousmane Dembélé;7;0;Jugada
+53;France;Ousmane Dembélé;20;0;Jugada
+53;France;Ousmane Dembélé;32;0;Jugada
+53;France;Désiré Doué;90;4;Jugada
+54;Senegal;Habib Diarra;4;0;Jugada
+54;Senegal;Ismaïla Sarr;56;0;Jugada
+54;Senegal;Pape Gueye;59;0;Jugada
+54;Senegal;Pape Gueye;71;0;Jugada
+54;Senegal;Iliman Ndiaye;82;0;Jugada
+55;Argentina;Lionel Messi;17;0;Jugada
+55;Argentina;Lionel Messi;60;0;Jugada
+55;Argentina;Lionel Messi;76;0;Jugada
+56;Austria;Romano Schmid;20;0;Jugada
+56;Jordan;Yazan Al-Arab;76;0;En contra
+56;Austria;Marko Arnautović;90;12;Penal
+56;Jordan;Ali Olwan;50;0;Jugada
+57;Argentina;Lionel Messi;38;0;Jugada
+57;Argentina;Lionel Messi;90;5;Jugada
+58;Jordan;Nizar Al-Rashdan;36;0;Jugada
+58;Algeria;Nadhir Benbouali;69;0;Jugada
+58;Algeria;Amine Gouiri;82;0;Jugada
+59;Algeria;Rafik Belghali;45;0;Jugada
+59;Algeria;Riyad Mahrez;60;0;Jugada
+59;Algeria;Riyad Mahrez;90;3;Jugada
+59;Austria;Marko Arnautović;28;0;Jugada
+59;Austria;Marcel Sabitzer;55;0;Jugada
+59;Austria;Saša Kalajdžić;90;6;Jugada
+60;Jordan;Musa Al-Taamari;55;0;Jugada
+60;Argentina;Giovani Lo Celso;19;0;Jugada
+60;Argentina;Lautaro Martínez;31;0;Penal
+60;Argentina;Lionel Messi;80;0;Jugada
+61;Portugal;João Neves;6;0;Jugada
+61;DR Congo;Yoane Wissa;45;5;Jugada
+62;Uzbekistan;Abbosbek Fayzullaev;60;0;Jugada
+62;Colombia;Daniel Muñoz;40;0;Jugada
+62;Colombia;Luis Díaz;65;0;Jugada
+62;Colombia;Jaminton Campaz;90;9;Jugada
+63;Portugal;Cristiano Ronaldo;6;0;Jugada
+63;Portugal;Cristiano Ronaldo;39;0;Jugada
+63;Portugal;Nuno Mendes;17;0;Jugada
+63;Uzbekistan;Abduvohid Nematov;60;0;En contra
+63;Portugal;Rafael Leão;87;0;Jugada
+64;Colombia;Daniel Muñoz;76;0;Jugada
+66;DR Congo;Yoane Wissa;68;0;Penal
+66;DR Congo;Yoane Wissa;90;1;Jugada
+66;DR Congo;Fiston Mayele;78;0;Jugada
+66;Uzbekistan;Eldor Shomurodov;10;0;Jugada
+67;England;Harry Kane;12;0;Penal
+67;England;Harry Kane;42;0;Jugada
+67;England;Jude Bellingham;47;0;Jugada
+67;England;Marcus Rashford;85;0;Jugada
+67;Croatia;Martin Baturina;36;0;Jugada
+67;Croatia;Petar Musa;45;5;Jugada
+68;Ghana;Caleb Yirenkyi;90;5;Jugada
+70;Croatia;Ante Budimir;54;0;Jugada
+71;England;Jude Bellingham;62;0;Jugada
+71;England;Harry Kane;67;0;Jugada
+72;Croatia;Petar Sučić;31;0;Jugada
+72;Croatia;Nikola Vlašić;83;0;Jugada
+72;Ghana;Derrick Luckassen;73;0;Jugada
+73;Canada;Stephen Eustáquio;90;2;Jugada
+74;Brazil;Casemiro;56;0;Jugada
+74;Brazil;Gabriel Martinelli;90;5;Jugada
+74;Japan;Kaishū Sano;29;0;Jugada
+75;Germany;Kai Havertz;54;0;Jugada
+75;Paraguay;Julio Enciso;42;0;Jugada
+76;Netherlands;Cody Gakpo;72;0;Jugada
+76;Morocco;Issa Diop;90;1;Jugada
+77;Ivory Coast;Amad Diallo;74;0;Jugada
+77;Norway;Antonio Nusa;39;0;Jugada
+77;Norway;Erling Haaland;86;0;Jugada
+78;France;Kylian Mbappé;45;0;Jugada
+78;France;Kylian Mbappé;74;0;Jugada
+78;France;Bradley Barcola;53;0;Jugada
+79;Mexico;Julián Quiñones;22;0;Jugada
+79;Mexico;Raúl Jiménez;31;0;Jugada
+80;England;Harry Kane;75;0;Jugada
+80;England;Harry Kane;86;0;Jugada
+80;DR Congo;Brian Cipenga;7;0;Jugada
+81;Belgium;Romelu Lukaku;86;0;Jugada
+81;Belgium;Youri Tielemans;89;0;Jugada
+81;Belgium;Youri Tielemans;120;5;Penal
+81;Senegal;Habib Diarra;25;0;Jugada
+81;Senegal;Ismaïla Sarr;51;0;Jugada
+82;United States;Folarin Balogun;45;0;Jugada
+82;United States;Malik Tillman;82;0;Jugada
+83;Spain;Mikel Oyarzabal;36;0;Jugada
+83;Spain;Mikel Oyarzabal;89;0;Jugada
+83;Spain;Pedro Porro;66;0;Jugada
+84;Portugal;Cristiano Ronaldo;68;0;Penal
+84;Portugal;Gonçalo Ramos;90;4;Jugada
+84;Croatia;Ivan Perišić;53;0;Jugada
+85;Switzerland;Breel Embolo;10;0;Jugada
+85;Switzerland;Dan Ndoye;46;0;Jugada
+86;Egypt;Mohamed Hany;55;0;En contra
+86;Egypt;Emam Ashour;13;0;Jugada
+87;Argentina;Lionel Messi;29;0;Jugada
+87;Argentina;Lisandro Martínez;92;0;Jugada
+87;Cape Verde;Diney;111;0;En contra
+87;Cape Verde;Deroy Duarte;59;0;Jugada
+87;Cape Verde;Sidny Lopes Cabral;103;0;Jugada
+88;Colombia;Jhon Arias;14;0;Jugada
+89;Morocco;Azzedine Ounahi;50;0;Jugada
+89;Morocco;Azzedine Ounahi;82;0;Jugada
+89;Morocco;Soufiane Rahimi;90;8;Jugada
+90;France;Kylian Mbappé;70;0;Penal
+91;Brazil;Neymar;90;10;Penal
+91;Norway;Erling Haaland;79;0;Jugada
+91;Norway;Erling Haaland;90;0;Jugada
+92;Mexico;Julián Quiñones;42;0;Jugada
+92;Mexico;Raúl Jiménez;69;0;Penal
+92;England;Jude Bellingham;36;0;Jugada
+92;England;Jude Bellingham;38;0;Jugada
+92;England;Harry Kane;60;0;Penal
+93;Spain;Mikel Merino;90;1;Jugada
+94;United States;Malik Tillman;31;0;Jugada
+94;Belgium;Charles De Ketelaere;9;0;Jugada
+94;Belgium;Charles De Ketelaere;33;0;Jugada
+94;Belgium;Hans Vanaken;57;0;Jugada
+94;Belgium;Romelu Lukaku;90;3;Jugada
+95;Argentina;Cristian Romero;79;0;Jugada
+95;Argentina;Lionel Messi;83;0;Jugada
+95;Argentina;Enzo Fernández;90;2;Jugada
+95;Egypt;Yasser Ibrahim;15;0;Jugada
+95;Egypt;Mostafa Ziko;67;0;Jugada
+97;France;Kylian Mbappé;60;0;Jugada
+97;France;Ousmane Dembélé;66;0;Jugada
+98;Spain;Fabián Ruiz;30;0;Jugada
+98;Spain;Mikel Merino;88;0;Jugada
+98;Belgium;Charles De Ketelaere;41;0;Jugada
+99;Norway;Andreas Schjelderup;36;0;Jugada
+99;England;Jude Bellingham;45;2;Jugada
+99;England;Jude Bellingham;93;0;Jugada
+100;Argentina;Alexis Mac Allister;10;0;Jugada
+100;Argentina;Julián Alvarez;112;0;Jugada
+100;Argentina;Lautaro Martínez;120;1;Jugada
+100;Switzerland;Dan Ndoye;67;0;Jugada
+101;Spain;Mikel Oyarzabal;22;0;Penal
+101;Spain;Pedro Porro;58;0;Jugada
+102;England;Anthony Gordon;55;0;Jugada
+102;Argentina;Enzo Fernández;85;0;Jugada
+102;Argentina;Lautaro Martínez;90;2;Jugada
+103;France;Kylian Mbappé;48;0;Jugada
+103;France;Kylian Mbappé;66;0;Jugada
+103;France;Bradley Barcola;54;0;Jugada
+103;France;Ousmane Dembélé;90;6;Jugada
+103;England;Declan Rice;3;0;Jugada
+103;England;Ezri Konsa;18;0;Jugada
+103;England;Bukayo Saka;37;0;Jugada
+103;England;Bukayo Saka;45;1;Jugada
+103;England;Bukayo Saka;87;0;Penal
+103;England;Jude Bellingham;90;8;Jugada
+104;Spain;Ferran Torres;106;0;Jugada

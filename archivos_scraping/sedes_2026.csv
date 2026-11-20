@@ -1,0 +1,17 @@
+pais;ciudad;estadio;capacidad;latitud;longitud;huso_horario
+Mexico;Ciudad de México;Estadio Azteca † (Mexico City Stadium);80,824;;;Central Standard Time (Mexico)
+United States;East Rutherford;MetLife Stadium (New York New Jersey Stadium);80,663;;;Eastern Standard Time
+United States;Dallas;AT&T Stadium ‡ (Dallas Stadium);70,649;;;Central Standard Time
+United States;Los Ángeles;SoFi Stadium ‡ (Los Angeles Stadium);70,492;;;Pacific Standard Time
+United States;Kansas City;Arrowhead Stadium (Kansas City Stadium);69,045;;;Central Standard Time
+United States;Santa Clara;Levi's Stadium (San Francisco Bay Area Stadium);68,827;;;Pacific Standard Time
+United States;Houston;NRG Stadium ‡ (Houston Stadium);68,777;;;Central Standard Time
+United States;Filadelfia;Lincoln Financial Field (Philadelphia Stadium);68,324;;;Eastern Standard Time
+United States;Atlanta;Mercedes-Benz Stadium ‡ (Atlanta Stadium);68,239;;;Eastern Standard Time
+United States;Seattle;Lumen Field (Seattle Stadium);66,925;;;Pacific Standard Time
+United States;Miami;Hard Rock Stadium (Miami Stadium);64,478;;;Eastern Standard Time
+United States;Foxborough;Gillette Stadium (Boston Stadium);64,146;;;Eastern Standard Time
+Canada;Vancouver;BC Place ‡ (BC Place Vancouver);52,497;;;Pacific Standard Time
+Mexico;Monterrey;Estadio BBVA (Estadio Monterrey);51,243;;;Central Standard Time (Mexico)
+Mexico;Guadalajara;Estadio Akron (Estadio Guadalajara);45,664;;;Central Standard Time (Mexico)
+Canada;Toronto;BMO Field (Toronto Stadium);43,036;;;Eastern Standard Time

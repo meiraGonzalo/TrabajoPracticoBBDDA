@@ -1,0 +1,105 @@
+nro_partido;fase;grupo;fecha;hora_local;estadio;ciudad;local;visitante;goles_local;goles_visitante;penales_local;penales_visitante;asistencia
+1;Group stage;A;June 11, 2026;1:00;Estadio Azteca † (Mexico City Stadium);Ciudad de México;Mexico;South Africa;2;0;;;80,824
+2;Group stage;A;June 11, 2026;8:00;Estadio Akron (Estadio Guadalajara);Guadalajara;South Korea;Czech Republic;2;1;;;44,985
+3;Group stage;A;June 18, 2026;12:00;Mercedes-Benz Stadium ‡ (Atlanta Stadium);Atlanta;Czech Republic;South Africa;1;1;;;67,442
+4;Group stage;A;June 18, 2026;7:00;Estadio Akron (Estadio Guadalajara);Guadalajara;Mexico;South Korea;1;0;;;45,522
+5;Group stage;A;June 24, 2026;7:00;Estadio Azteca † (Mexico City Stadium);Ciudad de México;Czech Republic;Mexico;0;3;;;80,824
+6;Group stage;A;June 24, 2026;7:00;Estadio BBVA (Estadio Monterrey);Monterrey;South Africa;South Korea;1;0;;;51,243
+7;Group stage;B;June 12, 2026;3:00;BMO Field (Toronto Stadium);Toronto;Canada;Bosnia and Herzegovina;1;1;;;43,002
+8;Group stage;B;June 13, 2026;12:00;Levi's Stadium (San Francisco Bay Area Stadium);Santa Clara;Qatar;Switzerland;1;1;;;67,966
+9;Group stage;B;June 18, 2026;12:00;SoFi Stadium ‡ (Los Angeles Stadium);Los Ángeles;Switzerland;Bosnia and Herzegovina;4;1;;;70,026
+10;Group stage;B;June 18, 2026;3:00;BC Place ‡ (BC Place Vancouver);Vancouver;Canada;Qatar;6;0;;;52,497
+11;Group stage;B;June 24, 2026;12:00;BC Place ‡ (BC Place Vancouver);Vancouver;Switzerland;Canada;2;1;;;52,497
+12;Group stage;B;June 24, 2026;12:00;Lumen Field (Seattle Stadium);Seattle;Bosnia and Herzegovina;Qatar;3;1;;;66,925
+13;Group stage;C;June 13, 2026;6:00;MetLife Stadium (New York New Jersey Stadium);East Rutherford;Brazil;Morocco;1;1;;;80,663
+14;Group stage;C;June 13, 2026;9:00;Gillette Stadium (Boston Stadium);Foxborough;Haiti;Scotland;0;1;;;64,146
+15;Group stage;C;June 19, 2026;6:00;Gillette Stadium (Boston Stadium);Foxborough;Scotland;Morocco;0;1;;;64,146
+16;Group stage;C;June 19, 2026;8:30;Lincoln Financial Field (Philadelphia Stadium);Filadelfia;Brazil;Haiti;3;0;;;68,324
+17;Group stage;C;June 24, 2026;6:00;Hard Rock Stadium (Miami Stadium);Miami;Scotland;Brazil;0;3;;;64,478
+18;Group stage;C;June 24, 2026;6:00;Mercedes-Benz Stadium ‡ (Atlanta Stadium);Atlanta;Morocco;Haiti;4;2;;;68,239
+19;Group stage;D;June 12, 2026;6:00;SoFi Stadium ‡ (Los Angeles Stadium);Los Ángeles;United States;Paraguay;4;1;;;70,492
+20;Group stage;D;June 13, 2026;9:00;BC Place ‡ (BC Place Vancouver);Vancouver;Australia;Turkey;2;0;;;52,497
+21;Group stage;D;June 19, 2026;12:00;Lumen Field (Seattle Stadium);Seattle;United States;Australia;2;0;;;66,925
+22;Group stage;D;June 19, 2026;8:00;Levi's Stadium (San Francisco Bay Area Stadium);Santa Clara;Turkey;Paraguay;0;1;;;68,827
+23;Group stage;D;June 25, 2026;7:00;SoFi Stadium ‡ (Los Angeles Stadium);Los Ángeles;Turkey;United States;3;2;;;70,492
+24;Group stage;D;June 25, 2026;7:00;Levi's Stadium (San Francisco Bay Area Stadium);Santa Clara;Paraguay;Australia;0;0;;;68,827
+25;Group stage;E;June 14, 2026;12:00;NRG Stadium ‡ (Houston Stadium);Houston;Germany;Curaçao;7;1;;;68,021
+26;Group stage;E;June 14, 2026;7:00;Lincoln Financial Field (Philadelphia Stadium);Filadelfia;Ivory Coast;Ecuador;1;0;;;68,274
+27;Group stage;E;June 20, 2026;4:00;BMO Field (Toronto Stadium);Toronto;Germany;Ivory Coast;2;1;;;43,036
+28;Group stage;E;June 20, 2026;7:00;Arrowhead Stadium (Kansas City Stadium);Kansas City;Ecuador;Curaçao;0;0;;;68,598
+29;Group stage;E;June 25, 2026;4:00;Lincoln Financial Field (Philadelphia Stadium);Filadelfia;Curaçao;Ivory Coast;0;2;;;68,324
+30;Group stage;E;June 25, 2026;4:00;MetLife Stadium (New York New Jersey Stadium);East Rutherford;Ecuador;Germany;2;1;;;80,663
+31;Group stage;F;June 14, 2026;3:00;AT&T Stadium ‡ (Dallas Stadium);Dallas;Netherlands;Japan;2;2;;;69,285
+32;Group stage;F;June 14, 2026;8:00;Estadio BBVA (Estadio Monterrey);Monterrey;Sweden;Tunisia;5;1;;;50,987
+33;Group stage;F;June 20, 2026;12:00;NRG Stadium ‡ (Houston Stadium);Houston;Netherlands;Sweden;5;1;;;68,777
+34;Group stage;F;June 20, 2026;10:00;Estadio BBVA (Estadio Monterrey);Monterrey;Tunisia;Japan;0;4;;;51,243
+35;Group stage;F;June 25, 2026;6:00;AT&T Stadium ‡ (Dallas Stadium);Dallas;Japan;Sweden;1;1;;;70,137
+36;Group stage;F;June 25, 2026;6:00;Arrowhead Stadium (Kansas City Stadium);Kansas City;Tunisia;Netherlands;1;3;;;68,391
+37;Group stage;G;June 15, 2026;12:00;Lumen Field (Seattle Stadium);Seattle;Belgium;Egypt;1;1;;;66,775
+38;Group stage;G;June 15, 2026;6:00;SoFi Stadium ‡ (Los Angeles Stadium);Los Ángeles;Iran;New Zealand;2;2;;;70,108
+39;Group stage;G;June 21, 2026;12:00;SoFi Stadium ‡ (Los Angeles Stadium);Los Ángeles;Belgium;Iran;0;0;;;70,317
+40;Group stage;G;June 21, 2026;6:00;BC Place ‡ (BC Place Vancouver);Vancouver;New Zealand;Egypt;1;3;;;52,497
+41;Group stage;G;June 26, 2026;8:00;Lumen Field (Seattle Stadium);Seattle;Egypt;Iran;1;1;;;66,925
+42;Group stage;G;June 26, 2026;8:00;BC Place ‡ (BC Place Vancouver);Vancouver;New Zealand;Belgium;1;5;;;52,497
+43;Group stage;H;June 15, 2026;12:00;Mercedes-Benz Stadium ‡ (Atlanta Stadium);Atlanta;Spain;Cape Verde;0;0;;;67,640
+44;Group stage;H;June 15, 2026;6:00;Hard Rock Stadium (Miami Stadium);Miami;Saudi Arabia;Uruguay;1;1;;;62,764
+45;Group stage;H;June 21, 2026;12:00;Mercedes-Benz Stadium ‡ (Atlanta Stadium);Atlanta;Spain;Saudi Arabia;4;0;;;68,239
+46;Group stage;H;June 21, 2026;6:00;Hard Rock Stadium (Miami Stadium);Miami;Uruguay;Cape Verde;2;2;;;64,003
+47;Group stage;H;June 26, 2026;7:00;NRG Stadium ‡ (Houston Stadium);Houston;Cape Verde;Saudi Arabia;0;0;;;68,278
+48;Group stage;H;June 26, 2026;6:00;Estadio Akron (Estadio Guadalajara);Guadalajara;Uruguay;Spain;0;1;;;45,065
+49;Group stage;I;June 16, 2026;3:00;MetLife Stadium (New York New Jersey Stadium);East Rutherford;France;Senegal;3;1;;;80,545
+50;Group stage;I;June 16, 2026;6:00;Gillette Stadium (Boston Stadium);Foxborough;Iraq;Norway;1;4;;;63,106
+51;Group stage;I;June 22, 2026;5:00;Lincoln Financial Field (Philadelphia Stadium);Filadelfia;France;Iraq;3;0;;;68,324
+52;Group stage;I;June 22, 2026;8:00;MetLife Stadium (New York New Jersey Stadium);East Rutherford;Norway;Senegal;3;2;;;80,663
+53;Group stage;I;June 26, 2026;3:00;Gillette Stadium (Boston Stadium);Foxborough;Norway;France;1;4;;;64,146
+54;Group stage;I;June 26, 2026;3:00;BMO Field (Toronto Stadium);Toronto;Senegal;Iraq;5;0;;;43,036
+55;Group stage;J;June 16, 2026;8:00;Arrowhead Stadium (Kansas City Stadium);Kansas City;Argentina;Algeria;3;0;;;69,045
+56;Group stage;J;June 16, 2026;9:00;Levi's Stadium (San Francisco Bay Area Stadium);Santa Clara;Austria;Jordan;3;1;;;68,527
+57;Group stage;J;June 22, 2026;12:00;AT&T Stadium ‡ (Dallas Stadium);Dallas;Argentina;Austria;2;0;;;70,649
+58;Group stage;J;June 22, 2026;8:00;Levi's Stadium (San Francisco Bay Area Stadium);Santa Clara;Jordan;Algeria;1;2;;;68,371
+59;Group stage;J;June 27, 2026;9:00;Arrowhead Stadium (Kansas City Stadium);Kansas City;Algeria;Austria;3;3;;;69,045
+60;Group stage;J;June 27, 2026;9:00;AT&T Stadium ‡ (Dallas Stadium);Dallas;Jordan;Argentina;1;3;;;70,649
+61;Group stage;K;June 17, 2026;12:00;NRG Stadium ‡ (Houston Stadium);Houston;Portugal;DR Congo;1;1;;;68,777
+62;Group stage;K;June 17, 2026;8:00;Estadio Azteca † (Mexico City Stadium);Ciudad de México;Uzbekistan;Colombia;1;3;;;80,824
+63;Group stage;K;June 23, 2026;12:00;NRG Stadium ‡ (Houston Stadium);Houston;Portugal;Uzbekistan;5;0;;;68,777
+64;Group stage;K;June 23, 2026;8:00;Estadio Akron (Estadio Guadalajara);Guadalajara;Colombia;DR Congo;1;0;;;45,358
+65;Group stage;K;June 27, 2026;7:30;Hard Rock Stadium (Miami Stadium);Miami;Colombia;Portugal;0;0;;;64,478
+66;Group stage;K;June 27, 2026;7:30;Mercedes-Benz Stadium ‡ (Atlanta Stadium);Atlanta;DR Congo;Uzbekistan;3;1;;;68,239
+67;Group stage;L;June 17, 2026;3:00;AT&T Stadium ‡ (Dallas Stadium);Dallas;England;Croatia;4;2;;;70,389
+68;Group stage;L;June 17, 2026;7:00;BMO Field (Toronto Stadium);Toronto;Ghana;Panama;1;0;;;42,942
+69;Group stage;L;June 23, 2026;4:00;Gillette Stadium (Boston Stadium);Foxborough;England;Ghana;0;0;;;63,983
+70;Group stage;L;June 23, 2026;7:00;BMO Field (Toronto Stadium);Toronto;Panama;Croatia;0;1;;;43,036
+71;Group stage;L;June 27, 2026;5:00;MetLife Stadium (New York New Jersey Stadium);East Rutherford;Panama;England;0;2;;;80,663
+72;Group stage;L;June 27, 2026;5:00;Lincoln Financial Field (Philadelphia Stadium);Filadelfia;Croatia;Ghana;2;1;;;68,324
+73;Round of 32;;June 28, 2026;12:00;SoFi Stadium ‡ (Los Angeles Stadium);Los Ángeles;South Africa;Canada;0;1;;;69,237
+74;Round of 32;;June 29, 2026;12:00;NRG Stadium ‡ (Houston Stadium);Houston;Brazil;Japan;2;1;;;68,777
+75;Round of 32;;June 29, 2026;4:30;Gillette Stadium (Boston Stadium);Foxborough;Germany;Paraguay;1;1;3;4;63,945
+76;Round of 32;;June 29, 2026;7:00;Estadio BBVA (Estadio Monterrey);Monterrey;Netherlands;Morocco;1;1;2;3;51,243
+77;Round of 32;;June 30, 2026;12:00;AT&T Stadium ‡ (Dallas Stadium);Dallas;Ivory Coast;Norway;1;2;;;69,665
+78;Round of 32;;June 30, 2026;5:00;MetLife Stadium (New York New Jersey Stadium);East Rutherford;France;Sweden;3;0;;;80,663
+79;Round of 32;;June 30, 2026;8:00;Estadio Azteca † (Mexico City Stadium);Ciudad de México;Mexico;Ecuador;2;0;;;80,824
+80;Round of 32;;July 1, 2026;12:00;Mercedes-Benz Stadium ‡ (Atlanta Stadium);Atlanta;England;DR Congo;2;1;;;68,239
+81;Round of 32;;July 1, 2026;1:00;Lumen Field (Seattle Stadium);Seattle;Belgium;Senegal;3;2;;;66,925
+82;Round of 32;;July 1, 2026;5:00;Levi's Stadium (San Francisco Bay Area Stadium);Santa Clara;United States;Bosnia and Herzegovina;2;0;;;68,827
+83;Round of 32;;July 2, 2026;12:00;SoFi Stadium ‡ (Los Angeles Stadium);Los Ángeles;Spain;Austria;3;0;;;70,492
+84;Round of 32;;July 2, 2026;7:00;BMO Field (Toronto Stadium);Toronto;Portugal;Croatia;2;1;;;43,036
+85;Round of 32;;July 2, 2026;8:00;BC Place ‡ (BC Place Vancouver);Vancouver;Switzerland;Algeria;2;0;;;52,497
+86;Round of 32;;July 3, 2026;1:00;AT&T Stadium ‡ (Dallas Stadium);Dallas;Australia;Egypt;1;1;2;4;70,244
+87;Round of 32;;July 3, 2026;6:00;Hard Rock Stadium (Miami Stadium);Miami;Argentina;Cape Verde;3;2;;;64,478
+88;Round of 32;;July 3, 2026;8:30;Arrowhead Stadium (Kansas City Stadium);Kansas City;Colombia;Ghana;1;0;;;69,045
+89;Round of 16;;July 4, 2026;12:00;NRG Stadium ‡ (Houston Stadium);Houston;Canada;Morocco;0;3;;;68,777
+90;Round of 16;;July 4, 2026;5:00;Lincoln Financial Field (Philadelphia Stadium);Filadelfia;Paraguay;France;0;1;;;68,324
+91;Round of 16;;July 5, 2026;4:00;MetLife Stadium (New York New Jersey Stadium);East Rutherford;Brazil;Norway;1;2;;;80,663
+92;Round of 16;;July 5, 2026;7:00;Estadio Azteca † (Mexico City Stadium);Ciudad de México;Mexico;England;2;3;;;80,824
+93;Round of 16;;July 6, 2026;2:00;AT&T Stadium ‡ (Dallas Stadium);Dallas;Portugal;Spain;0;1;;;70,649
+94;Round of 16;;July 6, 2026;5:00;Lumen Field (Seattle Stadium);Seattle;United States;Belgium;1;4;;;66,925
+95;Round of 16;;July 7, 2026;12:00;Mercedes-Benz Stadium ‡ (Atlanta Stadium);Atlanta;Argentina;Egypt;3;2;;;68,239
+96;Round of 16;;July 7, 2026;1:00;BC Place ‡ (BC Place Vancouver);Vancouver;Switzerland;Colombia;0;0;4;3;52,497
+97;Quarter-finals;;July 9, 2026;4:00;Gillette Stadium (Boston Stadium);Foxborough;France;Morocco;2;0;;;63,811
+98;Quarter-finals;;July 10, 2026;12:00;SoFi Stadium ‡ (Los Angeles Stadium);Los Ángeles;Spain;Belgium;2;1;;;70,492
+99;Quarter-finals;;July 11, 2026;5:00;Hard Rock Stadium (Miami Stadium);Miami;Norway;England;1;2;;;64,478
+100;Quarter-finals;;July 11, 2026;8:00;Arrowhead Stadium (Kansas City Stadium);Kansas City;Argentina;Switzerland;3;1;;;69,045
+101;Semi-finals;;July 14, 2026;2:00;AT&T Stadium ‡ (Dallas Stadium);Dallas;France;Spain;0;2;;;70,176
+102;Semi-finals;;July 15, 2026;3:00;Mercedes-Benz Stadium ‡ (Atlanta Stadium);Atlanta;England;Argentina;1;2;;;68,239
+103;Match for third place;;July 18, 2026;5:00;Hard Rock Stadium (Miami Stadium);Miami;France;England;4;6;;;64,478
+104;Final;;July 19, 2026;3:00;MetLife Stadium (New York New Jersey Stadium);East Rutherford;Spain;Argentina;1;0;;;80,663
