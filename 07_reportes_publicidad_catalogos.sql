@@ -23,6 +23,7 @@ GO
    local cae en "Prime Time" en los distintos países registrados.
    ===================================================================== */
 CREATE OR ALTER PROCEDURE pub.usp_Reporte_MatrizPrimeTime
+WITH EXECUTE AS OWNER   -- E8: usa SQL dinamico (corta el ownership chaining), asi los roles sin SELECT sobre pub pueden correrlo
 AS
 BEGIN
     SET NOCOUNT ON;
