@@ -67,3 +67,15 @@ Para reconstruir la solución íntegramente desde cero, ejecute los scripts en S
 * **`08`**: Implementación de cifrado de columnas sensibles y definición de roles (`rol_administrador`, `rol_cargador_resultados`, `rol_gestor_publicidad`, `rol_consulta`), backup y politica de RPO (`08_backup.sql`, `doc/08_politica_backup.md`).
 
 ---
+
+### 5. Aplicación ABM (`app_abm/`)
+Aplicación de escritorio en Python (tkinter) para gestionar el Alta, Baja y Modificación de **anunciantes** (`pub.Anunciante`). No ejecuta `INSERT`/`UPDATE`/`DELETE` propios: invoca `pub.usp_Anunciante_Alta`, `_Modificacion` y `_Baja` del script `02`, de modo que las validaciones (nombre obligatorio y único, país existente, no borrar anunciantes con marcas) las sigue aplicando la base y la app muestra el mensaje del `THROW`.
+
+* **Requisitos:** Python 3.10+, un driver ODBC de SQL Server (17 o 18) y `python -m pip install pyodbc` (con `python -m` se instala en el mismo intérprete que después ejecuta la app).
+* **Ejecución** (autenticación de Windows, instancia `localhost\SQLEXPRESS` por defecto):
+  ```
+  python app_abm/abm_anunciantes.py
+  python app_abm/abm_anunciantes.py --server MI_SERVIDOR --user mi_login --password ****
+  ```
+  También acepta las variables de entorno `MUNDIAL_SERVER`, `MUNDIAL_DB`, `MUNDIAL_USER` y `MUNDIAL_PASSWORD`. El login usado necesita `EXECUTE` sobre los SP de `pub` y `SELECT` sobre `pub.Anunciante`, `pub.Marca` y `cat.Pais` (por ejemplo, uno con `rol_administrador`); los usuarios del script `08` se crean `WITHOUT LOGIN`, por lo que no sirven para conectarse.
+* **Uso:** la grilla lista los anunciantes con su país y cantidad de marcas (filtrable por nombre). Para dar de alta se completa nombre y país y se pulsa *Alta*; para modificar o dar de baja se selecciona una fila, se editan los datos y se pulsa *Modificar* o *Baja*.
