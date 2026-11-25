@@ -14,6 +14,8 @@
 */
 
 USE MundialDB;
+-- E8: nro_documento esta cifrado; se abre la clave para poder buscar personas por documento en este test
+OPEN SYMMETRIC KEY sk_datos_personales DECRYPTION BY CERTIFICATE cert_datos_personales;
 GO
 
 /* =================================================================
@@ -74,13 +76,13 @@ GO
 
 --1. usp_Convocatoria_Reemplazar. OK: AR3 se lesiona y lo reemplaza AR4 con el mismo dorsal (3)
 DECLARE @c int, @j int;
-SELECT @c = c.id_convocado FROM comp.Convocado c JOIN comp.Persona p ON p.id_persona = c.id_jugador WHERE p.nro_documento = 'L1-AR3';
-SELECT @j = id_persona FROM comp.Persona WHERE nro_documento = 'L1-AR4';
+SELECT @c = c.id_convocado FROM comp.Convocado c JOIN comp.Persona p ON p.id_persona = c.id_jugador WHERE CONVERT(varchar(30), DECRYPTBYKEY(p.nro_documento_cif)) = 'L1-AR3';
+SELECT @j = id_persona FROM comp.Persona WHERE CONVERT(varchar(30), DECRYPTBYKEY(nro_documento_cif)) = 'L1-AR4';
 EXEC comp.usp_Convocatoria_Reemplazar @c, @j, 3, NULL, 'Lesion', '2038-06-05', 'Desgarro';
 
-SELECT p.nro_documento, c.dorsal, c.fecha_alta, c.fecha_baja
+SELECT CONVERT(varchar(30), DECRYPTBYKEY(p.nro_documento_cif)), c.dorsal, c.fecha_alta, c.fecha_baja
 FROM comp.Convocado c JOIN comp.Persona p ON p.id_persona = c.id_jugador
-WHERE p.nro_documento IN ('L1-AR3', 'L1-AR4');
+WHERE CONVERT(varchar(30), DECRYPTBYKEY(p.nro_documento_cif)) IN ('L1-AR3', 'L1-AR4');
 -- Esperado: L1-AR3 dorsal 3 con fecha_baja 2038-06-05 / L1-AR4 dorsal 3, alta 2038-06-05, sin baja
 SELECT id_convocado_baja, id_convocado_alta, motivo, fecha, observacion
 FROM comp.CambioConvocatoria WHERE id_convocado_baja = @c;
@@ -90,8 +92,8 @@ GO
 -- 2.usp_Convocatoria_Reemplazar. ERROR (validaciones propias): el que sale (AR3) ya tiene baja, motivo
 --invalido y fecha posterior al fin del torneo
 DECLARE @c int, @j int;
-SELECT @c = c.id_convocado FROM comp.Convocado c JOIN comp.Persona p ON p.id_persona = c.id_jugador WHERE p.nro_documento = 'L1-AR3';
-SELECT @j = id_persona FROM comp.Persona WHERE nro_documento = 'L1-BR1';
+SELECT @c = c.id_convocado FROM comp.Convocado c JOIN comp.Persona p ON p.id_persona = c.id_jugador WHERE CONVERT(varchar(30), DECRYPTBYKEY(p.nro_documento_cif)) = 'L1-AR3';
+SELECT @j = id_persona FROM comp.Persona WHERE CONVERT(varchar(30), DECRYPTBYKEY(nro_documento_cif)) = 'L1-BR1';
 EXEC comp.usp_Convocatoria_Reemplazar @c, @j, 1, NULL, 'Cansancio', '2038-08-01', NULL;
 /* Esperado:
    usp_Convocatoria_Reemplazar: - El convocado que sale ya estaba dado de baja.
@@ -103,16 +105,16 @@ GO
 --esta en Brasil y el dorsal 1 lo usa AR1. Lo rechaza usp_Convocado_Alta
 --despues de que AR2 ya tenia la baja -> la transaccion la deshace.
 DECLARE @c int, @j int;
-SELECT @c = c.id_convocado FROM comp.Convocado c JOIN comp.Persona p ON p.id_persona = c.id_jugador WHERE p.nro_documento = 'L1-AR2';
-SELECT @j = id_persona FROM comp.Persona WHERE nro_documento = 'L1-BR1';
+SELECT @c = c.id_convocado FROM comp.Convocado c JOIN comp.Persona p ON p.id_persona = c.id_jugador WHERE CONVERT(varchar(30), DECRYPTBYKEY(p.nro_documento_cif)) = 'L1-AR2';
+SELECT @j = id_persona FROM comp.Persona WHERE CONVERT(varchar(30), DECRYPTBYKEY(nro_documento_cif)) = 'L1-BR1';
 EXEC comp.usp_Convocatoria_Reemplazar @c, @j, 1, NULL, 'Lesion', '2038-06-06', NULL;
 /* Esperado:
    usp_Convocado_Alta: - El dorsal ya lo usa otro convocado.
    - El jugador ya esta convocado en otra seleccion. */
 GO
-SELECT p.nro_documento, c.fecha_baja
+SELECT CONVERT(varchar(30), DECRYPTBYKEY(p.nro_documento_cif)), c.fecha_baja
 FROM comp.Convocado c JOIN comp.Persona p ON p.id_persona = c.id_jugador
-WHERE p.nro_documento = 'L1-AR2';
+WHERE CONVERT(varchar(30), DECRYPTBYKEY(p.nro_documento_cif)) = 'L1-AR2';
 -- Esperado: fecha_baja NULL (la baja se deshizo)
 GO
 
@@ -125,7 +127,7 @@ GO
 DECLARE @cambio int;
 SELECT @cambio = cc.id_cambio_convocatoria FROM comp.CambioConvocatoria cc
 JOIN comp.Convocado c ON c.id_convocado = cc.id_convocado_baja
-JOIN comp.Persona p ON p.id_persona = c.id_jugador WHERE p.nro_documento = 'L1-AR3';
+JOIN comp.Persona p ON p.id_persona = c.id_jugador WHERE CONVERT(varchar(30), DECRYPTBYKEY(p.nro_documento_cif)) = 'L1-AR3';
 EXEC comp.usp_CambioConvocatoria_Modificacion @cambio, 'Lesion', 'Desgarro confirmado';
 SELECT motivo, observacion FROM comp.CambioConvocatoria WHERE id_cambio_convocatoria = @cambio;
 -- Esperado: Lesion, Desgarro confirmado
@@ -139,7 +141,7 @@ GO
 
 -- 1.usp_Convocatoria_Baja. OK: baja de AR4 (quedan 2 activos = minimo)
 DECLARE @c int;
-SELECT @c = c.id_convocado FROM comp.Convocado c JOIN comp.Persona p ON p.id_persona = c.id_jugador WHERE p.nro_documento = 'L1-AR4';
+SELECT @c = c.id_convocado FROM comp.Convocado c JOIN comp.Persona p ON p.id_persona = c.id_jugador WHERE CONVERT(varchar(30), DECRYPTBYKEY(p.nro_documento_cif)) = 'L1-AR4';
 EXEC comp.usp_Convocatoria_Baja @c, 'Decision tecnica', '2038-06-07', NULL;
 SELECT fecha_baja FROM comp.Convocado WHERE id_convocado = @c;
 -- Esperado: 2038-06-07
@@ -149,7 +151,7 @@ GO
 
 -- 2.usp_Convocatoria_Baja. ERROR: baja de AR1 dejaria a Argentina con 1 (minimo 2) y el motivo es invalido
 DECLARE @c int;
-SELECT @c = c.id_convocado FROM comp.Convocado c JOIN comp.Persona p ON p.id_persona = c.id_jugador WHERE p.nro_documento = 'L1-AR1';
+SELECT @c = c.id_convocado FROM comp.Convocado c JOIN comp.Persona p ON p.id_persona = c.id_jugador WHERE CONVERT(varchar(30), DECRYPTBYKEY(p.nro_documento_cif)) = 'L1-AR1';
 EXEC comp.usp_Convocatoria_Baja @c, 'Cansancio', '2038-06-08', NULL;
 /* Esperado:
    usp_Convocatoria_Baja: - Motivo invalido (Lesion / Enfermedad / Decision tecnica / Sancion).
@@ -158,7 +160,7 @@ GO
 
 -- 3.usp_Convocatoria_Baja. ERROR: AR4 ya tenia baja y no se indica fecha
 DECLARE @c int;
-SELECT @c = c.id_convocado FROM comp.Convocado c JOIN comp.Persona p ON p.id_persona = c.id_jugador WHERE p.nro_documento = 'L1-AR4';
+SELECT @c = c.id_convocado FROM comp.Convocado c JOIN comp.Persona p ON p.id_persona = c.id_jugador WHERE CONVERT(varchar(30), DECRYPTBYKEY(p.nro_documento_cif)) = 'L1-AR4';
 EXEC comp.usp_Convocatoria_Baja @c, 'Lesion', NULL, NULL;
 /* Esperado:
    usp_Convocatoria_Baja: - El convocado ya estaba dado de baja. - La fecha es obligatoria. */
@@ -172,11 +174,11 @@ GO
    ================================================================= */
 
 -- 1.usp_Jugador_AltaCompleta. Evidencia de la PREPARACION: persona + jugador (+ convocado si corresponde)
-SELECT p.nro_documento, j.id_jugador, c.dorsal, c.fecha_baja
+SELECT CONVERT(varchar(30), DECRYPTBYKEY(p.nro_documento_cif)), j.id_jugador, c.dorsal, c.fecha_baja
 FROM comp.Persona p
 JOIN comp.Jugador j ON j.id_jugador = p.id_persona
 LEFT JOIN comp.Convocado c ON c.id_jugador = j.id_jugador
-WHERE p.nro_documento LIKE 'L1-%' ORDER BY p.nro_documento;
+WHERE CONVERT(varchar(30), DECRYPTBYKEY(p.nro_documento_cif)) LIKE 'L1-%' ORDER BY CONVERT(varchar(30), DECRYPTBYKEY(p.nro_documento_cif));
 -- Esperado: 5 filas (AR1..AR4 y BR1); id_jugador = id_persona
 GO
 
@@ -187,8 +189,8 @@ SELECT @arg = id_pais FROM cat.Pais WHERE nombre = 'Argentina';
 SELECT @s_arg = id_seleccion FROM comp.Seleccion WHERE id_torneo = @t AND id_pais = @arg;
 SELECT @def = id_posicion FROM comp.Posicion WHERE nombre = 'Defensor';
 EXEC comp.usp_Jugador_AltaCompleta 'Argentino', 'Seis', '2001-02-02', @arg, 'DNI', 'L1-AR6', @def, @s_arg, 6, NULL, '2038-06-08';
-SELECT p.nro_documento, c.dorsal, c.fecha_alta
-FROM comp.Persona p JOIN comp.Convocado c ON c.id_jugador = p.id_persona WHERE p.nro_documento = 'L1-AR6';
+SELECT CONVERT(varchar(30), DECRYPTBYKEY(p.nro_documento_cif)), c.dorsal, c.fecha_alta
+FROM comp.Persona p JOIN comp.Convocado c ON c.id_jugador = p.id_persona WHERE CONVERT(varchar(30), DECRYPTBYKEY(p.nro_documento_cif)) = 'L1-AR6';
 -- Esperado: 1 fila, dorsal 6, alta 2038-06-08
 GO
 
@@ -204,7 +206,7 @@ EXEC comp.usp_Jugador_AltaCompleta 'Argentino', 'Siete', '2001-02-02', @arg, 'DN
    usp_Convocado_Alta: - El dorsal ya lo usa otro convocado.
    - La seleccion ya tiene el maximo de convocados. */
 GO
-SELECT COUNT(*) AS personas_AR7 FROM comp.Persona WHERE nro_documento = 'L1-AR7';
+SELECT COUNT(*) AS personas_AR7 FROM comp.Persona WHERE CONVERT(varchar(30), DECRYPTBYKEY(nro_documento_cif)) = 'L1-AR7';
 -- Esperado: 0 (la persona no quedo creada)
 GO
 
@@ -226,7 +228,7 @@ GO
 /* =================================================================
    RESUMEN FINAL: convocatoria del torneo 2038
    ================================================================= */
-SELECT pa.nombre AS seleccion, p.nro_documento, c.dorsal, c.fecha_baja
+SELECT pa.nombre AS seleccion, CONVERT(varchar(30), DECRYPTBYKEY(p.nro_documento_cif)), c.dorsal, c.fecha_baja
 FROM comp.Convocado c
 JOIN comp.Seleccion s ON s.id_seleccion = c.id_seleccion
 JOIN cat.Pais pa ON pa.id_pais = s.id_pais

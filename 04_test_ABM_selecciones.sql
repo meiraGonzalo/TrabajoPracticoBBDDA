@@ -20,6 +20,10 @@
 =====================================================================
 */
 
+-- E8: nro_documento esta cifrado; se abre la clave para poder buscar personas por documento en este test
+OPEN SYMMETRIC KEY sk_datos_personales DECRYPTION BY CERTIFICATE cert_datos_personales;
+GO
+
  ---Alta----
 
 IF (SELECT COUNT(*) FROM cat.Pais WHERE nombre = 'Argentina') = 0
@@ -341,7 +345,7 @@ EXEC comp.usp_Persona_Alta 'Jugador', 'Dos',  '1996-01-01', @arg, 'DNI', 'T-0002
 EXEC comp.usp_Persona_Alta 'Jugador', 'Tres', '1997-01-01', @arg, 'DNI', 'T-0003';
 EXEC comp.usp_Persona_Alta 'Tecnico', 'Uno',  '1970-01-01', @arg, 'DNI', 'T-0101';
 EXEC comp.usp_Persona_Alta 'Tecnico', 'Dos',  '1975-01-01', @arg, 'DNI', 'T-0102';
-SELECT * FROM comp.Persona WHERE nro_documento LIKE 'T-%';
+SELECT * FROM comp.Persona WHERE CONVERT(varchar(30), DECRYPTBYKEY(nro_documento_cif)) LIKE 'T-%';
 -- Esperado: 5 filas
 GO
 
@@ -363,7 +367,7 @@ GO
 -- MODIFICACION OK: cambio de apellido
 DECLARE @arg int, @p int;
 SELECT @arg = id_pais FROM cat.Pais WHERE nombre = 'Argentina';
-SELECT @p = id_persona FROM comp.Persona WHERE nro_documento = 'T-0003';
+SELECT @p = id_persona FROM comp.Persona WHERE CONVERT(varchar(30), DECRYPTBYKEY(nro_documento_cif)) = 'T-0003';
 EXEC comp.usp_Persona_Modificacion @p, 'Jugador', 'Tres Modificado', '1997-01-01', @arg, 'DNI', 'T-0003';
 SELECT * FROM comp.Persona WHERE id_persona = @p;
 -- Esperado: 1 fila con apellido 'Tres Modificado'
@@ -372,7 +376,7 @@ GO
 -- MODIFICACION ERROR: le quiere poner el documento de otra persona
 DECLARE @arg int, @p int;
 SELECT @arg = id_pais FROM cat.Pais WHERE nombre = 'Argentina';
-SELECT @p = id_persona FROM comp.Persona WHERE nro_documento = 'T-0003';
+SELECT @p = id_persona FROM comp.Persona WHERE CONVERT(varchar(30), DECRYPTBYKEY(nro_documento_cif)) = 'T-0003';
 EXEC comp.usp_Persona_Modificacion @p, 'Jugador', 'Tres', '1997-01-01', @arg, 'DNI', 'T-0001';
 /* Esperado:
    usp_Persona_Modificacion: - Otra persona ya tiene ese documento. */
@@ -393,9 +397,9 @@ GO
 
 --ALTA OK: las 3 personas "Jugador" pasan a ser jugadores
 DECLARE @p1 int, @p2 int, @p3 int, @arq int, @def int;
-SELECT @p1 = id_persona FROM comp.Persona WHERE nro_documento = 'T-0001';
-SELECT @p2 = id_persona FROM comp.Persona WHERE nro_documento = 'T-0002';
-SELECT @p3 = id_persona FROM comp.Persona WHERE nro_documento = 'T-0003';
+SELECT @p1 = id_persona FROM comp.Persona WHERE CONVERT(varchar(30), DECRYPTBYKEY(nro_documento_cif)) = 'T-0001';
+SELECT @p2 = id_persona FROM comp.Persona WHERE CONVERT(varchar(30), DECRYPTBYKEY(nro_documento_cif)) = 'T-0002';
+SELECT @p3 = id_persona FROM comp.Persona WHERE CONVERT(varchar(30), DECRYPTBYKEY(nro_documento_cif)) = 'T-0003';
 SELECT @arq = id_posicion FROM comp.Posicion WHERE nombre = 'Arquero';
 SELECT @def = id_posicion FROM comp.Posicion WHERE nombre = 'Defensor';
 EXEC comp.usp_Jugador_Alta @p1, @arq;
@@ -413,7 +417,7 @@ GO
 
 -- JU3. ALTA ERROR: la persona ya es jugador
 DECLARE @p1 int, @arq int;
-SELECT @p1 = id_persona FROM comp.Persona WHERE nro_documento = 'T-0001';
+SELECT @p1 = id_persona FROM comp.Persona WHERE CONVERT(varchar(30), DECRYPTBYKEY(nro_documento_cif)) = 'T-0001';
 SELECT @arq = id_posicion FROM comp.Posicion WHERE nombre = 'Arquero';
 EXEC comp.usp_Jugador_Alta @p1, @arq;
 /* Esperado:
@@ -422,7 +426,7 @@ GO
 
 -- MODIFICACION OK: Jugador Dos pasa a Delantero
 DECLARE @p2 int, @del int;
-SELECT @p2 = id_persona FROM comp.Persona WHERE nro_documento = 'T-0002';
+SELECT @p2 = id_persona FROM comp.Persona WHERE CONVERT(varchar(30), DECRYPTBYKEY(nro_documento_cif)) = 'T-0002';
 SELECT @del = id_posicion FROM comp.Posicion WHERE nombre = 'Delantero';
 EXEC comp.usp_Jugador_Modificacion @p2, @del;
 SELECT * FROM comp.Jugador WHERE id_jugador = @p2;
@@ -568,8 +572,8 @@ DECLARE @t int, @s int, @dt1 int, @dt2 int;
 SELECT @t = id_torneo FROM comp.Torneo WHERE anio = 2026;
 SELECT @s = s.id_seleccion FROM comp.Seleccion s INNER JOIN cat.Pais p ON p.id_pais = s.id_pais
 WHERE p.nombre = 'Argentina' AND s.id_torneo = @t;
-SELECT @dt1 = id_persona FROM comp.Persona WHERE nro_documento = 'T-0101';
-SELECT @dt2 = id_persona FROM comp.Persona WHERE nro_documento = 'T-0102';
+SELECT @dt1 = id_persona FROM comp.Persona WHERE CONVERT(varchar(30), DECRYPTBYKEY(nro_documento_cif)) = 'T-0101';
+SELECT @dt2 = id_persona FROM comp.Persona WHERE CONVERT(varchar(30), DECRYPTBYKEY(nro_documento_cif)) = 'T-0102';
 EXEC comp.usp_CuerpoTecnico_Alta @s, @dt1, 'Director Tecnico';
 EXEC comp.usp_CuerpoTecnico_Alta @s, @dt2, 'Ayudante de Campo';
 SELECT * FROM comp.CuerpoTecnico WHERE id_seleccion = @s;
@@ -581,7 +585,7 @@ DECLARE @t int, @s int, @dt2 int;
 SELECT @t = id_torneo FROM comp.Torneo WHERE anio = 2026;
 SELECT @s = s.id_seleccion FROM comp.Seleccion s INNER JOIN cat.Pais p ON p.id_pais = s.id_pais
 WHERE p.nombre = 'Argentina' AND s.id_torneo = @t;
-SELECT @dt2 = id_persona FROM comp.Persona WHERE nro_documento = 'T-0102';
+SELECT @dt2 = id_persona FROM comp.Persona WHERE CONVERT(varchar(30), DECRYPTBYKEY(nro_documento_cif)) = 'T-0102';
 EXEC comp.usp_CuerpoTecnico_Alta @s, @dt2, 'Director Tecnico';
 /* Esperado:
    usp_CuerpoTecnico_Alta: - La persona ya integra el cuerpo tecnico de esta seleccion.
@@ -600,7 +604,7 @@ DECLARE @t int, @s int, @dt1 int;
 SELECT @t = id_torneo FROM comp.Torneo WHERE anio = 2026;
 SELECT @s = s.id_seleccion FROM comp.Seleccion s INNER JOIN cat.Pais p ON p.id_pais = s.id_pais
 WHERE p.nombre = 'Brasil' AND s.id_torneo = @t;
-SELECT @dt1 = id_persona FROM comp.Persona WHERE nro_documento = 'T-0101';
+SELECT @dt1 = id_persona FROM comp.Persona WHERE CONVERT(varchar(30), DECRYPTBYKEY(nro_documento_cif)) = 'T-0101';
 EXEC comp.usp_CuerpoTecnico_Alta @s, @dt1, 'Ayudante de Campo';
 /* Esperado:
    usp_CuerpoTecnico_Alta: - La persona ya integra el cuerpo tecnico de otra seleccion del torneo. */
@@ -609,7 +613,7 @@ GO
 -- MODIFICACION OK: Tecnico Dos pasa a Preparador Fisico
 DECLARE @ct int;
 SELECT @ct = ct.id_cuerpo_tecnico FROM comp.CuerpoTecnico ct
-INNER JOIN comp.Persona p ON p.id_persona = ct.id_persona WHERE p.nro_documento = 'T-0102';
+INNER JOIN comp.Persona p ON p.id_persona = ct.id_persona WHERE CONVERT(varchar(30), DECRYPTBYKEY(p.nro_documento_cif)) = 'T-0102';
 EXEC comp.usp_CuerpoTecnico_Modificacion @ct, 'Preparador Fisico';
 SELECT * FROM comp.CuerpoTecnico WHERE id_cuerpo_tecnico = @ct;
 -- Esperado: 1 fila con rol 'Preparador Fisico'
@@ -618,7 +622,7 @@ GO
 -- MODIFICACION ERROR: Tecnico Dos no puede ser DT (ya hay uno)
 DECLARE @ct int;
 SELECT @ct = ct.id_cuerpo_tecnico FROM comp.CuerpoTecnico ct
-INNER JOIN comp.Persona p ON p.id_persona = ct.id_persona WHERE p.nro_documento = 'T-0102';
+INNER JOIN comp.Persona p ON p.id_persona = ct.id_persona WHERE CONVERT(varchar(30), DECRYPTBYKEY(p.nro_documento_cif)) = 'T-0102';
 EXEC comp.usp_CuerpoTecnico_Modificacion @ct, 'Director Tecnico';
 /* Esperado, error 51102:
    usp_CuerpoTecnico_Modificacion: - La seleccion ya tiene director tecnico. */
@@ -634,7 +638,7 @@ DECLARE @t int, @s int, @j1 int, @club int;
 SELECT @t = id_torneo FROM comp.Torneo WHERE anio = 2026;
 SELECT @s = s.id_seleccion FROM comp.Seleccion s INNER JOIN cat.Pais p ON p.id_pais = s.id_pais
 WHERE p.nombre = 'Argentina' AND s.id_torneo = @t;
-SELECT @j1 = id_persona FROM comp.Persona WHERE nro_documento = 'T-0001';
+SELECT @j1 = id_persona FROM comp.Persona WHERE CONVERT(varchar(30), DECRYPTBYKEY(nro_documento_cif)) = 'T-0001';
 SELECT @club = id_club FROM comp.Club WHERE nombre = 'River Plate';
 EXEC comp.usp_Convocado_Alta @s, @j1, 10, @club, '2026-06-01';
 SELECT * FROM comp.Convocado WHERE id_seleccion = @s;
@@ -646,7 +650,7 @@ DECLARE @t int, @s int, @j1 int;
 SELECT @t = id_torneo FROM comp.Torneo WHERE anio = 2026;
 SELECT @s = s.id_seleccion FROM comp.Seleccion s INNER JOIN cat.Pais p ON p.id_pais = s.id_pais
 WHERE p.nombre = 'Argentina' AND s.id_torneo = @t;
-SELECT @j1 = id_persona FROM comp.Persona WHERE nro_documento = 'T-0001';
+SELECT @j1 = id_persona FROM comp.Persona WHERE CONVERT(varchar(30), DECRYPTBYKEY(nro_documento_cif)) = 'T-0001';
 EXEC comp.usp_Convocado_Alta @s, @j1, 10, 9999, '2026-06-01';
 /* Esperado:
    usp_Convocado_Alta: - El dorsal ya lo usa otro convocado. - El jugador ya esta en esta seleccion.
@@ -658,7 +662,7 @@ DECLARE @t int, @s int, @j1 int;
 SELECT @t = id_torneo FROM comp.Torneo WHERE anio = 2026;
 SELECT @s = s.id_seleccion FROM comp.Seleccion s INNER JOIN cat.Pais p ON p.id_pais = s.id_pais
 WHERE p.nombre = 'Brasil' AND s.id_torneo = @t;
-SELECT @j1 = id_persona FROM comp.Persona WHERE nro_documento = 'T-0001';
+SELECT @j1 = id_persona FROM comp.Persona WHERE CONVERT(varchar(30), DECRYPTBYKEY(nro_documento_cif)) = 'T-0001';
 EXEC comp.usp_Convocado_Alta @s, @j1, 10, NULL, '2026-06-01';
 /* Esperado:
    usp_Convocado_Alta: - El jugador ya esta convocado en otra seleccion. */
@@ -676,7 +680,7 @@ DECLARE @t int, @s int, @j2 int;
 SELECT @t = id_torneo FROM comp.Torneo WHERE anio = 2026;
 SELECT @s = s.id_seleccion FROM comp.Seleccion s INNER JOIN cat.Pais p ON p.id_pais = s.id_pais
 WHERE p.nombre = 'Argentina' AND s.id_torneo = @t;
-SELECT @j2 = id_persona FROM comp.Persona WHERE nro_documento = 'T-0002';
+SELECT @j2 = id_persona FROM comp.Persona WHERE CONVERT(varchar(30), DECRYPTBYKEY(nro_documento_cif)) = 'T-0002';
 EXEC comp.usp_Convocado_Alta @s, @j2, 7, NULL, '2026-06-01';
 SELECT * FROM comp.Convocado WHERE id_seleccion = @s;
 -- Esperado: 2 filas (dorsales 10 y 7)
@@ -687,7 +691,7 @@ DECLARE @t int, @s int, @j3 int;
 SELECT @t = id_torneo FROM comp.Torneo WHERE anio = 2026;
 SELECT @s = s.id_seleccion FROM comp.Seleccion s INNER JOIN cat.Pais p ON p.id_pais = s.id_pais
 WHERE p.nombre = 'Argentina' AND s.id_torneo = @t;
-SELECT @j3 = id_persona FROM comp.Persona WHERE nro_documento = 'T-0003';
+SELECT @j3 = id_persona FROM comp.Persona WHERE CONVERT(varchar(30), DECRYPTBYKEY(nro_documento_cif)) = 'T-0003';
 EXEC comp.usp_Convocado_Alta @s, @j3, 9, NULL, '2026-06-01';
 /* Esperado:
    usp_Convocado_Alta: - La seleccion ya tiene el maximo de convocados. */
@@ -696,7 +700,7 @@ GO
 -- MODIFICACION OK: Jugador Dos pasa del 7 al 8
 DECLARE @c int;
 SELECT @c = c.id_convocado FROM comp.Convocado c INNER JOIN comp.Persona p ON p.id_persona = c.id_jugador
-WHERE p.nro_documento = 'T-0002';
+WHERE CONVERT(varchar(30), DECRYPTBYKEY(p.nro_documento_cif)) = 'T-0002';
 EXEC comp.usp_Convocado_Modificacion @c, 8, NULL;
 SELECT * FROM comp.Convocado WHERE id_convocado = @c;
 -- Esperado: 1 fila con dorsal 8
@@ -705,7 +709,7 @@ GO
 --  MODIFICACION ERROR: Jugador Dos quiere el 10 (lo tiene Jugador Uno) y un club inexistente
 DECLARE @c int;
 SELECT @c = c.id_convocado FROM comp.Convocado c INNER JOIN comp.Persona p ON p.id_persona = c.id_jugador
-WHERE p.nro_documento = 'T-0002';
+WHERE CONVERT(varchar(30), DECRYPTBYKEY(p.nro_documento_cif)) = 'T-0002';
 EXEC comp.usp_Convocado_Modificacion @c, 10, 9999;
 /* Esperado:
    usp_Convocado_Modificacion: - El dorsal ya lo usa otro convocado. - El club no existe. */
@@ -720,7 +724,7 @@ GO
 -- BAJA OK: se borra a Jugador Dos (no fue alineado ni tiene cambios)
 DECLARE @c int;
 SELECT @c = c.id_convocado FROM comp.Convocado c INNER JOIN comp.Persona p ON p.id_persona = c.id_jugador
-WHERE p.nro_documento = 'T-0002';
+WHERE CONVERT(varchar(30), DECRYPTBYKEY(p.nro_documento_cif)) = 'T-0002';
 EXEC comp.usp_Convocado_Baja @c;
 SELECT * FROM comp.Convocado;
 -- Esperado: 1 fila (solo Jugador Uno)
@@ -780,7 +784,7 @@ GO
 
 -- PERSONA BAJA ERROR: Jugador Uno esta registrado como jugador
 DECLARE @p int;
-SELECT @p = id_persona FROM comp.Persona WHERE nro_documento = 'T-0001';
+SELECT @p = id_persona FROM comp.Persona WHERE CONVERT(varchar(30), DECRYPTBYKEY(nro_documento_cif)) = 'T-0001';
 EXEC comp.usp_Persona_Baja @p;
 /* Esperado:
    usp_Persona_Baja: - Esta registrada como jugador. */
@@ -790,15 +794,15 @@ GO
 DECLARE @arg int, @p int;
 SELECT @arg = id_pais FROM cat.Pais WHERE nombre = 'Argentina';
 EXEC comp.usp_Persona_Alta 'Persona', 'Borrar', '1990-01-01', @arg, 'DNI', 'T-9999';
-SELECT @p = id_persona FROM comp.Persona WHERE nro_documento = 'T-9999';
+SELECT @p = id_persona FROM comp.Persona WHERE CONVERT(varchar(30), DECRYPTBYKEY(nro_documento_cif)) = 'T-9999';
 EXEC comp.usp_Persona_Baja @p;
-SELECT * FROM comp.Persona WHERE nro_documento = 'T-9999';
+SELECT * FROM comp.Persona WHERE CONVERT(varchar(30), DECRYPTBYKEY(nro_documento_cif)) = 'T-9999';
 -- Esperado: 0 filas
 GO
 
 -- JUGADOR BAJA ERROR: Jugador Uno fue convocado
 DECLARE @p int;
-SELECT @p = id_persona FROM comp.Persona WHERE nro_documento = 'T-0001';
+SELECT @p = id_persona FROM comp.Persona WHERE CONVERT(varchar(30), DECRYPTBYKEY(nro_documento_cif)) = 'T-0001';
 EXEC comp.usp_Jugador_Baja @p;
 /* Esperado:
    usp_Jugador_Baja: - Fue convocado por alguna seleccion. */
@@ -806,7 +810,7 @@ GO
 
 -- JUGADOR BAJA OK: Jugador Tres nunca fue convocado
 DECLARE @p int;
-SELECT @p = id_persona FROM comp.Persona WHERE nro_documento = 'T-0003';
+SELECT @p = id_persona FROM comp.Persona WHERE CONVERT(varchar(30), DECRYPTBYKEY(nro_documento_cif)) = 'T-0003';
 EXEC comp.usp_Jugador_Baja @p;
 SELECT * FROM comp.Jugador WHERE id_jugador = @p;
 SELECT * FROM comp.Persona WHERE id_persona = @p;
@@ -832,7 +836,7 @@ GO
 -- CUERPO TECNICO BAJA OK: Tecnico Dos
 DECLARE @ct int;
 SELECT @ct = ct.id_cuerpo_tecnico FROM comp.CuerpoTecnico ct
-INNER JOIN comp.Persona p ON p.id_persona = ct.id_persona WHERE p.nro_documento = 'T-0102';
+INNER JOIN comp.Persona p ON p.id_persona = ct.id_persona WHERE CONVERT(varchar(30), DECRYPTBYKEY(p.nro_documento_cif)) = 'T-0102';
 EXEC comp.usp_CuerpoTecnico_Baja @ct;
 SELECT * FROM comp.CuerpoTecnico WHERE id_cuerpo_tecnico = @ct;
 -- Esperado: 0 filas
@@ -995,37 +999,37 @@ SELECT @arq = id_posicion FROM comp.Posicion WHERE nombre = 'Arquero';
 SELECT @def = id_posicion FROM comp.Posicion WHERE nombre = 'Defensor';
 
 EXEC comp.usp_Persona_Alta 'Mexicano', 'Uno', '1995-01-01', @mex, 'DNI', 'P2-M1';
-SELECT @p = id_persona FROM comp.Persona WHERE nro_documento = 'P2-M1';
+SELECT @p = id_persona FROM comp.Persona WHERE CONVERT(varchar(30), DECRYPTBYKEY(nro_documento_cif)) = 'P2-M1';
 EXEC comp.usp_Jugador_Alta @p, @arq;
 EXEC comp.usp_Convocado_Alta @s_mex, @p, 1, NULL, '2034-05-20';
 
 EXEC comp.usp_Persona_Alta 'Mexicano', 'Dos', '1995-01-01', @mex, 'DNI', 'P2-M2';
-SELECT @p = id_persona FROM comp.Persona WHERE nro_documento = 'P2-M2';
+SELECT @p = id_persona FROM comp.Persona WHERE CONVERT(varchar(30), DECRYPTBYKEY(nro_documento_cif)) = 'P2-M2';
 EXEC comp.usp_Jugador_Alta @p, @def;
 EXEC comp.usp_Convocado_Alta @s_mex, @p, 2, NULL, '2034-05-20';
 
 EXEC comp.usp_Persona_Alta 'Mexicano', 'Tres', '1995-01-01', @mex, 'DNI', 'P2-M3';
-SELECT @p = id_persona FROM comp.Persona WHERE nro_documento = 'P2-M3';
+SELECT @p = id_persona FROM comp.Persona WHERE CONVERT(varchar(30), DECRYPTBYKEY(nro_documento_cif)) = 'P2-M3';
 EXEC comp.usp_Jugador_Alta @p, @def;
 EXEC comp.usp_Convocado_Alta @s_mex, @p, 3, NULL, '2034-05-20';
 
 EXEC comp.usp_Persona_Alta 'Mexicano', 'Cuatro', '1995-01-01', @mex, 'DNI', 'P2-M4';
-SELECT @p = id_persona FROM comp.Persona WHERE nro_documento = 'P2-M4';
+SELECT @p = id_persona FROM comp.Persona WHERE CONVERT(varchar(30), DECRYPTBYKEY(nro_documento_cif)) = 'P2-M4';
 EXEC comp.usp_Jugador_Alta @p, @def;
 EXEC comp.usp_Convocado_Alta @s_mex, @p, 4, NULL, '2034-05-20';
 
 EXEC comp.usp_Persona_Alta 'Mexicano', 'Cinco', '1995-01-01', @mex, 'DNI', 'P2-M5';
-SELECT @p = id_persona FROM comp.Persona WHERE nro_documento = 'P2-M5';
+SELECT @p = id_persona FROM comp.Persona WHERE CONVERT(varchar(30), DECRYPTBYKEY(nro_documento_cif)) = 'P2-M5';
 EXEC comp.usp_Jugador_Alta @p, @def;
 EXEC comp.usp_Convocado_Alta @s_mex, @p, 5, NULL, '2034-05-20';
 
 EXEC comp.usp_Persona_Alta 'Mexicano', 'Seis', '1995-01-01', @mex, 'DNI', 'P2-M6';
-SELECT @p = id_persona FROM comp.Persona WHERE nro_documento = 'P2-M6';
+SELECT @p = id_persona FROM comp.Persona WHERE CONVERT(varchar(30), DECRYPTBYKEY(nro_documento_cif)) = 'P2-M6';
 EXEC comp.usp_Jugador_Alta @p, @def;
 EXEC comp.usp_Convocado_Alta @s_mex, @p, 6, NULL, '2034-05-20';
 
 EXEC comp.usp_Persona_Alta 'Canadiense', 'Uno', '1995-01-01', @can, 'DNI', 'P2-C1';
-SELECT @p = id_persona FROM comp.Persona WHERE nro_documento = 'P2-C1';
+SELECT @p = id_persona FROM comp.Persona WHERE CONVERT(varchar(30), DECRYPTBYKEY(nro_documento_cif)) = 'P2-C1';
 EXEC comp.usp_Jugador_Alta @p, @arq;
 EXEC comp.usp_Convocado_Alta @s_can, @p, 1, NULL, '2034-05-20';
 GO

@@ -22,6 +22,8 @@
 =====================================================================
 */
 USE MundialDB;
+-- E8: nro_documento esta cifrado; se abre la clave para poder buscar personas por documento en este test
+OPEN SYMMETRIC KEY sk_datos_personales DECRYPTION BY CERTIFICATE cert_datos_personales;
 GO
 SET NOCOUNT ON;
 PRINT '=== TEST LOGICA DISCIPLINA ===';
@@ -109,26 +111,26 @@ SELECT @del = id_posicion FROM comp.Posicion WHERE nombre = 'Delantero';
 -- Argentina
 SELECT @pais = id_pais FROM cat.Pais WHERE nombre = 'Argentina';
 SELECT @sel  = id_seleccion FROM comp.Seleccion WHERE id_torneo = @t AND id_pais = @pais;
-IF NOT EXISTS (SELECT 1 FROM comp.Persona WHERE nro_documento = 'D3-ARG01') EXEC comp.usp_Jugador_AltaCompleta 'Jugador', 'Argentina 01', '1998-01-01', @pais, 'DNI', 'D3-ARG01', @arq, @sel, 1, NULL, '2043-05-20';
-IF NOT EXISTS (SELECT 1 FROM comp.Persona WHERE nro_documento = 'D3-ARG02') EXEC comp.usp_Jugador_AltaCompleta 'Jugador', 'Argentina 02', '1998-01-01', @pais, 'DNI', 'D3-ARG02', @def, @sel, 2, NULL, '2043-05-20';
-IF NOT EXISTS (SELECT 1 FROM comp.Persona WHERE nro_documento = 'D3-ARG03') EXEC comp.usp_Jugador_AltaCompleta 'Jugador', 'Argentina 03', '1998-01-01', @pais, 'DNI', 'D3-ARG03', @med, @sel, 3, NULL, '2043-05-20';
-IF NOT EXISTS (SELECT 1 FROM comp.Persona WHERE nro_documento = 'D3-ARG04') EXEC comp.usp_Jugador_AltaCompleta 'Jugador', 'Argentina 04', '1998-01-01', @pais, 'DNI', 'D3-ARG04', @del, @sel, 4, NULL, '2043-05-20';
+IF NOT EXISTS (SELECT 1 FROM comp.Persona WHERE CONVERT(varchar(30), DECRYPTBYKEY(nro_documento_cif)) = 'D3-ARG01') EXEC comp.usp_Jugador_AltaCompleta 'Jugador', 'Argentina 01', '1998-01-01', @pais, 'DNI', 'D3-ARG01', @arq, @sel, 1, NULL, '2043-05-20';
+IF NOT EXISTS (SELECT 1 FROM comp.Persona WHERE CONVERT(varchar(30), DECRYPTBYKEY(nro_documento_cif)) = 'D3-ARG02') EXEC comp.usp_Jugador_AltaCompleta 'Jugador', 'Argentina 02', '1998-01-01', @pais, 'DNI', 'D3-ARG02', @def, @sel, 2, NULL, '2043-05-20';
+IF NOT EXISTS (SELECT 1 FROM comp.Persona WHERE CONVERT(varchar(30), DECRYPTBYKEY(nro_documento_cif)) = 'D3-ARG03') EXEC comp.usp_Jugador_AltaCompleta 'Jugador', 'Argentina 03', '1998-01-01', @pais, 'DNI', 'D3-ARG03', @med, @sel, 3, NULL, '2043-05-20';
+IF NOT EXISTS (SELECT 1 FROM comp.Persona WHERE CONVERT(varchar(30), DECRYPTBYKEY(nro_documento_cif)) = 'D3-ARG04') EXEC comp.usp_Jugador_AltaCompleta 'Jugador', 'Argentina 04', '1998-01-01', @pais, 'DNI', 'D3-ARG04', @del, @sel, 4, NULL, '2043-05-20';
 
 -- Brasil
 SELECT @pais = id_pais FROM cat.Pais WHERE nombre = 'Brasil';
 SELECT @sel  = id_seleccion FROM comp.Seleccion WHERE id_torneo = @t AND id_pais = @pais;
-IF NOT EXISTS (SELECT 1 FROM comp.Persona WHERE nro_documento = 'D3-BRA01') EXEC comp.usp_Jugador_AltaCompleta 'Jugador', 'Brasil 01', '1998-01-01', @pais, 'DNI', 'D3-BRA01', @arq, @sel, 1, NULL, '2043-05-20';
-IF NOT EXISTS (SELECT 1 FROM comp.Persona WHERE nro_documento = 'D3-BRA02') EXEC comp.usp_Jugador_AltaCompleta 'Jugador', 'Brasil 02', '1998-01-01', @pais, 'DNI', 'D3-BRA02', @def, @sel, 2, NULL, '2043-05-20';
-IF NOT EXISTS (SELECT 1 FROM comp.Persona WHERE nro_documento = 'D3-BRA03') EXEC comp.usp_Jugador_AltaCompleta 'Jugador', 'Brasil 03', '1998-01-01', @pais, 'DNI', 'D3-BRA03', @med, @sel, 3, NULL, '2043-05-20';
-IF NOT EXISTS (SELECT 1 FROM comp.Persona WHERE nro_documento = 'D3-BRA04') EXEC comp.usp_Jugador_AltaCompleta 'Jugador', 'Brasil 04', '1998-01-01', @pais, 'DNI', 'D3-BRA04', @del, @sel, 4, NULL, '2043-05-20';
+IF NOT EXISTS (SELECT 1 FROM comp.Persona WHERE CONVERT(varchar(30), DECRYPTBYKEY(nro_documento_cif)) = 'D3-BRA01') EXEC comp.usp_Jugador_AltaCompleta 'Jugador', 'Brasil 01', '1998-01-01', @pais, 'DNI', 'D3-BRA01', @arq, @sel, 1, NULL, '2043-05-20';
+IF NOT EXISTS (SELECT 1 FROM comp.Persona WHERE CONVERT(varchar(30), DECRYPTBYKEY(nro_documento_cif)) = 'D3-BRA02') EXEC comp.usp_Jugador_AltaCompleta 'Jugador', 'Brasil 02', '1998-01-01', @pais, 'DNI', 'D3-BRA02', @def, @sel, 2, NULL, '2043-05-20';
+IF NOT EXISTS (SELECT 1 FROM comp.Persona WHERE CONVERT(varchar(30), DECRYPTBYKEY(nro_documento_cif)) = 'D3-BRA03') EXEC comp.usp_Jugador_AltaCompleta 'Jugador', 'Brasil 03', '1998-01-01', @pais, 'DNI', 'D3-BRA03', @med, @sel, 3, NULL, '2043-05-20';
+IF NOT EXISTS (SELECT 1 FROM comp.Persona WHERE CONVERT(varchar(30), DECRYPTBYKEY(nro_documento_cif)) = 'D3-BRA04') EXEC comp.usp_Jugador_AltaCompleta 'Jugador', 'Brasil 04', '1998-01-01', @pais, 'DNI', 'D3-BRA04', @del, @sel, 4, NULL, '2043-05-20';
 
 -- Uruguay
 SELECT @pais = id_pais FROM cat.Pais WHERE nombre = 'Uruguay';
 SELECT @sel  = id_seleccion FROM comp.Seleccion WHERE id_torneo = @t AND id_pais = @pais;
-IF NOT EXISTS (SELECT 1 FROM comp.Persona WHERE nro_documento = 'D3-URU01') EXEC comp.usp_Jugador_AltaCompleta 'Jugador', 'Uruguay 01', '1998-01-01', @pais, 'DNI', 'D3-URU01', @arq, @sel, 1, NULL, '2043-05-20';
-IF NOT EXISTS (SELECT 1 FROM comp.Persona WHERE nro_documento = 'D3-URU02') EXEC comp.usp_Jugador_AltaCompleta 'Jugador', 'Uruguay 02', '1998-01-01', @pais, 'DNI', 'D3-URU02', @def, @sel, 2, NULL, '2043-05-20';
-IF NOT EXISTS (SELECT 1 FROM comp.Persona WHERE nro_documento = 'D3-URU03') EXEC comp.usp_Jugador_AltaCompleta 'Jugador', 'Uruguay 03', '1998-01-01', @pais, 'DNI', 'D3-URU03', @med, @sel, 3, NULL, '2043-05-20';
-IF NOT EXISTS (SELECT 1 FROM comp.Persona WHERE nro_documento = 'D3-URU04') EXEC comp.usp_Jugador_AltaCompleta 'Jugador', 'Uruguay 04', '1998-01-01', @pais, 'DNI', 'D3-URU04', @del, @sel, 4, NULL, '2043-05-20';
+IF NOT EXISTS (SELECT 1 FROM comp.Persona WHERE CONVERT(varchar(30), DECRYPTBYKEY(nro_documento_cif)) = 'D3-URU01') EXEC comp.usp_Jugador_AltaCompleta 'Jugador', 'Uruguay 01', '1998-01-01', @pais, 'DNI', 'D3-URU01', @arq, @sel, 1, NULL, '2043-05-20';
+IF NOT EXISTS (SELECT 1 FROM comp.Persona WHERE CONVERT(varchar(30), DECRYPTBYKEY(nro_documento_cif)) = 'D3-URU02') EXEC comp.usp_Jugador_AltaCompleta 'Jugador', 'Uruguay 02', '1998-01-01', @pais, 'DNI', 'D3-URU02', @def, @sel, 2, NULL, '2043-05-20';
+IF NOT EXISTS (SELECT 1 FROM comp.Persona WHERE CONVERT(varchar(30), DECRYPTBYKEY(nro_documento_cif)) = 'D3-URU03') EXEC comp.usp_Jugador_AltaCompleta 'Jugador', 'Uruguay 03', '1998-01-01', @pais, 'DNI', 'D3-URU03', @med, @sel, 3, NULL, '2043-05-20';
+IF NOT EXISTS (SELECT 1 FROM comp.Persona WHERE CONVERT(varchar(30), DECRYPTBYKEY(nro_documento_cif)) = 'D3-URU04') EXEC comp.usp_Jugador_AltaCompleta 'Jugador', 'Uruguay 04', '1998-01-01', @pais, 'DNI', 'D3-URU04', @del, @sel, 4, NULL, '2043-05-20';
 GO
 
 -- Partidos: 1 Argentina-Brasil (10/06), 2 Argentina-Uruguay (15/06), 3 Brasil-Uruguay (20/06), 4 octavos Argentina-Brasil (25/06)
@@ -167,7 +169,7 @@ BEGIN
     SELECT @doc = doc, @nro = nro FROM #ali_pares WHERE n = @i;
     SELECT @c = c.id_convocado
     FROM comp.Convocado c JOIN comp.Persona pe ON pe.id_persona = c.id_jugador
-    WHERE pe.nro_documento = @doc;
+    WHERE CONVERT(varchar(30), DECRYPTBYKEY(pe.nro_documento_cif)) = @doc;
     SELECT @ps = ps.id_partido_seleccion
     FROM comp.PartidoSeleccion ps
     JOIN comp.Partido p   ON p.id_partido = ps.id_partido
@@ -182,7 +184,7 @@ GO
 
 -- Mapa de consulta (solo lectura): documento del jugador + nro de partido -> alineacion
 IF OBJECT_ID('tempdb..#ali') IS NOT NULL DROP TABLE #ali;
-SELECT pe.nro_documento AS doc, p.nro_partido AS nro, a.id_alineacion, a.id_convocado
+SELECT CONVERT(varchar(30), DECRYPTBYKEY(pe.nro_documento_cif)) AS doc, p.nro_partido AS nro, a.id_alineacion, a.id_convocado
 INTO #ali
 FROM comp.Alineacion a
 JOIN comp.Convocado c         ON c.id_convocado = a.id_convocado

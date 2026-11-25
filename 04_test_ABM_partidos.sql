@@ -20,6 +20,8 @@
 =====================================================================*/
 
 use MundialDB;
+-- E8: nro_documento esta cifrado; se abre la clave para poder buscar personas por documento en este test
+OPEN SYMMETRIC KEY sk_datos_personales DECRYPTION BY CERTIFICATE cert_datos_personales;
 go
 
 /* =================================================================
@@ -279,15 +281,15 @@ WHERE p.id_torneo = @t AND p.nro_partido = 1 AND pa.nombre = 'Mexico';
 SELECT @arq = id_posicion FROM comp.Posicion WHERE nombre = 'Arquero';
 SELECT @def = id_posicion FROM comp.Posicion WHERE nombre = 'Defensor';
 
-SELECT @c = c.id_convocado FROM comp.Convocado c INNER JOIN comp.Persona pe ON pe.id_persona = c.id_jugador WHERE pe.nro_documento = 'P2-M1';
+SELECT @c = c.id_convocado FROM comp.Convocado c INNER JOIN comp.Persona pe ON pe.id_persona = c.id_jugador WHERE CONVERT(varchar(30), DECRYPTBYKEY(pe.nro_documento_cif)) = 'P2-M1';
 EXEC comp.usp_Alineacion_Alta @ps, @c, 1, @arq;
-SELECT @c = c.id_convocado FROM comp.Convocado c INNER JOIN comp.Persona pe ON pe.id_persona = c.id_jugador WHERE pe.nro_documento = 'P2-M2';
+SELECT @c = c.id_convocado FROM comp.Convocado c INNER JOIN comp.Persona pe ON pe.id_persona = c.id_jugador WHERE CONVERT(varchar(30), DECRYPTBYKEY(pe.nro_documento_cif)) = 'P2-M2';
 EXEC comp.usp_Alineacion_Alta @ps, @c, 1, @def;
-SELECT @c = c.id_convocado FROM comp.Convocado c INNER JOIN comp.Persona pe ON pe.id_persona = c.id_jugador WHERE pe.nro_documento = 'P2-M3';
+SELECT @c = c.id_convocado FROM comp.Convocado c INNER JOIN comp.Persona pe ON pe.id_persona = c.id_jugador WHERE CONVERT(varchar(30), DECRYPTBYKEY(pe.nro_documento_cif)) = 'P2-M3';
 EXEC comp.usp_Alineacion_Alta @ps, @c, 0, NULL;
-SELECT @c = c.id_convocado FROM comp.Convocado c INNER JOIN comp.Persona pe ON pe.id_persona = c.id_jugador WHERE pe.nro_documento = 'P2-M4';
+SELECT @c = c.id_convocado FROM comp.Convocado c INNER JOIN comp.Persona pe ON pe.id_persona = c.id_jugador WHERE CONVERT(varchar(30), DECRYPTBYKEY(pe.nro_documento_cif)) = 'P2-M4';
 EXEC comp.usp_Alineacion_Alta @ps, @c, 0, NULL;
-SELECT @c = c.id_convocado FROM comp.Convocado c INNER JOIN comp.Persona pe ON pe.id_persona = c.id_jugador WHERE pe.nro_documento = 'P2-M5';
+SELECT @c = c.id_convocado FROM comp.Convocado c INNER JOIN comp.Persona pe ON pe.id_persona = c.id_jugador WHERE CONVERT(varchar(30), DECRYPTBYKEY(pe.nro_documento_cif)) = 'P2-M5';
 EXEC comp.usp_Alineacion_Alta @ps, @c, 0, NULL;
 
 SELECT * FROM comp.Alineacion WHERE id_partido_seleccion = @ps;
@@ -302,7 +304,7 @@ INNER JOIN comp.Partido p ON p.id_partido = ps.id_partido
 INNER JOIN comp.Seleccion s ON s.id_seleccion = ps.id_seleccion
 INNER JOIN cat.Pais pa ON pa.id_pais = s.id_pais
 WHERE p.id_torneo = @t AND p.nro_partido = 1 AND pa.nombre = 'Mexico';
-SELECT @c = c.id_convocado FROM comp.Convocado c INNER JOIN comp.Persona pe ON pe.id_persona = c.id_jugador WHERE pe.nro_documento = 'P2-C1';
+SELECT @c = c.id_convocado FROM comp.Convocado c INNER JOIN comp.Persona pe ON pe.id_persona = c.id_jugador WHERE CONVERT(varchar(30), DECRYPTBYKEY(pe.nro_documento_cif)) = 'P2-C1';
 EXEC comp.usp_Alineacion_Alta @ps, @c, 1, NULL;
 /* Esperado:
    usp_Alineacion_Alta: - El jugador no es convocado de esta seleccion.
@@ -318,7 +320,7 @@ INNER JOIN comp.Seleccion s ON s.id_seleccion = ps.id_seleccion
 INNER JOIN cat.Pais pa ON pa.id_pais = s.id_pais
 WHERE p.id_torneo = @t AND p.nro_partido = 1 AND pa.nombre = 'Mexico';
 SELECT @arq = id_posicion FROM comp.Posicion WHERE nombre = 'Arquero';
-SELECT @c = c.id_convocado FROM comp.Convocado c INNER JOIN comp.Persona pe ON pe.id_persona = c.id_jugador WHERE pe.nro_documento = 'P2-M1';
+SELECT @c = c.id_convocado FROM comp.Convocado c INNER JOIN comp.Persona pe ON pe.id_persona = c.id_jugador WHERE CONVERT(varchar(30), DECRYPTBYKEY(pe.nro_documento_cif)) = 'P2-M1';
 EXEC comp.usp_Alineacion_Alta @ps, @c, 1, @arq;
 /* Esperado:
    usp_Alineacion_Alta: - El jugador ya esta en la alineacion. - Ya hay un arquero titular. */
@@ -333,7 +335,7 @@ INNER JOIN comp.Seleccion s ON s.id_seleccion = ps.id_seleccion
 INNER JOIN cat.Pais pa ON pa.id_pais = s.id_pais
 WHERE p.id_torneo = @t AND p.nro_partido = 1 AND pa.nombre = 'Mexico';
 SELECT @def = id_posicion FROM comp.Posicion WHERE nombre = 'Defensor';
-SELECT @c = c.id_convocado FROM comp.Convocado c INNER JOIN comp.Persona pe ON pe.id_persona = c.id_jugador WHERE pe.nro_documento = 'P2-M6';
+SELECT @c = c.id_convocado FROM comp.Convocado c INNER JOIN comp.Persona pe ON pe.id_persona = c.id_jugador WHERE CONVERT(varchar(30), DECRYPTBYKEY(pe.nro_documento_cif)) = 'P2-M6';
 EXEC comp.usp_Alineacion_Alta @ps, @c, 0, @def;
 /* Esperado:
    usp_Alineacion_Alta: - Un suplente no lleva posicion en cancha. */
@@ -352,7 +354,7 @@ INNER JOIN comp.Partido p ON p.id_partido = ps.id_partido
 INNER JOIN comp.Seleccion s ON s.id_seleccion = ps.id_seleccion
 INNER JOIN cat.Pais pa ON pa.id_pais = s.id_pais
 WHERE p.id_torneo = @t AND p.nro_partido = 1 AND pa.nombre = 'Mexico';
-SELECT @c = c.id_convocado FROM comp.Convocado c INNER JOIN comp.Persona pe ON pe.id_persona = c.id_jugador WHERE pe.nro_documento = 'P2-M5';
+SELECT @c = c.id_convocado FROM comp.Convocado c INNER JOIN comp.Persona pe ON pe.id_persona = c.id_jugador WHERE CONVERT(varchar(30), DECRYPTBYKEY(pe.nro_documento_cif)) = 'P2-M5';
 SELECT @a = id_alineacion FROM comp.Alineacion WHERE id_partido_seleccion = @ps AND id_convocado = @c;
 SELECT @p1t = id_periodo FROM comp.Periodo WHERE orden = 1;
 SELECT @p2 = id_partido FROM comp.Partido WHERE id_torneo = @t AND nro_partido = 2;
@@ -401,7 +403,7 @@ INNER JOIN comp.Partido p ON p.id_partido = ps.id_partido
 INNER JOIN comp.Seleccion s ON s.id_seleccion = ps.id_seleccion
 INNER JOIN cat.Pais pa ON pa.id_pais = s.id_pais
 WHERE p.id_torneo = @t AND p.nro_partido = 2 AND pa.nombre = 'Mexico';
-SELECT @c = c.id_convocado FROM comp.Convocado c INNER JOIN comp.Persona pe ON pe.id_persona = c.id_jugador WHERE pe.nro_documento = 'P2-M5';
+SELECT @c = c.id_convocado FROM comp.Convocado c INNER JOIN comp.Persona pe ON pe.id_persona = c.id_jugador WHERE CONVERT(varchar(30), DECRYPTBYKEY(pe.nro_documento_cif)) = 'P2-M5';
 EXEC comp.usp_Alineacion_Alta @ps2, @c, 0, NULL;
 /* Esperado:
    usp_Alineacion_Alta: - El jugador esta suspendido para este partido. */
@@ -419,7 +421,7 @@ SELECT @def = id_posicion FROM comp.Posicion WHERE nombre = 'Defensor';
 SELECT @a = a.id_alineacion FROM comp.Alineacion a
 INNER JOIN comp.Convocado c ON c.id_convocado = a.id_convocado
 INNER JOIN comp.Persona pe ON pe.id_persona = c.id_jugador
-WHERE a.id_partido_seleccion = @ps AND pe.nro_documento = 'P2-M4';
+WHERE a.id_partido_seleccion = @ps AND CONVERT(varchar(30), DECRYPTBYKEY(pe.nro_documento_cif)) = 'P2-M4';
 EXEC comp.usp_Alineacion_Modificacion @a, 1, @def;
 SELECT * FROM comp.Alineacion WHERE id_alineacion = @a;
 -- Esperado: 1 fila con es_titular = 1 y la posicion de Defensor
@@ -436,7 +438,7 @@ WHERE p.id_torneo = @t AND p.nro_partido = 1 AND pa.nombre = 'Mexico';
 SELECT @a = a.id_alineacion FROM comp.Alineacion a
 INNER JOIN comp.Convocado c ON c.id_convocado = a.id_convocado
 INNER JOIN comp.Persona pe ON pe.id_persona = c.id_jugador
-WHERE a.id_partido_seleccion = @ps AND pe.nro_documento = 'P2-M5';
+WHERE a.id_partido_seleccion = @ps AND CONVERT(varchar(30), DECRYPTBYKEY(pe.nro_documento_cif)) = 'P2-M5';
 EXEC comp.usp_Alineacion_Modificacion @a, 0, NULL;
 /* Esperado:
    usp_Alineacion_Modificacion: - El jugador ya tiene tarjetas. */
@@ -456,9 +458,9 @@ INNER JOIN comp.Seleccion s ON s.id_seleccion = ps.id_seleccion
 INNER JOIN cat.Pais pa ON pa.id_pais = s.id_pais
 WHERE p.id_torneo = @t AND p.nro_partido = 1 AND pa.nombre = 'Mexico';
 SELECT @sale = a.id_alineacion FROM comp.Alineacion a INNER JOIN comp.Convocado c ON c.id_convocado = a.id_convocado
-INNER JOIN comp.Persona pe ON pe.id_persona = c.id_jugador WHERE a.id_partido_seleccion = @ps AND pe.nro_documento = 'P2-M2';
+INNER JOIN comp.Persona pe ON pe.id_persona = c.id_jugador WHERE a.id_partido_seleccion = @ps AND CONVERT(varchar(30), DECRYPTBYKEY(pe.nro_documento_cif)) = 'P2-M2';
 SELECT @entra = a.id_alineacion FROM comp.Alineacion a INNER JOIN comp.Convocado c ON c.id_convocado = a.id_convocado
-INNER JOIN comp.Persona pe ON pe.id_persona = c.id_jugador WHERE a.id_partido_seleccion = @ps AND pe.nro_documento = 'P2-M3';
+INNER JOIN comp.Persona pe ON pe.id_persona = c.id_jugador WHERE a.id_partido_seleccion = @ps AND CONVERT(varchar(30), DECRYPTBYKEY(pe.nro_documento_cif)) = 'P2-M3';
 SELECT @p1t = id_periodo FROM comp.Periodo WHERE orden = 1;
 EXEC comp.usp_Sustitucion_Alta @sale, @entra, @p1t, 18, 0, 1, 'Lesion';
 SELECT * FROM comp.Sustitucion WHERE id_alineacion_sale = @sale;
@@ -474,9 +476,9 @@ INNER JOIN comp.Seleccion s ON s.id_seleccion = ps.id_seleccion
 INNER JOIN cat.Pais pa ON pa.id_pais = s.id_pais
 WHERE p.id_torneo = @t AND p.nro_partido = 1 AND pa.nombre = 'Mexico';
 SELECT @sale = a.id_alineacion FROM comp.Alineacion a INNER JOIN comp.Convocado c ON c.id_convocado = a.id_convocado
-INNER JOIN comp.Persona pe ON pe.id_persona = c.id_jugador WHERE a.id_partido_seleccion = @ps AND pe.nro_documento = 'P2-M2';
+INNER JOIN comp.Persona pe ON pe.id_persona = c.id_jugador WHERE a.id_partido_seleccion = @ps AND CONVERT(varchar(30), DECRYPTBYKEY(pe.nro_documento_cif)) = 'P2-M2';
 SELECT @entra = a.id_alineacion FROM comp.Alineacion a INNER JOIN comp.Convocado c ON c.id_convocado = a.id_convocado
-INNER JOIN comp.Persona pe ON pe.id_persona = c.id_jugador WHERE a.id_partido_seleccion = @ps AND pe.nro_documento = 'P2-M1';
+INNER JOIN comp.Persona pe ON pe.id_persona = c.id_jugador WHERE a.id_partido_seleccion = @ps AND CONVERT(varchar(30), DECRYPTBYKEY(pe.nro_documento_cif)) = 'P2-M1';
 SELECT @p1t = id_periodo FROM comp.Periodo WHERE orden = 1;
 EXEC comp.usp_Sustitucion_Alta @sale, @entra, @p1t, 30, 0, 1, 'Cansancio';
 /* Esperado:
@@ -494,9 +496,9 @@ INNER JOIN comp.Seleccion s ON s.id_seleccion = ps.id_seleccion
 INNER JOIN cat.Pais pa ON pa.id_pais = s.id_pais
 WHERE p.id_torneo = @t AND p.nro_partido = 1 AND pa.nombre = 'Mexico';
 SELECT @sale = a.id_alineacion FROM comp.Alineacion a INNER JOIN comp.Convocado c ON c.id_convocado = a.id_convocado
-INNER JOIN comp.Persona pe ON pe.id_persona = c.id_jugador WHERE a.id_partido_seleccion = @ps AND pe.nro_documento = 'P2-M1';
+INNER JOIN comp.Persona pe ON pe.id_persona = c.id_jugador WHERE a.id_partido_seleccion = @ps AND CONVERT(varchar(30), DECRYPTBYKEY(pe.nro_documento_cif)) = 'P2-M1';
 SELECT @entra = a.id_alineacion FROM comp.Alineacion a INNER JOIN comp.Convocado c ON c.id_convocado = a.id_convocado
-INNER JOIN comp.Persona pe ON pe.id_persona = c.id_jugador WHERE a.id_partido_seleccion = @ps AND pe.nro_documento = 'P2-M5';
+INNER JOIN comp.Persona pe ON pe.id_persona = c.id_jugador WHERE a.id_partido_seleccion = @ps AND CONVERT(varchar(30), DECRYPTBYKEY(pe.nro_documento_cif)) = 'P2-M5';
 SELECT @p2t = id_periodo FROM comp.Periodo WHERE orden = 2;
 EXEC comp.usp_Sustitucion_Alta @sale, @entra, @p2t, 60, 0, 2, 'Tactico';
 /* Esperado:
@@ -510,7 +512,7 @@ SELECT @id = s.id_sustitucion FROM comp.Sustitucion s
 INNER JOIN comp.Alineacion a ON a.id_alineacion = s.id_alineacion_sale
 INNER JOIN comp.Convocado c ON c.id_convocado = a.id_convocado
 INNER JOIN comp.Persona pe ON pe.id_persona = c.id_jugador
-WHERE pe.nro_documento = 'P2-M2';
+WHERE CONVERT(varchar(30), DECRYPTBYKEY(pe.nro_documento_cif)) = 'P2-M2';
 EXEC comp.usp_Sustitucion_Modificacion @id, 'Precaucion';
 SELECT * FROM comp.Sustitucion WHERE id_sustitucion = @id;
 -- Esperado: 1 fila con motivo 'Precaucion'
@@ -536,7 +538,7 @@ INNER JOIN comp.Seleccion s ON s.id_seleccion = ps.id_seleccion
 INNER JOIN cat.Pais pa ON pa.id_pais = s.id_pais
 WHERE p.id_torneo = @t AND p.nro_partido = 1 AND pa.nombre = 'Mexico';
 SELECT @a = a.id_alineacion FROM comp.Alineacion a INNER JOIN comp.Convocado c ON c.id_convocado = a.id_convocado
-INNER JOIN comp.Persona pe ON pe.id_persona = c.id_jugador WHERE a.id_partido_seleccion = @ps AND pe.nro_documento = 'P2-M3';
+INNER JOIN comp.Persona pe ON pe.id_persona = c.id_jugador WHERE a.id_partido_seleccion = @ps AND CONVERT(varchar(30), DECRYPTBYKEY(pe.nro_documento_cif)) = 'P2-M3';
 EXEC comp.usp_Alineacion_Baja @a;
 /* Esperado:
    usp_Alineacion_Baja: - El jugador participo de un cambio. */
@@ -550,7 +552,7 @@ INNER JOIN comp.Partido p ON p.id_partido = ps.id_partido
 INNER JOIN comp.Seleccion s ON s.id_seleccion = ps.id_seleccion
 INNER JOIN cat.Pais pa ON pa.id_pais = s.id_pais
 WHERE p.id_torneo = @t AND p.nro_partido = 1 AND pa.nombre = 'Canada';
-SELECT @c = c.id_convocado FROM comp.Convocado c INNER JOIN comp.Persona pe ON pe.id_persona = c.id_jugador WHERE pe.nro_documento = 'P2-C1';
+SELECT @c = c.id_convocado FROM comp.Convocado c INNER JOIN comp.Persona pe ON pe.id_persona = c.id_jugador WHERE CONVERT(varchar(30), DECRYPTBYKEY(pe.nro_documento_cif)) = 'P2-C1';
 EXEC comp.usp_Alineacion_Alta @ps, @c, 0, NULL;
 SELECT @a = id_alineacion FROM comp.Alineacion WHERE id_partido_seleccion = @ps AND id_convocado = @c;
 EXEC comp.usp_Alineacion_Baja @a;
@@ -570,7 +572,7 @@ SELECT @id = s.id_sustitucion FROM comp.Sustitucion s
 INNER JOIN comp.Alineacion a ON a.id_alineacion = s.id_alineacion_sale
 INNER JOIN comp.Convocado c ON c.id_convocado = a.id_convocado
 INNER JOIN comp.Persona pe ON pe.id_persona = c.id_jugador
-WHERE pe.nro_documento = 'P2-M2';
+WHERE CONVERT(varchar(30), DECRYPTBYKEY(pe.nro_documento_cif)) = 'P2-M2';
 EXEC comp.usp_Sustitucion_Baja @id;
 SELECT * FROM comp.Sustitucion WHERE id_sustitucion = @id;
 -- Esperado: 0 filas

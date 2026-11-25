@@ -20,6 +20,8 @@
 */
 
 USE MundialDB;
+-- E8: nro_documento esta cifrado; se abre la clave para poder buscar personas por documento en este test
+OPEN SYMMETRIC KEY sk_datos_personales DECRYPTION BY CERTIFICATE cert_datos_personales;
 GO
 
 /* =================================================================
@@ -325,18 +327,18 @@ SELECT @arq = id_posicion FROM comp.Posicion WHERE nombre = 'Arquero';
 SELECT @def = id_posicion FROM comp.Posicion WHERE nombre = 'Defensor';
 SELECT @med = id_posicion FROM comp.Posicion WHERE nombre = 'Mediocampista';
 SELECT @del = id_posicion FROM comp.Posicion WHERE nombre = 'Delantero';
-SELECT @c = c.id_convocado FROM comp.Convocado c JOIN comp.Persona p ON p.id_persona = c.id_jugador WHERE p.nro_documento = 'L2-M01'; EXEC comp.usp_Alineacion_Alta @ps, @c, 1, @arq;
-SELECT @c = c.id_convocado FROM comp.Convocado c JOIN comp.Persona p ON p.id_persona = c.id_jugador WHERE p.nro_documento = 'L2-M02'; EXEC comp.usp_Alineacion_Alta @ps, @c, 1, @def;
-SELECT @c = c.id_convocado FROM comp.Convocado c JOIN comp.Persona p ON p.id_persona = c.id_jugador WHERE p.nro_documento = 'L2-M03'; EXEC comp.usp_Alineacion_Alta @ps, @c, 1, @def;
-SELECT @c = c.id_convocado FROM comp.Convocado c JOIN comp.Persona p ON p.id_persona = c.id_jugador WHERE p.nro_documento = 'L2-M04'; EXEC comp.usp_Alineacion_Alta @ps, @c, 1, @def;
-SELECT @c = c.id_convocado FROM comp.Convocado c JOIN comp.Persona p ON p.id_persona = c.id_jugador WHERE p.nro_documento = 'L2-M05'; EXEC comp.usp_Alineacion_Alta @ps, @c, 1, @def;
-SELECT @c = c.id_convocado FROM comp.Convocado c JOIN comp.Persona p ON p.id_persona = c.id_jugador WHERE p.nro_documento = 'L2-M06'; EXEC comp.usp_Alineacion_Alta @ps, @c, 1, @med;
-SELECT @c = c.id_convocado FROM comp.Convocado c JOIN comp.Persona p ON p.id_persona = c.id_jugador WHERE p.nro_documento = 'L2-M07'; EXEC comp.usp_Alineacion_Alta @ps, @c, 1, @med;
-SELECT @c = c.id_convocado FROM comp.Convocado c JOIN comp.Persona p ON p.id_persona = c.id_jugador WHERE p.nro_documento = 'L2-M08'; EXEC comp.usp_Alineacion_Alta @ps, @c, 1, @med;
-SELECT @c = c.id_convocado FROM comp.Convocado c JOIN comp.Persona p ON p.id_persona = c.id_jugador WHERE p.nro_documento = 'L2-M09'; EXEC comp.usp_Alineacion_Alta @ps, @c, 1, @del;
-SELECT @c = c.id_convocado FROM comp.Convocado c JOIN comp.Persona p ON p.id_persona = c.id_jugador WHERE p.nro_documento = 'L2-M10'; EXEC comp.usp_Alineacion_Alta @ps, @c, 1, @del;
-SELECT @c = c.id_convocado FROM comp.Convocado c JOIN comp.Persona p ON p.id_persona = c.id_jugador WHERE p.nro_documento = 'L2-M11'; EXEC comp.usp_Alineacion_Alta @ps, @c, 1, @del;
-SELECT @c = c.id_convocado FROM comp.Convocado c JOIN comp.Persona p ON p.id_persona = c.id_jugador WHERE p.nro_documento = 'L2-M12'; EXEC comp.usp_Alineacion_Alta @ps, @c, 0, NULL;
+SELECT @c = c.id_convocado FROM comp.Convocado c JOIN comp.Persona p ON p.id_persona = c.id_jugador WHERE CONVERT(varchar(30), DECRYPTBYKEY(p.nro_documento_cif)) = 'L2-M01'; EXEC comp.usp_Alineacion_Alta @ps, @c, 1, @arq;
+SELECT @c = c.id_convocado FROM comp.Convocado c JOIN comp.Persona p ON p.id_persona = c.id_jugador WHERE CONVERT(varchar(30), DECRYPTBYKEY(p.nro_documento_cif)) = 'L2-M02'; EXEC comp.usp_Alineacion_Alta @ps, @c, 1, @def;
+SELECT @c = c.id_convocado FROM comp.Convocado c JOIN comp.Persona p ON p.id_persona = c.id_jugador WHERE CONVERT(varchar(30), DECRYPTBYKEY(p.nro_documento_cif)) = 'L2-M03'; EXEC comp.usp_Alineacion_Alta @ps, @c, 1, @def;
+SELECT @c = c.id_convocado FROM comp.Convocado c JOIN comp.Persona p ON p.id_persona = c.id_jugador WHERE CONVERT(varchar(30), DECRYPTBYKEY(p.nro_documento_cif)) = 'L2-M04'; EXEC comp.usp_Alineacion_Alta @ps, @c, 1, @def;
+SELECT @c = c.id_convocado FROM comp.Convocado c JOIN comp.Persona p ON p.id_persona = c.id_jugador WHERE CONVERT(varchar(30), DECRYPTBYKEY(p.nro_documento_cif)) = 'L2-M05'; EXEC comp.usp_Alineacion_Alta @ps, @c, 1, @def;
+SELECT @c = c.id_convocado FROM comp.Convocado c JOIN comp.Persona p ON p.id_persona = c.id_jugador WHERE CONVERT(varchar(30), DECRYPTBYKEY(p.nro_documento_cif)) = 'L2-M06'; EXEC comp.usp_Alineacion_Alta @ps, @c, 1, @med;
+SELECT @c = c.id_convocado FROM comp.Convocado c JOIN comp.Persona p ON p.id_persona = c.id_jugador WHERE CONVERT(varchar(30), DECRYPTBYKEY(p.nro_documento_cif)) = 'L2-M07'; EXEC comp.usp_Alineacion_Alta @ps, @c, 1, @med;
+SELECT @c = c.id_convocado FROM comp.Convocado c JOIN comp.Persona p ON p.id_persona = c.id_jugador WHERE CONVERT(varchar(30), DECRYPTBYKEY(p.nro_documento_cif)) = 'L2-M08'; EXEC comp.usp_Alineacion_Alta @ps, @c, 1, @med;
+SELECT @c = c.id_convocado FROM comp.Convocado c JOIN comp.Persona p ON p.id_persona = c.id_jugador WHERE CONVERT(varchar(30), DECRYPTBYKEY(p.nro_documento_cif)) = 'L2-M09'; EXEC comp.usp_Alineacion_Alta @ps, @c, 1, @del;
+SELECT @c = c.id_convocado FROM comp.Convocado c JOIN comp.Persona p ON p.id_persona = c.id_jugador WHERE CONVERT(varchar(30), DECRYPTBYKEY(p.nro_documento_cif)) = 'L2-M10'; EXEC comp.usp_Alineacion_Alta @ps, @c, 1, @del;
+SELECT @c = c.id_convocado FROM comp.Convocado c JOIN comp.Persona p ON p.id_persona = c.id_jugador WHERE CONVERT(varchar(30), DECRYPTBYKEY(p.nro_documento_cif)) = 'L2-M11'; EXEC comp.usp_Alineacion_Alta @ps, @c, 1, @del;
+SELECT @c = c.id_convocado FROM comp.Convocado c JOIN comp.Persona p ON p.id_persona = c.id_jugador WHERE CONVERT(varchar(30), DECRYPTBYKEY(p.nro_documento_cif)) = 'L2-M12'; EXEC comp.usp_Alineacion_Alta @ps, @c, 0, NULL;
 GO
 
 -- Alineacion de Canada en el partido 4: 11 titulares en 4-3-3 y 1 suplente
@@ -349,18 +351,18 @@ SELECT @arq = id_posicion FROM comp.Posicion WHERE nombre = 'Arquero';
 SELECT @def = id_posicion FROM comp.Posicion WHERE nombre = 'Defensor';
 SELECT @med = id_posicion FROM comp.Posicion WHERE nombre = 'Mediocampista';
 SELECT @del = id_posicion FROM comp.Posicion WHERE nombre = 'Delantero';
-SELECT @c = c.id_convocado FROM comp.Convocado c JOIN comp.Persona p ON p.id_persona = c.id_jugador WHERE p.nro_documento = 'L2-C01'; EXEC comp.usp_Alineacion_Alta @ps, @c, 1, @arq;
-SELECT @c = c.id_convocado FROM comp.Convocado c JOIN comp.Persona p ON p.id_persona = c.id_jugador WHERE p.nro_documento = 'L2-C02'; EXEC comp.usp_Alineacion_Alta @ps, @c, 1, @def;
-SELECT @c = c.id_convocado FROM comp.Convocado c JOIN comp.Persona p ON p.id_persona = c.id_jugador WHERE p.nro_documento = 'L2-C03'; EXEC comp.usp_Alineacion_Alta @ps, @c, 1, @def;
-SELECT @c = c.id_convocado FROM comp.Convocado c JOIN comp.Persona p ON p.id_persona = c.id_jugador WHERE p.nro_documento = 'L2-C04'; EXEC comp.usp_Alineacion_Alta @ps, @c, 1, @def;
-SELECT @c = c.id_convocado FROM comp.Convocado c JOIN comp.Persona p ON p.id_persona = c.id_jugador WHERE p.nro_documento = 'L2-C05'; EXEC comp.usp_Alineacion_Alta @ps, @c, 1, @def;
-SELECT @c = c.id_convocado FROM comp.Convocado c JOIN comp.Persona p ON p.id_persona = c.id_jugador WHERE p.nro_documento = 'L2-C06'; EXEC comp.usp_Alineacion_Alta @ps, @c, 1, @med;
-SELECT @c = c.id_convocado FROM comp.Convocado c JOIN comp.Persona p ON p.id_persona = c.id_jugador WHERE p.nro_documento = 'L2-C07'; EXEC comp.usp_Alineacion_Alta @ps, @c, 1, @med;
-SELECT @c = c.id_convocado FROM comp.Convocado c JOIN comp.Persona p ON p.id_persona = c.id_jugador WHERE p.nro_documento = 'L2-C08'; EXEC comp.usp_Alineacion_Alta @ps, @c, 1, @med;
-SELECT @c = c.id_convocado FROM comp.Convocado c JOIN comp.Persona p ON p.id_persona = c.id_jugador WHERE p.nro_documento = 'L2-C09'; EXEC comp.usp_Alineacion_Alta @ps, @c, 1, @del;
-SELECT @c = c.id_convocado FROM comp.Convocado c JOIN comp.Persona p ON p.id_persona = c.id_jugador WHERE p.nro_documento = 'L2-C10'; EXEC comp.usp_Alineacion_Alta @ps, @c, 1, @del;
-SELECT @c = c.id_convocado FROM comp.Convocado c JOIN comp.Persona p ON p.id_persona = c.id_jugador WHERE p.nro_documento = 'L2-C11'; EXEC comp.usp_Alineacion_Alta @ps, @c, 1, @del;
-SELECT @c = c.id_convocado FROM comp.Convocado c JOIN comp.Persona p ON p.id_persona = c.id_jugador WHERE p.nro_documento = 'L2-C12'; EXEC comp.usp_Alineacion_Alta @ps, @c, 0, NULL;
+SELECT @c = c.id_convocado FROM comp.Convocado c JOIN comp.Persona p ON p.id_persona = c.id_jugador WHERE CONVERT(varchar(30), DECRYPTBYKEY(p.nro_documento_cif)) = 'L2-C01'; EXEC comp.usp_Alineacion_Alta @ps, @c, 1, @arq;
+SELECT @c = c.id_convocado FROM comp.Convocado c JOIN comp.Persona p ON p.id_persona = c.id_jugador WHERE CONVERT(varchar(30), DECRYPTBYKEY(p.nro_documento_cif)) = 'L2-C02'; EXEC comp.usp_Alineacion_Alta @ps, @c, 1, @def;
+SELECT @c = c.id_convocado FROM comp.Convocado c JOIN comp.Persona p ON p.id_persona = c.id_jugador WHERE CONVERT(varchar(30), DECRYPTBYKEY(p.nro_documento_cif)) = 'L2-C03'; EXEC comp.usp_Alineacion_Alta @ps, @c, 1, @def;
+SELECT @c = c.id_convocado FROM comp.Convocado c JOIN comp.Persona p ON p.id_persona = c.id_jugador WHERE CONVERT(varchar(30), DECRYPTBYKEY(p.nro_documento_cif)) = 'L2-C04'; EXEC comp.usp_Alineacion_Alta @ps, @c, 1, @def;
+SELECT @c = c.id_convocado FROM comp.Convocado c JOIN comp.Persona p ON p.id_persona = c.id_jugador WHERE CONVERT(varchar(30), DECRYPTBYKEY(p.nro_documento_cif)) = 'L2-C05'; EXEC comp.usp_Alineacion_Alta @ps, @c, 1, @def;
+SELECT @c = c.id_convocado FROM comp.Convocado c JOIN comp.Persona p ON p.id_persona = c.id_jugador WHERE CONVERT(varchar(30), DECRYPTBYKEY(p.nro_documento_cif)) = 'L2-C06'; EXEC comp.usp_Alineacion_Alta @ps, @c, 1, @med;
+SELECT @c = c.id_convocado FROM comp.Convocado c JOIN comp.Persona p ON p.id_persona = c.id_jugador WHERE CONVERT(varchar(30), DECRYPTBYKEY(p.nro_documento_cif)) = 'L2-C07'; EXEC comp.usp_Alineacion_Alta @ps, @c, 1, @med;
+SELECT @c = c.id_convocado FROM comp.Convocado c JOIN comp.Persona p ON p.id_persona = c.id_jugador WHERE CONVERT(varchar(30), DECRYPTBYKEY(p.nro_documento_cif)) = 'L2-C08'; EXEC comp.usp_Alineacion_Alta @ps, @c, 1, @med;
+SELECT @c = c.id_convocado FROM comp.Convocado c JOIN comp.Persona p ON p.id_persona = c.id_jugador WHERE CONVERT(varchar(30), DECRYPTBYKEY(p.nro_documento_cif)) = 'L2-C09'; EXEC comp.usp_Alineacion_Alta @ps, @c, 1, @del;
+SELECT @c = c.id_convocado FROM comp.Convocado c JOIN comp.Persona p ON p.id_persona = c.id_jugador WHERE CONVERT(varchar(30), DECRYPTBYKEY(p.nro_documento_cif)) = 'L2-C10'; EXEC comp.usp_Alineacion_Alta @ps, @c, 1, @del;
+SELECT @c = c.id_convocado FROM comp.Convocado c JOIN comp.Persona p ON p.id_persona = c.id_jugador WHERE CONVERT(varchar(30), DECRYPTBYKEY(p.nro_documento_cif)) = 'L2-C11'; EXEC comp.usp_Alineacion_Alta @ps, @c, 1, @del;
+SELECT @c = c.id_convocado FROM comp.Convocado c JOIN comp.Persona p ON p.id_persona = c.id_jugador WHERE CONVERT(varchar(30), DECRYPTBYKEY(p.nro_documento_cif)) = 'L2-C12'; EXEC comp.usp_Alineacion_Alta @ps, @c, 0, NULL;
 GO
 
 -- FO2. ERROR: el local dice 3-5-2 pero puso 4-3-3; el esquema del visitante esta mal escrito
