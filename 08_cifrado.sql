@@ -109,9 +109,15 @@ BEGIN
         SET @err = @err + ' - Tipo y numero de documento van juntos (los dos o ninguno).';
 
     -- Sin documento no hay nada que cifrar ni que comparar: la clave solo se abre si hace falta.
+    -- @cerrar = 1 solo si este SP abrio la clave: si el que llama ya la tenia abierta, se la deja abierta.
+    DECLARE @cerrar bit = 0;
     IF @nro_documento IS NOT NULL
     BEGIN
-        OPEN SYMMETRIC KEY sk_datos_personales DECRYPTION BY CERTIFICATE cert_datos_personales;
+        IF NOT EXISTS (SELECT 1 FROM sys.openkeys WHERE key_name = 'sk_datos_personales')
+        BEGIN
+            OPEN SYMMETRIC KEY sk_datos_personales DECRYPTION BY CERTIFICATE cert_datos_personales;
+            SET @cerrar = 1;
+        END
 
         -- La columna esta cifrada: se compara contra el dato descifrado.
         IF EXISTS(SELECT 1 FROM comp.Persona
@@ -123,7 +129,7 @@ BEGIN
 
     IF @err <> ''
     BEGIN
-        IF @nro_documento IS NOT NULL
+        IF @cerrar = 1
             CLOSE SYMMETRIC KEY sk_datos_personales;
         SET @err = 'usp_Persona_Alta:' + @err;
         THROW 50051, @err, 1;
@@ -133,7 +139,7 @@ BEGIN
     VALUES (@nombre, @apellido, @fecha_nacimiento, @id_pais_nacionalidad, @tipo_documento,
             ENCRYPTBYKEY(KEY_GUID('sk_datos_personales'), @nro_documento));   -- NULL si no hay documento
 
-    IF @nro_documento IS NOT NULL
+    IF @cerrar = 1
         CLOSE SYMMETRIC KEY sk_datos_personales;
 END
 GO
@@ -174,9 +180,15 @@ BEGIN
        OR (@tipo_documento IS NOT NULL AND @nro_documento IS NULL)
         SET @err = @err + ' - Tipo y numero de documento van juntos (los dos o ninguno).';
 
+    -- @cerrar = 1 solo si este SP abrio la clave: si el que llama ya la tenia abierta, se la deja abierta.
+    DECLARE @cerrar bit = 0;
     IF @nro_documento IS NOT NULL
     BEGIN
-        OPEN SYMMETRIC KEY sk_datos_personales DECRYPTION BY CERTIFICATE cert_datos_personales;
+        IF NOT EXISTS (SELECT 1 FROM sys.openkeys WHERE key_name = 'sk_datos_personales')
+        BEGIN
+            OPEN SYMMETRIC KEY sk_datos_personales DECRYPTION BY CERTIFICATE cert_datos_personales;
+            SET @cerrar = 1;
+        END
 
         IF EXISTS(SELECT 1 FROM comp.Persona
             WHERE tipo_documento = @tipo_documento
@@ -188,7 +200,7 @@ BEGIN
 
     IF @err <> ''
     BEGIN
-        IF @nro_documento IS NOT NULL
+        IF @cerrar = 1
             CLOSE SYMMETRIC KEY sk_datos_personales;
         SET @err = 'usp_Persona_Modificacion:' + @err;
         THROW 50052, @err, 1;
@@ -201,7 +213,7 @@ BEGIN
         nro_documento_cif = ENCRYPTBYKEY(KEY_GUID('sk_datos_personales'), @nro_documento)
     WHERE id_persona = @id_persona;
 
-    IF @nro_documento IS NOT NULL
+    IF @cerrar = 1
         CLOSE SYMMETRIC KEY sk_datos_personales;
 END
 GO
@@ -229,13 +241,19 @@ BEGIN
         THROW 50054, @err, 1;
     END
 
-    OPEN SYMMETRIC KEY sk_datos_personales DECRYPTION BY CERTIFICATE cert_datos_personales;
+    DECLARE @cerrar bit = 0;
+    IF NOT EXISTS (SELECT 1 FROM sys.openkeys WHERE key_name = 'sk_datos_personales')
+    BEGIN
+        OPEN SYMMETRIC KEY sk_datos_personales DECRYPTION BY CERTIFICATE cert_datos_personales;
+        SET @cerrar = 1;
+    END
 
     SELECT id_persona, nombre, apellido, tipo_documento,
            CONVERT(varchar(30), DECRYPTBYKEY(nro_documento_cif)) AS nro_documento
     FROM comp.Persona
     WHERE id_persona = @id_persona;
 
-    CLOSE SYMMETRIC KEY sk_datos_personales;
+    IF @cerrar = 1
+        CLOSE SYMMETRIC KEY sk_datos_personales;
 END
 GO

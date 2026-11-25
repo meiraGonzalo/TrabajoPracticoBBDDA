@@ -2,240 +2,159 @@
 =====================================================================
  UNLaM - 3641 Bases de Datos Aplicada
  TP: Sistema de Registro y Gestion del Mundial de Futbol
- Entrega 8 - Script 08: Cifrado de datos personales
+ Entrega 8 - Script 08: Roles, usuarios y permisos
  Grupo 02 - Comision 02-5600
  Integrantes: Mendez Camacho, Tatiana Antonella   nickGithub: tatimendez
               Rocha Escalera, Sheila Belisa       nickGithub: sheilarocha02
               Meira da Cruz Saleiro, Gonzalo      nickGithub: meiraGonzalo
               Miro, Saba Alejandro                nickGithub: SabaM10
- Fecha: 2026-11-23
- Objetivo: cifrar el numero de documento de las personas (jugadores, cuerpo tecnico y
-           arbitros son subtipos de comp.Persona, por eso alcanza con cifrar ahi).
-           Metodo: clave simetrica (AES_256) protegida por un certificado.
-              Certificado -> protege a -> Clave simetrica -> cifra -> nro_documento
-           Es un script de MODIFICACION sobre lo existente:
-             - comp.Persona: nro_documento (varchar) pasa a nro_documento_cif (varbinary).
-             - comp.usp_Persona_Alta y comp.usp_Persona_Modificacion: cifran al guardar y
-               comparan contra el dato descifrado para validar documentos duplicados.
-             - comp.usp_Persona_DescifrarDocumento (nuevo): unico camino para leer el documento.
-           Las firmas de los SP no cambian: quien los llama (usp_Jugador_AltaCompleta, la
-           importacion de plantillas) sigue funcionando igual.
- Nota:     los SP que abren la clave usan EXECUTE AS OWNER. Asi el usuario comun nunca recibe
-           permiso sobre el certificado ni sobre la clave: el permiso de descifrar se controla
-           dandole o no EXECUTE sobre usp_Persona_DescifrarDocumento (ver script de roles).
-           Los tests de entregas anteriores que lean o carguen nro_documento deben ajustarse.
- Orden:    00 -> 01 -> 02 -> 03 -> importaciones/seed -> 07 -> este script
+ Fecha: 2026-11-24
+ Objetivo: crear 4 roles de seguridad con permisos granulares, y un usuario de prueba por rol.
+             rol_administrador        -> todo, incluido descifrar el documento de las personas
+             rol_cargador_resultados  -> SPs de comp y disc (partidos, goles, tarjetas, designaciones)
+             rol_gestor_publicidad    -> SPs de pub (campanias, tarifas, asignacion de publicidad)
+             rol_consulta             -> solo reportes (usp_Reporte_*) y vistas del esquema bi
+           Se implementa con dos SPs en el esquema seg:
+             seg.usp_CrearRolesYUsuarios  crea roles y usuarios y los asocia
+             seg.usp_AsignarPermisos      da y niega los permisos (cuadro en doc/08_cuadro_roles_permisos.md)
+ Criterio: ninguna operacion se hace directo sobre las tablas, todo pasa por stored procedures.
+           Los roles que no son administrador reciben DENY sobre las tablas y EXECUTE sobre los
+           SP que les corresponden. Como los SP y las tablas tienen el mismo dueno (dbo), el SP
+           puede tocar la tabla aunque el usuario no tenga permiso sobre ella (ownership chaining).
+           Los usuarios son WITHOUT LOGIN: sirven para EXECUTE AS en los scripts de prueba. Para
+           una herramienta externa (Metabase, E9) se crea un LOGIN y se lo asocia a rol_consulta.
+ Orden:    00 -> 01 -> 02 -> 03 -> importaciones/seed -> 07 -> 08_cifrado -> 09 (vistas bi) -> este script
+           (si se corre antes del 09, volver a ejecutar seg.usp_AsignarPermisos despues del 09)
 =====================================================================
 */
 USE MundialDB;
 GO
 
-/* ----------------- 1. JERARQUIA DE CLAVES ---------------------------------------
-   Master key de la base -> certificado -> clave simetrica.
-   La contrasena de la master key esta escrita aca porque es un TP; en un sistema
-   real se guardaria fuera del codigo.
-   ----------------------------------------------------------------------------- */
-IF NOT EXISTS (SELECT 1 FROM sys.symmetric_keys WHERE name = '##MS_DatabaseMasterKey##')
-    CREATE MASTER KEY ENCRYPTION BY PASSWORD = 'Mundial2026#MasterKey!';
-GO
-
-IF NOT EXISTS (SELECT 1 FROM sys.certificates WHERE name = 'cert_datos_personales')
-    CREATE CERTIFICATE cert_datos_personales
-        WITH SUBJECT = 'Certificado que protege la clave de datos personales';
-GO
-
-IF NOT EXISTS (SELECT 1 FROM sys.symmetric_keys WHERE name = 'sk_datos_personales')
-    CREATE SYMMETRIC KEY sk_datos_personales
-        WITH ALGORITHM = AES_256
-        ENCRYPTION BY CERTIFICATE cert_datos_personales;
+IF SCHEMA_ID('seg') IS NULL
+    EXEC('CREATE SCHEMA seg');
 GO
 
 
-/* ----------------- 2. TABLA: nro_documento -> nro_documento_cif ------------------ */
+/* ----------------- 1. ROLES Y USUARIOS ------------------------------------------- */
 
-IF COL_LENGTH('comp.Persona', 'nro_documento_cif') IS NULL
-    ALTER TABLE comp.Persona ADD nro_documento_cif varbinary(256) NULL;
-GO
-
--- Migra los documentos que ya hubiera cargados y elimina la columna en claro.
--- Va en SQL dinamico porque el script tiene que poder correrse dos veces: la segunda vez
--- nro_documento ya no existe y un UPDATE comun no compilaria.
-IF COL_LENGTH('comp.Persona', 'nro_documento') IS NOT NULL
+CREATE OR ALTER PROCEDURE seg.usp_CrearRolesYUsuarios
+AS
 BEGIN
-    EXEC('
-        OPEN SYMMETRIC KEY sk_datos_personales DECRYPTION BY CERTIFICATE cert_datos_personales;
+    IF DATABASE_PRINCIPAL_ID('rol_administrador') IS NULL       CREATE ROLE rol_administrador;
+    IF DATABASE_PRINCIPAL_ID('rol_cargador_resultados') IS NULL CREATE ROLE rol_cargador_resultados;
+    IF DATABASE_PRINCIPAL_ID('rol_gestor_publicidad') IS NULL   CREATE ROLE rol_gestor_publicidad;
+    IF DATABASE_PRINCIPAL_ID('rol_consulta') IS NULL            CREATE ROLE rol_consulta;
 
-        UPDATE comp.Persona
-        SET nro_documento_cif = ENCRYPTBYKEY(KEY_GUID(''sk_datos_personales''), nro_documento)
-        WHERE nro_documento IS NOT NULL;
+    IF DATABASE_PRINCIPAL_ID('usr_admin') IS NULL      CREATE USER usr_admin      WITHOUT LOGIN;
+    IF DATABASE_PRINCIPAL_ID('usr_cargador') IS NULL   CREATE USER usr_cargador   WITHOUT LOGIN;
+    IF DATABASE_PRINCIPAL_ID('usr_publicidad') IS NULL CREATE USER usr_publicidad WITHOUT LOGIN;
+    IF DATABASE_PRINCIPAL_ID('usr_consulta') IS NULL   CREATE USER usr_consulta   WITHOUT LOGIN;
 
-        CLOSE SYMMETRIC KEY sk_datos_personales;
-
-        ALTER TABLE comp.Persona DROP COLUMN nro_documento;
-    ');
+    IF IS_ROLEMEMBER('rol_administrador', 'usr_admin') = 0
+        ALTER ROLE rol_administrador ADD MEMBER usr_admin;
+    IF IS_ROLEMEMBER('rol_cargador_resultados', 'usr_cargador') = 0
+        ALTER ROLE rol_cargador_resultados ADD MEMBER usr_cargador;
+    IF IS_ROLEMEMBER('rol_gestor_publicidad', 'usr_publicidad') = 0
+        ALTER ROLE rol_gestor_publicidad ADD MEMBER usr_publicidad;
+    IF IS_ROLEMEMBER('rol_consulta', 'usr_consulta') = 0
+        ALTER ROLE rol_consulta ADD MEMBER usr_consulta;
 END
 GO
 
 
-/* ----------------- 3. SP: ALTA ---------------------------------------------------- */
+/* ----------------- 2. PERMISOS ---------------------------------------------------- */
 
-CREATE OR ALTER PROCEDURE comp.usp_Persona_Alta
-    @nombre               nvarchar(80),
-    @apellido             nvarchar(80),
-    @fecha_nacimiento     date,
-    @id_pais_nacionalidad int,
-    @tipo_documento       varchar(15),
-    @nro_documento        varchar(30)
-WITH EXECUTE AS OWNER
+CREATE OR ALTER PROCEDURE seg.usp_AsignarPermisos
 AS
 BEGIN
     DECLARE @err nvarchar(2000);
     SET @err = '';
 
-    IF @nombre IS NULL OR @nombre = ''
-        SET @err = @err + ' - El nombre es obligatorio.';
+    IF DATABASE_PRINCIPAL_ID('rol_administrador') IS NULL
+       OR DATABASE_PRINCIPAL_ID('rol_cargador_resultados') IS NULL
+       OR DATABASE_PRINCIPAL_ID('rol_gestor_publicidad') IS NULL
+       OR DATABASE_PRINCIPAL_ID('rol_consulta') IS NULL
+        SET @err = @err + ' - Faltan los roles: ejecutar antes seg.usp_CrearRolesYUsuarios.';
 
-    IF @apellido IS NULL OR @apellido = ''
-        SET @err = @err + ' - El apellido es obligatorio.';
-
-    IF @fecha_nacimiento > GETDATE()
-        SET @err = @err + ' - La fecha de nacimiento no puede ser futura.';
-
-    IF NOT EXISTS(SELECT 1 FROM cat.Pais WHERE id_pais = @id_pais_nacionalidad)
-        SET @err = @err + ' - El pais de nacionalidad no existe.';
-
-    IF (@tipo_documento IS NULL AND @nro_documento IS NOT NULL)
-       OR (@tipo_documento IS NOT NULL AND @nro_documento IS NULL)
-        SET @err = @err + ' - Tipo y numero de documento van juntos (los dos o ninguno).';
-
-    -- Sin documento no hay nada que cifrar ni que comparar: la clave solo se abre si hace falta.
-    IF @nro_documento IS NOT NULL
-    BEGIN
-        OPEN SYMMETRIC KEY sk_datos_personales DECRYPTION BY CERTIFICATE cert_datos_personales;
-
-        -- La columna esta cifrada: se compara contra el dato descifrado.
-        IF EXISTS(SELECT 1 FROM comp.Persona
-            WHERE tipo_documento = @tipo_documento
-              AND CONVERT(varchar(30), DECRYPTBYKEY(nro_documento_cif)) = @nro_documento
-              AND id_pais_nacionalidad = @id_pais_nacionalidad)
-            SET @err = @err + ' - Ya existe una persona con ese documento.';
-    END
+    IF OBJECT_ID('comp.usp_Persona_DescifrarDocumento', 'P') IS NULL
+        SET @err = @err + ' - Falta comp.usp_Persona_DescifrarDocumento: ejecutar antes 08_cifrado.sql.';
 
     IF @err <> ''
     BEGIN
-        IF @nro_documento IS NOT NULL
-            CLOSE SYMMETRIC KEY sk_datos_personales;
-        SET @err = 'usp_Persona_Alta:' + @err;
-        THROW 50051, @err, 1;
+        SET @err = 'usp_AsignarPermisos:' + @err;
+        THROW 50081, @err, 1;
     END
 
-    INSERT INTO comp.Persona (nombre, apellido, fecha_nacimiento, id_pais_nacionalidad, tipo_documento, nro_documento_cif)
-    VALUES (@nombre, @apellido, @fecha_nacimiento, @id_pais_nacionalidad, @tipo_documento,
-            ENCRYPTBYKEY(KEY_GUID('sk_datos_personales'), @nro_documento));   -- NULL si no hay documento
+    /* ---- rol_administrador: todo sobre los 5 esquemas de negocio y el esquema seg ---- */
+    GRANT SELECT, INSERT, UPDATE, DELETE, EXECUTE ON SCHEMA::cat  TO rol_administrador;
+    GRANT SELECT, INSERT, UPDATE, DELETE, EXECUTE ON SCHEMA::comp TO rol_administrador;
+    GRANT SELECT, INSERT, UPDATE, DELETE, EXECUTE ON SCHEMA::disc TO rol_administrador;
+    GRANT SELECT, INSERT, UPDATE, DELETE, EXECUTE ON SCHEMA::pub  TO rol_administrador;
+    GRANT SELECT, INSERT, UPDATE, DELETE, EXECUTE ON SCHEMA::imp  TO rol_administrador;
+    GRANT EXECUTE ON SCHEMA::seg TO rol_administrador;
+    IF SCHEMA_ID('bi') IS NOT NULL
+        GRANT SELECT ON SCHEMA::bi TO rol_administrador;
 
-    IF @nro_documento IS NOT NULL
-        CLOSE SYMMETRIC KEY sk_datos_personales;
+    /* ---- rol_cargador_resultados: SPs de competencia y disciplina ---- */
+    GRANT EXECUTE ON SCHEMA::comp TO rol_cargador_resultados;
+    GRANT EXECUTE ON SCHEMA::disc TO rol_cargador_resultados;
+    DENY SELECT, INSERT, UPDATE, DELETE ON SCHEMA::cat  TO rol_cargador_resultados;
+    DENY SELECT, INSERT, UPDATE, DELETE ON SCHEMA::comp TO rol_cargador_resultados;
+    DENY SELECT, INSERT, UPDATE, DELETE ON SCHEMA::disc TO rol_cargador_resultados;
+    DENY SELECT, INSERT, UPDATE, DELETE ON SCHEMA::pub  TO rol_cargador_resultados;
+    DENY SELECT, INSERT, UPDATE, DELETE ON SCHEMA::imp  TO rol_cargador_resultados;
+    DENY EXECUTE ON SCHEMA::cat TO rol_cargador_resultados;
+    DENY EXECUTE ON SCHEMA::pub TO rol_cargador_resultados;
+    DENY EXECUTE ON SCHEMA::imp TO rol_cargador_resultados;
+    DENY EXECUTE ON OBJECT::comp.usp_Persona_DescifrarDocumento TO rol_cargador_resultados;
+
+    /* ---- rol_gestor_publicidad: SPs de publicidad ---- */
+    GRANT EXECUTE ON SCHEMA::pub TO rol_gestor_publicidad;
+    DENY SELECT, INSERT, UPDATE, DELETE ON SCHEMA::cat  TO rol_gestor_publicidad;
+    DENY SELECT, INSERT, UPDATE, DELETE ON SCHEMA::comp TO rol_gestor_publicidad;
+    DENY SELECT, INSERT, UPDATE, DELETE ON SCHEMA::disc TO rol_gestor_publicidad;
+    DENY SELECT, INSERT, UPDATE, DELETE ON SCHEMA::pub  TO rol_gestor_publicidad;
+    DENY SELECT, INSERT, UPDATE, DELETE ON SCHEMA::imp  TO rol_gestor_publicidad;
+    DENY EXECUTE ON SCHEMA::cat  TO rol_gestor_publicidad;
+    DENY EXECUTE ON SCHEMA::comp TO rol_gestor_publicidad;
+    DENY EXECUTE ON SCHEMA::disc TO rol_gestor_publicidad;
+    DENY EXECUTE ON SCHEMA::imp  TO rol_gestor_publicidad;
+
+    /* ---- rol_consulta: solo reportes y vistas bi ---- */
+    GRANT EXECUTE ON OBJECT::cat.usp_Reporte_ContextoEconomicoFeriados   TO rol_consulta;
+    GRANT EXECUTE ON OBJECT::comp.usp_Reporte_Plantillas_XML             TO rol_consulta;
+    GRANT EXECUTE ON OBJECT::comp.usp_Reporte_Resultados                 TO rol_consulta;
+    GRANT EXECUTE ON OBJECT::disc.usp_Reporte_Goleadores                 TO rol_consulta;
+    GRANT EXECUTE ON OBJECT::disc.usp_Reporte_Tarjetas                   TO rol_consulta;
+    GRANT EXECUTE ON OBJECT::disc.usp_Reporte_Designaciones_XML          TO rol_consulta;
+    GRANT EXECUTE ON OBJECT::pub.usp_Reporte_IngresosPublicidadGlobal    TO rol_consulta;
+    GRANT EXECUTE ON OBJECT::pub.usp_Reporte_MatrizPrimeTime             TO rol_consulta;
+    GRANT EXECUTE ON OBJECT::pub.usp_Reporte_OcupacionPublicitaria       TO rol_consulta;
+    GRANT EXECUTE ON OBJECT::imp.usp_Reporte_LogImportacion              TO rol_consulta;
+    IF SCHEMA_ID('bi') IS NOT NULL
+        GRANT SELECT ON SCHEMA::bi TO rol_consulta;
+    DENY SELECT, INSERT, UPDATE, DELETE ON SCHEMA::cat  TO rol_consulta;
+    DENY SELECT, INSERT, UPDATE, DELETE ON SCHEMA::comp TO rol_consulta;
+    DENY SELECT, INSERT, UPDATE, DELETE ON SCHEMA::disc TO rol_consulta;
+    DENY SELECT, INSERT, UPDATE, DELETE ON SCHEMA::pub  TO rol_consulta;
+    DENY SELECT, INSERT, UPDATE, DELETE ON SCHEMA::imp  TO rol_consulta;
+    DENY EXECUTE ON OBJECT::comp.usp_Persona_DescifrarDocumento TO rol_consulta;
 END
 GO
 
 
-/* ----------------- 4. SP: MODIFICACION ------------------------------------------- */
+/* ----------------- 3. EJECUCION --------------------------------------------------- */
 
-CREATE OR ALTER PROCEDURE comp.usp_Persona_Modificacion
-    @id_persona           int,
-    @nombre               nvarchar(80),
-    @apellido             nvarchar(80),
-    @fecha_nacimiento     date,
-    @id_pais_nacionalidad int,
-    @tipo_documento       varchar(15),
-    @nro_documento        varchar(30)
-WITH EXECUTE AS OWNER
-AS
-BEGIN
-    DECLARE @err nvarchar(2000);
-    SET @err = '';
-
-    IF NOT EXISTS (SELECT 1 FROM comp.Persona WHERE id_persona = @id_persona)
-        SET @err = @err + ' - La persona no existe.';
-
-    IF @nombre IS NULL OR @nombre = ''
-        SET @err = @err + ' - El nombre es obligatorio.';
-
-    IF @apellido IS NULL OR @apellido = ''
-        SET @err = @err + ' - El apellido es obligatorio.';
-
-    IF @fecha_nacimiento > GETDATE()
-        SET @err = @err + ' - La fecha de nacimiento no puede ser futura.';
-
-    IF NOT EXISTS (SELECT 1 FROM cat.Pais WHERE id_pais = @id_pais_nacionalidad)
-        SET @err = @err + ' - El pais de nacionalidad no existe.';
-
-    IF (@tipo_documento IS NULL AND @nro_documento IS NOT NULL)
-       OR (@tipo_documento IS NOT NULL AND @nro_documento IS NULL)
-        SET @err = @err + ' - Tipo y numero de documento van juntos (los dos o ninguno).';
-
-    IF @nro_documento IS NOT NULL
-    BEGIN
-        OPEN SYMMETRIC KEY sk_datos_personales DECRYPTION BY CERTIFICATE cert_datos_personales;
-
-        IF EXISTS(SELECT 1 FROM comp.Persona
-            WHERE tipo_documento = @tipo_documento
-              AND CONVERT(varchar(30), DECRYPTBYKEY(nro_documento_cif)) = @nro_documento
-              AND id_pais_nacionalidad = @id_pais_nacionalidad
-              AND id_persona <> @id_persona)
-            SET @err = @err + ' - Otra persona ya tiene ese documento.';
-    END
-
-    IF @err <> ''
-    BEGIN
-        IF @nro_documento IS NOT NULL
-            CLOSE SYMMETRIC KEY sk_datos_personales;
-        SET @err = 'usp_Persona_Modificacion:' + @err;
-        THROW 50052, @err, 1;
-    END
-
-    UPDATE comp.Persona
-    SET nombre = @nombre, apellido = @apellido, fecha_nacimiento = @fecha_nacimiento,
-        id_pais_nacionalidad = @id_pais_nacionalidad,
-        tipo_documento = @tipo_documento,
-        nro_documento_cif = ENCRYPTBYKEY(KEY_GUID('sk_datos_personales'), @nro_documento)
-    WHERE id_persona = @id_persona;
-
-    IF @nro_documento IS NOT NULL
-        CLOSE SYMMETRIC KEY sk_datos_personales;
-END
+EXEC seg.usp_CrearRolesYUsuarios;
+GO
+EXEC seg.usp_AsignarPermisos;
 GO
 
-
-/* ----------------- 5. SP NUEVO: leer el documento descifrado ---------------------- */
--- Es la unica puerta para ver el numero de documento. Solo quien tenga EXECUTE sobre este
--- SP puede descifrar (en el script de roles se lo damos solo al administrador).
-
-CREATE OR ALTER PROCEDURE comp.usp_Persona_DescifrarDocumento
-    @id_persona int
-WITH EXECUTE AS OWNER
-AS
-BEGIN
-    DECLARE @err nvarchar(2000);
-    SET @err = '';
-
-    IF @id_persona IS NULL
-       OR NOT EXISTS (SELECT 1 FROM comp.Persona WHERE id_persona = @id_persona)
-        SET @err = @err + ' - La persona no existe.';
-
-    IF @err <> ''
-    BEGIN
-        SET @err = 'usp_Persona_DescifrarDocumento:' + @err;
-        THROW 50054, @err, 1;
-    END
-
-    OPEN SYMMETRIC KEY sk_datos_personales DECRYPTION BY CERTIFICATE cert_datos_personales;
-
-    SELECT id_persona, nombre, apellido, tipo_documento,
-           CONVERT(varchar(30), DECRYPTBYKEY(nro_documento_cif)) AS nro_documento
-    FROM comp.Persona
-    WHERE id_persona = @id_persona;
-
-    CLOSE SYMMETRIC KEY sk_datos_personales;
-END
+-- Verificacion rapida: a que rol pertenece cada usuario
+SELECT r.name AS rol, m.name AS usuario
+FROM sys.database_role_members rm
+JOIN sys.database_principals r ON r.principal_id = rm.role_principal_id
+JOIN sys.database_principals m ON m.principal_id = rm.member_principal_id
+WHERE r.name LIKE 'rol[_]%'
+ORDER BY r.name;
 GO

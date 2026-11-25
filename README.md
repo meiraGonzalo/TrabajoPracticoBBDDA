@@ -64,6 +64,6 @@ Para reconstruir la solución íntegramente desde cero, ejecute los scripts en S
 
 ### 4. Reportes y Seguridad
 * **`07`**: Consultas operativas y analíticas (salidas tabulares y en formato `XML`).
-* **`08`**: Implementación de cifrado de columnas sensibles y definición de roles (`db_administrador`, `db_operador_resultados`, `db_gestor_publicidad`, `db_consulta`).
+* **`08`**: Implementación de cifrado de columnas sensibles y definición de roles (`rol_administrador`, `rol_cargador_resultados`, `rol_gestor_publicidad`, `rol_consulta`), backup y politica de RPO (`08_backup.sql`, `doc/08_politica_backup.md`).
 
 ---
