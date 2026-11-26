@@ -2002,7 +2002,7 @@ BEGIN
     /* ----- Datos que vamos a necesitar ----- */
     SELECT @ps_sale  = id_partido_seleccion FROM comp.Alineacion WHERE id_alineacion = @id_alineacion_sale;
     SELECT @ps_entra = id_partido_seleccion FROM comp.Alineacion WHERE id_alineacion = @id_alineacion_entra;
-    SELECT @orden    = orden FROM disc.Periodo WHERE id_periodo = @id_periodo;
+    SELECT @orden    = orden FROM comp.Periodo WHERE id_periodo = @id_periodo;
 
     SELECT @id_torneo = p.id_torneo
     FROM comp.PartidoSeleccion ps
