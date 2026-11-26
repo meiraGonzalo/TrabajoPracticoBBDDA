@@ -65,8 +65,10 @@ EXEC imp.usp_ImportarPublicidad_CSV 'C:\Mundial2026_Datos\dossier_publicidad.csv
 GO
 
 EXEC imp.usp_Importar_Goles @archivo = 'C:\MundialDB\goles_2026.csv', @anio_torneo = 2026;
+GO
 
-
+EXEC imp.usp_Importar_CuerpoTecnico  @archivo = 'C:\MundialDB\cuerpo_tecnico_2026.csv', @anio_torneo = 2026;
+GO
 
 
 /* =================================================================
